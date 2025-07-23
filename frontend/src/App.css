@@ -1,0 +1,280 @@
+/* App.css */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #0b0c2a;
+  color: #fff;
+}
+
+.homepage {
+  min-height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #0b0c2a;
+  border-bottom: 2px solid #1e1f3b;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar nav a {
+  margin: 0 1rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.3rem 0.7rem;
+  border-radius: 8px;
+}
+
+.navbar nav .active {
+  border-bottom: 2px solid #00ffff;
+}
+
+.icons button {
+  background: #1e1f3b;
+  color: #00ffff;
+  border: none;
+  margin-left: 1rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.destacados {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  gap: 2rem;
+}
+
+.destacados button {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #1e1f3b;
+  color: #fff;
+  cursor: pointer;
+}
+
+.destacados .deal {
+  color: #ff00ff;
+}
+
+.destacados .coming {
+  color: #00ffff;
+}
+
+.juegos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.card {
+  background: #1e1f3b;
+  border-radius: 15px;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.card img {
+  width: 120px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+
+.card-content {
+  flex: 1;
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  color: #00ffff;
+  margin-bottom: 0.5rem;
+}
+
+.stars {
+  color: gold;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.card .precio {
+  font-size: 1.2rem;
+  color: #ff00ff;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+.card .detalle {
+  margin-left: 1rem;
+  padding: 0.3rem 1rem;
+  background-color: #ff00ff;
+  border: none;
+  border-radius: 5px;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Contenedor de los botones */
+.destacados {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Base de tus botones */
+.deal,
+.coming {
+  background: #1A1A40; /* o el que uses */
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* Hover opcional */
+.deal:hover,
+.coming:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Variante: icono + texto */
+.btn-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Tamaño de los iconos de Flaticon */
+.btn-icon .fi {
+  font-size: 1.2rem;
+}
+
+/* Colores específicos */
+.deal {
+  color: #FF00FF;
+}
+
+.coming {
+  color: #00FFFF;
+}
+
+/* Contenedor de los botones */
+/* —————————————
+   Sección Deals / Coming Soon
+   ————————————— */
+.destacados {
+  display: flex;
+  justify-content: center;    /* centra los botones */
+  gap: 2rem;                   /* separa ambos */
+  margin: 2rem auto;           /* margen arriba/abajo + centrar horizontal */
+  max-width: 600px;            /* ancho máximo opcional */
+}
+
+/* Botón con icono + texto en columna */
+.destacados .btn-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.5rem;      /* tamaño dinámico según contenido */
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  cursor: pointer;
+   border: 1px solid #00ffff;
+  transition: background 0.2s, transform 0.2s;
+
+  
+}
+.destacados .btn-icon:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateY(-2px);
+}
+
+/* Icono */
+.destacados .btn-icon .fi {
+  font-size: 1.6rem;
+}
+
+/* Texto */
+.destacados .btn-icon span {
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* Colores por variante */
+.destacados .deal .fi,
+.destacados .deal span {
+  color: #FF00FF;
+}
+
+.destacados .coming .fi,
+.destacados .coming span {
+  color: #FF00FF;
+}
+
+/* Base de los botones con icono+texto */
+.btn-icon {
+  display: flex;
+  flex-direction: column;  /* icono arriba, texto abajo */
+  align-items: center;
+  justify-content: center;
+  width: 10rem;             /* ajusta al ancho deseado */
+  height: 6rem;            /* ajusta la altura */
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-icon:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateY(-2px);
+}
+
+/* Icono más grande */
+.btn-icon .fi {
+  font-size: 1.6rem;
+}
+
+/* Texto justo debajo */
+.btn-icon span {
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  line-height: 1;
+}
+

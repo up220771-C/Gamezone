@@ -1,0 +1,263 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* padding: 1rem 2rem;  <- quítalo */
+  padding: 0.5rem 2rem;    /* 0.5rem arriba/abajo, 2rem izq/der */
+  position: relative;
+  background: transparent;
+}
+
+
+
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: #1e1f3b;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  color: #00ffff;
+
+  /* ¡Esto centra siempre el menú! */
+  margin: 0 auto;
+}
+
+
+.navbar__left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;                         /* menos separación logo-texto */
+  margin-left: 0;                    /* elimina desplazamiento extra */
+}
+
+.navbar__logo { width: 32px; height: 32px; }
+.navbar__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Ajusta el tamaño del logo */
+.navbar__logo {
+  width: 120px;    /* antes 48px, ajústalo si lo quieres aún más grande */
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.2s ease-in-out;
+}
+.navbar__logo:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* Si quieres desplazarlo un poco */
+.navbar__left {
+  align-items: center;
+  display: flex;
+  gap: 1 rem;
+   margin-left: 2rem; 
+}
+
+
+
+.navbar__menu {
+  position: absolute;           /* <--- lo saca del flujo */
+  left: 50%;                    
+  transform: translateX(-50%);  /* <--- lo centra en el eje X */
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;                  
+  background: #1e1f3b;
+  padding: 0.4rem 1rem;         
+  border-radius: 12px;
+  margin: 0;                    /* quita cualquier margin:auto previo */
+}
+
+.nav-item {
+  color: #00ffff;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  padding: 0.2rem 0.5rem;            /* añade un poco de relleno horizontal */
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.nav-item:hover {
+  color: #ff00ff;
+}
+
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #00ffff;
+  border-radius: 1px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: #00ffff;
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;            /* consistencia con nav-item */
+}
+.icon-btn:hover {
+  color: #ff00ff;
+}
+
+.navbar__auth {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #1e1f3b;
+  padding: 0.4rem 1rem;
+  border-radius: 12px;
+}
+.navbar__auth .nav-item {
+  color: #00ffff;
+  padding: 0.2rem 0.5rem;            /* igual que nav-item */
+}
+.navbar__auth .nav-item:hover,
+.navbar__auth .nav-item.active {
+  background: rgba(0,255,255,0.1);
+}
+
+dialog.modal {
+  border: none;
+  padding: 0;
+  background: none;
+}
+.modal__form {
+  background: #1e1f3b;
+  border: 1px solid #00ffff;    
+  border-radius: 12px;
+  width: 320px;                  
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  text-align: center;            
+}
+.modal__form h2 {
+  margin: 0;
+  color: #00ffff;
+  font-size: 1.5rem;
+}
+.modal__form input {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 20px;
+  font-size: 1rem;
+  outline: none;
+  text-align: center;
+}
+.modal__form .btn {
+  background: #ff00ff;
+  border: none;
+  color: #000;
+  padding: 0.8rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.switch-modal {
+  font-size: 0.9rem;
+  color: #00ffff;
+  margin: 0;
+}
+.switch-modal .link {
+  background: none;
+  border: none;
+  color: #00ffff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.card {
+  background: #1e1f3b;
+  border-radius: 15px;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  border: 1px solid #00ffff;
+}
+
+.navbar {
+  border-bottom: none !important;
+}
+
+
+.navbar__menu .nav-item {
+  color: #00ffff;   
+}
+
+.navbar__menu .nav-item:hover {
+  color: #ff00ff;   
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal {
+  background: #1e1f3b;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 320px;
+  box-shadow: 0 0 20px rgba(0,255,255,0.2);
+  position: relative;
+}
+
+.btn {
+  pointer-events: all !important;
+  z-index: 9999;
+}
+.btn {
+  pointer-events: all !important;
+  z-index: 9999 !important;
+  position: relative;
+  border: 2px solid lime !important;
+}
+
+.logout-btn {
+ 
+  border: none;
+  color: #ff00ff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
