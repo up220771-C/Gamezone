@@ -7,7 +7,7 @@ export default function Navbar() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [usuario, setUsuario] = useState<string | null>(null);
-  const navigate = useNavigate(); // ← para redirigir al perfil
+  const navigate = useNavigate(); // ← para redirigir
 
   const [loginData, setLoginData] = useState({ correo: '', contraseña: '' });
 
@@ -20,7 +20,7 @@ export default function Navbar() {
   });
 
   useEffect(() => {
-    const nombreGuardado = localStorage.getItem('usuarioNombre');
+    const nombreGuardado = localStorage.getItem('usuarioUsername');
     if (nombreGuardado) setUsuario(nombreGuardado);
   }, []);
 
@@ -30,9 +30,11 @@ export default function Navbar() {
     console.log(result);
     if (result.token) {
       localStorage.setItem('token', result.token);
-      localStorage.setItem('usuarioNombre', result.usuario?.nombre || 'Usuario');
-      setUsuario(result.usuario?.nombre || 'Usuario');
+      localStorage.setItem('usuarioUsername', result.usuario?.username || 'user');
+      setUsuario(result.usuario?.username || 'user');
+
       setShowLogin(false);
+      setLoginData({ correo: '', contraseña: '' });
     } else {
       alert(result.error || 'Error en login');
     }
@@ -56,6 +58,7 @@ export default function Navbar() {
     localStorage.removeItem('token');
     localStorage.removeItem('usuarioNombre');
     setUsuario(null);
+    navigate('/'); // ← redirigir al Home
   };
 
   return (
@@ -77,13 +80,10 @@ export default function Navbar() {
         <div className="navbar__auth">
           {usuario ? (
             <>
-              <button
-                className="icon-btn"
-                title="Perfil"
-                onClick={() => navigate('/perfil')}
-              >
+              <NavLink to="/perfil" className="icon-btn" title="Perfil">
                 <i className="fi fi-rr-circle-user"></i>
-              </button>
+              </NavLink>
+
               <button type="button" className="nav-item logout-btn" onClick={handleLogout}>
                 Cerrar sesión
               </button>

@@ -7,7 +7,6 @@ export const registrarUsuario = async (req: Request, res: Response) => {
   try {
     const { nombre, apellido, username, correo, contraseña } = req.body;
 
-    // 1) Validar campos obligatorios
     if (!nombre || !apellido || !username || !correo || !contraseña) {
       return res.status(400).json({ error: 'Faltan datos obligatorios.' });
     }

@@ -5,6 +5,15 @@ import Categorias from './pages/Categorias';
 import About from './pages/About';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Perfil from './pages/Perfil';
+// otros imports...
+
+<Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/perfil" element={<Perfil />} />
+  {/* otras rutas... */}
+</Routes>
+
 
 function App() {
   return (
@@ -16,6 +25,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/perfil" element={<Perfil />} />
       </Routes>
     </Router>
   );
