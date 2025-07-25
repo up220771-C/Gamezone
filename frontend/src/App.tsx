@@ -11,7 +11,7 @@ import Perfil from './pages/Perfil';
 <Routes>
   <Route path="/" element={<Home />} />
   <Route path="/perfil" element={<Perfil />} />
-  {/* otras rutas... */}
+
 </Routes>
 
 
@@ -26,6 +26,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/perfil" element={<Perfil />} />
+        
       </Routes>
     </Router>
   );

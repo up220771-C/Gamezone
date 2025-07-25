@@ -43,11 +43,6 @@ export default function About() {
         </p>
       </section>
 
-      <nav className="about-nav">
-        <NavLink to="/" className="nav-button">
-          Back to Home
-        </NavLink>
-      </nav>
     </div>
   );
 }
