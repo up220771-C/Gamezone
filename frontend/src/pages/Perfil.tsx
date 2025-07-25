@@ -64,6 +64,7 @@ export default function Perfil() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/');
+    window.location.reload()
   };
 
   return (
