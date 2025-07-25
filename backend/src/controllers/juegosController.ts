@@ -1,3 +1,4 @@
+// src/controllers/juegosController.ts
 import { Request, Response } from 'express';
 import Juego from '../models/juegos';
 
@@ -11,9 +12,14 @@ export const crearJuego = async (req: Request, res: Response) => {
   }
 };
 
-export const obtenerJuegos = async (_req: Request, res: Response) => {
+export const obtenerJuegos = async (req: Request, res: Response) => {
   try {
-    const juegos = await Juego.find();
+    // Si llega un query ?plataforma=..., filtramos por ese campo.
+    const filtro: any = {};
+    if (req.query.plataforma) {
+      filtro.plataforma = req.query.plataforma;
+    }
+    const juegos = await Juego.find(filtro);
     res.json(juegos);
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al obtener los juegos', error });
