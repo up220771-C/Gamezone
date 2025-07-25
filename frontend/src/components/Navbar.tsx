@@ -7,10 +7,10 @@ export default function Navbar() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [usuario, setUsuario] = useState<string | null>(null);
-  const navigate = useNavigate(); // ← para redirigir
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState({ correo: '', contraseña: '' });
-
   const [regData, setRegData] = useState({
     nombre: '',
     apellido: '',
@@ -20,46 +20,76 @@ export default function Navbar() {
   });
 
   useEffect(() => {
-    const nombreGuardado = localStorage.getItem('usuarioUsername');
-    if (nombreGuardado) setUsuario(nombreGuardado);
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    fetch('http://localhost:5000/api/auth/perfil', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('No autorizado');
+        return res.json();
+      })
+      .then(data => setUsuario(data.usuario.username))
+      .catch(() => setUsuario(null));
   }, []);
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await loginUser(loginData);
-    console.log(result);
-    if (result.token) {
-      localStorage.setItem('token', result.token);
-      localStorage.setItem('usuarioUsername', result.usuario?.username || 'user');
-      setUsuario(result.usuario?.username || 'user');
-
+    const res = await loginUser(loginData);
+    if (res.token) {
+      localStorage.setItem('token', res.token);
+      setUsuario(res.usuario?.username || 'user');
       setShowLogin(false);
       setLoginData({ correo: '', contraseña: '' });
+      setMobileOpen(false);
     } else {
-      alert(result.error || 'Error en login');
+      alert(res.error || 'Error en login');
     }
   };
 
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Enviando datos a backend:', regData);
-    const result = await registerUser(regData);
-    console.log(result);
-    if (result.mensaje) {
+    const res = await registerUser(regData);
+    if (res.mensaje) {
       alert('Registro exitoso');
       setShowRegister(false);
-      setRegData({ nombre: '', apellido: '', username: '', correo: '', contraseña: '' });
+      setRegData({
+        nombre: '',
+        apellido: '',
+        username: '',
+        correo: '',
+        contraseña: ''
+      });
+      setMobileOpen(false);
     } else {
-      alert(result.error || 'Error en registro');
+      alert(res.error || 'Error en registro');
     }
   };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('usuarioNombre');
     setUsuario(null);
-    navigate('/'); // ← redirigir al Home
+    navigate('/');
+    setMobileOpen(false);
   };
+
+  const LinkItem = ({
+    to,
+    children
+  }: {
+    to: string;
+    children: React.ReactNode;
+  }) => (
+    <NavLink
+      to={to}
+      end
+      onClick={() => setMobileOpen(false)}
+      className={({ isActive }) => (isActive ? 'nav-item active' : 'nav-item')}
+    >
+      {children}
+    </NavLink>
+  );
 
   return (
     <>
@@ -69,9 +99,9 @@ export default function Navbar() {
         </div>
 
         <nav className="navbar__menu">
-          <NavLink to="/" end className="nav-item">Home</NavLink>
-          <NavLink to="/categorias" className="nav-item">Categories</NavLink>
-          <NavLink to="/about" className="nav-item">About</NavLink>
+          <LinkItem to="/">Home</LinkItem>
+          <LinkItem to="/categorias">Categories</LinkItem>
+          <LinkItem to="/about">About</LinkItem>
           <button className="icon-btn" title="Carrito">
             <i className="fi fi-sr-shopping-cart"></i>
           </button>
@@ -79,29 +109,106 @@ export default function Navbar() {
 
         <div className="navbar__auth">
           {usuario ? (
-            <>
-              <NavLink to="/perfil" className="icon-btn" title="Perfil">
-                <i className="fi fi-rr-circle-user"></i>
-              </NavLink>
-
-              <button type="button" className="nav-item logout-btn" onClick={handleLogout}>
-                Cerrar sesión
-              </button>
-            </>
+            <NavLink
+              to="/perfil"
+              title="Perfil"
+              className={({ isActive }) =>
+                `icon-btn navbar__profile-link${isActive ? ' active' : ''}`
+              }
+            >
+              <img
+                src="https://www.pngmart.com/files/15/Fallout-Pip-Boy-PNG-HD.png"
+                alt="Perfil"
+                className="navbar__profile-icon"
+              />
+              <span className="navbar__username">{usuario}</span>
+            </NavLink>
           ) : (
             <>
-              <button type="button" className="nav-item" onClick={() => setShowLogin(true)}>
+              <button
+                className="nav-item"
+                onClick={() => {
+                  setShowLogin(true);
+                  setMobileOpen(false);
+                }}
+              >
                 Log-in
               </button>
-              <button type="button" className="nav-item" onClick={() => setShowRegister(true)}>
+              <button
+                className="nav-item"
+                onClick={() => {
+                  setShowRegister(true);
+                  setMobileOpen(false);
+                }}
+              >
                 Register
               </button>
             </>
           )}
         </div>
+
+        <button
+          className={`hamburger ${mobileOpen ? 'open' : ''}`}
+          onClick={() => setMobileOpen(o => !o)}
+          aria-label="Toggle menu"
+        >
+          <i className="fi fi-sr-menu-burger"></i>
+        </button>
+
+        {mobileOpen && (
+          <div className="mobile-menu open">
+            <LinkItem to="/">Home</LinkItem>
+            <LinkItem to="/categorias">Categories</LinkItem>
+            <LinkItem to="/about">About</LinkItem>
+            <button
+              className="icon-btn"
+              title="Carrito"
+              onClick={() => setMobileOpen(false)}
+            >
+              <i className="fi fi-sr-shopping-cart"></i>
+            </button>
+            {usuario ? (
+              <NavLink
+                to="/perfil"
+                title="Perfil"
+                className={({ isActive }) =>
+                  `icon-btn navbar__profile-link${isActive ? ' active' : ''}`
+                }
+                onClick={() => setMobileOpen(false)}
+              >
+                <img
+                  src="https://www.pngmart.com/files/15/Fallout-Pip-Boy-PNG-HD.png"
+                  alt="Perfil"
+                  className="navbar__profile-icon"
+                />
+                <span className="navbar__username">{usuario}</span>
+              </NavLink>
+            ) : (
+              <>
+                <button
+                  className="nav-item"
+                  onClick={() => {
+                    setShowLogin(true);
+                    setMobileOpen(false);
+                  }}
+                >
+                  Log-in
+                </button>
+                <button
+                  className="nav-item"
+                  onClick={() => {
+                    setShowRegister(true);
+                    setMobileOpen(false);
+                  }}
+                >
+                  Register
+                </button>
+              </>
+            )}
+          </div>
+        )}
       </header>
 
-      {/* ------ Login Modal ------ */}
       {showLogin && (
         <div className="modal-overlay">
           <div className="modal">
@@ -111,53 +218,121 @@ export default function Navbar() {
                 type="email"
                 placeholder="Correo"
                 value={loginData.correo}
-                onChange={e => setLoginData({ ...loginData, correo: e.target.value })}
+                onChange={e =>
+                  setLoginData({ ...loginData, correo: e.target.value })
+                }
                 required
               />
               <input
                 type="password"
                 placeholder="Contraseña"
                 value={loginData.contraseña}
-                onChange={e => setLoginData({ ...loginData, contraseña: e.target.value })}
+                onChange={e =>
+                  setLoginData({ ...loginData, contraseña: e.target.value })
+                }
                 required
               />
-              <button type="submit" className="btn">Log In</button>
+              <button type="submit" className="btn">
+                Log In
+              </button>
               <p className="switch-modal">
                 Don’t have an account?{' '}
-                <button type="button" className="link" onClick={() => { setShowLogin(false); setShowRegister(true); }}>
+                <button
+                  type="button"
+                  className="link"
+                  onClick={() => {
+                    setShowLogin(false);
+                    setShowRegister(true);
+                  }}
+                >
                   Register
                 </button>
               </p>
-              <button type="button" className="modal-close" onClick={() => setShowLogin(false)}>✕</button>
+              <button
+                type="button"
+                className="modal-close"
+                onClick={() => setShowLogin(false)}
+              >
+                ✕
+              </button>
             </form>
           </div>
         </div>
       )}
 
-      {/* ---- Register Modal ---- */}
       {showRegister && (
         <div className="modal-overlay">
           <div className="modal">
             <form onSubmit={handleRegisterSubmit} className="modal__form">
               <h2>Register</h2>
-              <input type="text" placeholder="Nombre" value={regData.nombre}
-                onChange={e => setRegData({ ...regData, nombre: e.target.value })} required />
-              <input type="text" placeholder="Apellido" value={regData.apellido}
-                onChange={e => setRegData({ ...regData, apellido: e.target.value })} required />
-              <input type="text" placeholder="Username" value={regData.username}
-                onChange={e => setRegData({ ...regData, username: e.target.value })} required />
-              <input type="email" placeholder="Correo" value={regData.correo}
-                onChange={e => setRegData({ ...regData, correo: e.target.value })} required />
-              <input type="password" placeholder="Contraseña" value={regData.contraseña}
-                onChange={e => setRegData({ ...regData, contraseña: e.target.value })} required />
-              <button type="submit" className="btn">Create Account</button>
+              <input
+                type="text"
+                placeholder="Nombre"
+                value={regData.nombre}
+                onChange={e =>
+                  setRegData({ ...regData, nombre: e.target.value })
+                }
+                required
+              />
+              <input
+                type="text"
+                placeholder="Apellido"
+                value={regData.apellido}
+                onChange={e =>
+                  setRegData({ ...regData, apellido: e.target.value })
+                }
+                required
+              />
+              <input
+                type="text"
+                placeholder="Username"
+                value={regData.username}
+                onChange={e =>
+                  setRegData({ ...regData, username: e.target.value })
+                }
+                required
+              />
+              <input
+                type="email"
+                placeholder="Correo"
+                value={regData.correo}
+                onChange={e =>
+                  setRegData({ ...regData, correo: e.target.value })
+                }
+                required
+              />
+              <input
+                type="password"
+                placeholder="Contraseña"
+                value={regData.contraseña}
+                onChange={e =>
+                  setRegData({ ...regData, contraseña: e.target.value })
+                }
+                required
+              />
+              <button type="submit" className="btn">
+                Create Account
+              </button>
               <p className="switch-modal">
                 Already have an account?{' '}
-                <button type="button" className="link" onClick={() => { setShowRegister(false); setShowLogin(true); }}>
+                <button
+                  type="button"
+                  className="link"
+                  onClick={() => {
+                    setShowRegister(false);
+                    setShowLogin(true);
+                  }}
+                >
                   Log-in
                 </button>
               </p>
-              <button type="button" className="modal-close" onClick={() => setShowRegister(false)}>✕</button>
+              <button
+                type="button"
+                className="modal-close"
+                onClick={() => setShowRegister(false)}
+              >
+                ✕
+              </button>
             </form>
           </div>
         </div>
