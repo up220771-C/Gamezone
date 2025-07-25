@@ -1,10 +1,14 @@
+/* Perfil.css — móvil primero, luego desktop */
+
+/* ─── Global ─── */
 .perfil-container {
-  padding: 2rem;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box;
   font-family: 'Segoe UI', sans-serif;
   color: #fff;
-  min-width: 900px; /* evita que colapsen las columnas */
 }
 
 .seccion-titulo {
@@ -14,74 +18,61 @@
   font-weight: bold;
 }
 
-/* Nuevo contenedor general en dos columnas */
-.perfil-grid {
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-  flex-wrap: nowrap; /* clave para que NO se vaya abajo */
+.subtitulo {
+  color: #ff00ff;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
-/* Columna izquierda con las secciones */
-.perfil-column {
-  flex: 0 1 70%;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* Columna derecha fija */
-.card-lateral {
-  flex: 0 1 30%;
-  background-color: #1e1f3b;
-  border: 2px solid #00ffff;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
-  height: fit-content;
-}
-
-/* Cards generales */
 .card-seccion {
   background-color: #1e1f3b;
   border: 2px solid #00ffff;
   border-radius: 12px;
-  padding: 1.5rem;
   box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-sizing: border-box;
 }
 
-.perfil-usuario {
+/* ─── Móvil (<768px) ─── */
+.perfil-top .perfil-usuario {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 1rem;
+  text-align: center;
 }
 
 .perfil-usuario img {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   border: 2px solid #00ffff;
   object-fit: cover;
 }
 
-.perfil-info p {
-  margin: 0;
-  line-height: 1.5;
-}
 .perfil-info .username {
+  margin: 0;
   font-weight: bold;
   color: #ff00ff;
 }
+
 .perfil-info .correo {
-  color: #00ffff;
+  margin: 0;
   font-size: 0.95rem;
+  color: #00ffff;
 }
 
 .personal-info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
-  margin-top: 1rem;
+}
+
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .info-label {
@@ -89,70 +80,16 @@
   color: #ff00ff;
 }
 
-.total-gastos {
-  border-top: 1px solid #00ffff;
-  padding-top: 1rem;
-  margin-top: 1.5rem;
-  text-align: center;
+.info-value {
+  margin: 0.3rem 0 1rem;
 }
 
-.total-gastos .titulo-gasto {
-  font-weight: bold;
-  color: #ff00ff;
-  margin-bottom: 0.3rem;
-}
-
-.total-gastos .monto {
-  font-size: 1.8rem;
-  color: #00ffff;
-  font-weight: bold;
-}
-
-.ultimas-compras img {
-  width: 100%;
-  border-radius: 8px;
-  margin: 0.5rem 0;
-}
-
-.view-history-btn {
-  display: inline-block;
-  margin-top: 0.5rem;
-  background: #00ffff;
-  color: #000;
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 0.85rem;
-  text-align: center;
-}
-
-.subtitulo {
-  color: #ff00ff;
-}
-
-/* contenedor de cada etiqueta + lápiz */
-.info-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* icono lápiz, guardar, cancelar */
-.edit-icon, .save-icon, .cancel-icon {
-  cursor: pointer;
-  color: #00ffff;
-}
-.edit-icon:hover { color: #ff00ff; }
-.save-icon:hover { color: #00ff00; }
-.cancel-icon:hover { color: #ff0000; }
-
-/* fila de edición: input + iconos */
 .edit-row {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
+
 .edit-input {
   flex: 1;
   padding: 0.3rem;
@@ -163,7 +100,126 @@
   outline: none;
 }
 
-/* valor normal */
-.info-value {
-  margin: 0.2rem 0 1rem;
+.edit-icon,
+.save-icon,
+.cancel-icon {
+  cursor: pointer;
+  color: #00ffff;
+}
+.edit-icon:hover {
+  color: #ff00ff;
+}
+.save-icon:hover {
+  color: #00ff00;
+}
+.cancel-icon:hover {
+  color: #ff0000;
+}
+
+.total-gastos {
+  border-top: 1px solid #00ffff;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.total-gastos .titulo-gasto {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+  color: #ff00ff;
+}
+
+.total-gastos .monto {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #00ffff;
+}
+
+.ultimas-compras {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ultimas-compras img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.view-history-btn {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  background: #00ffff;
+  color: #000;
+  padding: 0.5rem;
+  border-radius: 20px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.logout-action {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.logout-action .logout-btn {
+  background: #ff00ff;
+  color: #000;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.logout-action .logout-btn:hover {
+  background: #e600e6;
+}
+
+/* ─── Desktop (≥768px) ─── */
+@media (min-width: 768px) {
+  .perfil-top .perfil-usuario {
+    flex-direction: row;
+    text-align: left;
+    align-items: center;
+  }
+
+  .personal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .card-seccion {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .total-gastos {
+    flex: 0 0 100%;
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  .ultimas-compras {
+    flex-direction: row;
+  }
+
+  .ultimas-compras img {
+    max-width: 150px;
+  }
+
+  .view-history-btn {
+    width: auto;
+    max-width: none;
+    margin-top: 0;
+    align-self: center;
+  }
 }

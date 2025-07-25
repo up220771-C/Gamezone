@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* padding: 1rem 2rem;  <- quítalo */
   padding: 0.5rem 2rem;    /* 0.5rem arriba/abajo, 2rem izq/der */
   position: relative;
   background: transparent;
@@ -87,16 +86,46 @@
   color: #ff00ff;
 }
 
+/* ——————————————————————————————
+   Nuevo estilo para el nav-item activo
+—————————————————————————————————*/
+.nav-item.active {
+  background: linear-gradient(1150deg,
+    rgba(0,255,255,0.2),
+    rgba(255,0,255,0.2)
+  );
+  padding: 0.3rem 0.8rem;    /* mantiene el pill */
+  border-radius: 15px;
+  color: #0ff;
+  text-shadow:
+    0 0 4px  #0ff,
+    0 0 8px  #f0f;
+  box-shadow:
+    -3px -3px 8px  #0ff,
+    3px 3px 8px #f0f;
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+/* Un ligero “pop” al hacer hover (opcional) */
+.nav-item.active:hover {
+  transform: scale(1);
+}
+
+/* Desactiva el subrayado/after anterior */
 .nav-item.active::after {
   content: '';
   position: absolute;
-  bottom: -4px;
   left: 0;
-  width: 100%;
+  right: 0;
+  bottom: -2px;               /* justo bajo el texto */
   height: 2px;
-  background: #00ffff;
-  border-radius: 1px;
+  background: radial-gradient(circle, #0ff, transparent);
+  /* animación de entrada */
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
 }
+
 
 .icon-btn {
   background: none;
@@ -105,6 +134,7 @@
   font-size: 1.4rem;
   cursor: pointer;
   padding: 0.2rem 0.5rem;            /* consistencia con nav-item */
+  text-decoration: none;
 }
 .icon-btn:hover {
   color: #ff00ff;
@@ -234,7 +264,7 @@ dialog.modal {
   background: #1e1f3b;
   border-radius: 12px;
   padding: 2rem;
-  width: 320px;
+  width: 370px;
   box-shadow: 0 0 20px rgba(0,255,255,0.2);
   position: relative;
 }
@@ -261,3 +291,171 @@ dialog.modal {
 }
 
 
+/* Navbar.css */
+
+/* 1. Sticky */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 2rem;
+  background: transparent;
+}
+
+/* 2. Oculta el hamburger por defecto */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #00ffff;
+  cursor: pointer;
+}
+
+/* 3. Menú desplegable móvil */
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #1e1f3b;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+/* 4. Items del menú (reusa estilos existentes) */
+.mobile-menu .nav-item,
+.mobile-menu .icon-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+/* 5. Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+  .navbar__menu,
+  .navbar__auth {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+  }
+  .mobile-menu {
+    display: flex;
+  }
+}
+/* ——————————————————————————————
+   1. Animación del hamburger
+—————————————————————————————————*/
+.hamburger {
+  transition: transform 0.3s ease-in-out;
+}
+.hamburger.open {
+  transform: rotate(180deg);
+}
+
+/* ——————————————————————————————
+   2. Hover futurista para nav-item y icon-btn
+—————————————————————————————————*/
+.nav-item,
+.icon-btn {
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.nav-item:hover {
+  color: #0ff;
+  text-shadow:
+    0 0 4px   #0ff,
+    0 0 8px   #f0f,
+    0 0 12px  #0ff;
+}
+
+.icon-btn:hover {
+  color: #f0f;
+  text-shadow:
+    0 0 4px  #f0f,
+    0 0 8px  #0ff;
+}
+
+/* Ajustes para el nuevo icono de perfil */
+.navbar__profile-icon {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.navbar__profile-icon:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+/* nombre de usuario al lado del icono */
+.navbar__username {
+  color: #00ffff;
+  font-weight: 500;
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+.navbar__username:hover {
+  color: #0ff;
+  text-shadow:
+    0 0 4px #0ff,
+    0 0 8px #f0f;
+}
+/* wrapper de icon + username */
+.navbar__profile-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #1e1f3b;
+  padding: 0.4rem 1rem;
+  border-radius: 12px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* estado activo (ruta /perfil) */
+.navbar__profile-link.active {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 255, 0.2),
+    rgba(255, 0, 255, 0.2)
+  );
+  box-shadow:
+    0 0 6px #0ff,
+    0 0 12px #f0f;
+}
+
+.navbar__profile-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+.navbar__profile-icon:hover {
+  transform: scale(1.1);
+}
+
+/* nombre de usuario */
+.navbar__username {
+  color: #00ffff;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+.navbar__profile-link.active .navbar__username {
+  color: #0ff;
+  text-shadow:
+    0 0 4px #0ff,
+    0 0 8px #f0f;
+}
