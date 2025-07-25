@@ -10,6 +10,7 @@ import { verificarToken } from '../middleware/authMiddleware';
 
 const router = Router();
 
+// No hagas lógica de filtro aquí, ya está en el controlador
 router.get('/', obtenerJuegos);
 router.get('/:id', obtenerJuegoPorId);
 router.post('/', verificarToken, crearJuego);

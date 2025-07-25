@@ -10,13 +10,13 @@ export interface IJuego extends mongoose.Document {
   disponible: boolean;
 }
 
-const juegoSchema = new mongoose.Schema<IJuego>({
+const juegoSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
-  descripcion: { type: String, required: true },
+  descripcion: { type: String },
   precio: { type: Number, required: true },
   plataforma: { type: String, required: true },
-  genero: { type: String, required: true },
-  imagen: { type: String, required: true },
+  genero: { type: String },
+  imagen: { type: String },
   disponible: { type: Boolean, default: true }
 });
 

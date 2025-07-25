@@ -14,7 +14,6 @@ export const crearJuego = async (req: Request, res: Response) => {
 
 export const obtenerJuegos = async (req: Request, res: Response) => {
   try {
-    // Si llega un query ?plataforma=..., filtramos por ese campo.
     const filtro: any = {};
     if (req.query.plataforma) {
       filtro.plataforma = req.query.plataforma;
@@ -25,6 +24,7 @@ export const obtenerJuegos = async (req: Request, res: Response) => {
     res.status(500).json({ mensaje: 'Error al obtener los juegos', error });
   }
 };
+
 
 export const obtenerJuegoPorId = async (req: Request, res: Response) => {
   try {
