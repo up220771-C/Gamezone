@@ -1,14 +1,20 @@
 import { useEffect, useState } from 'react';
 import '../App.css';
 import { obtenerJuegos } from '../services/juegosService';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Home() {
     const [juegos, setJuegos] = useState<any[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         obtenerJuegos()
-            .then(data => setJuegos(data))
+            .then(data => {
+                // Solo juegos disponibles y con precio > 0
+                const disponibles = data.filter((juego: any) => juego.disponible !== false && juego.precio > 0);
+                setJuegos(disponibles);
+            })
             .catch(err => console.error('Error al obtener juegos:', err));
     }, []);
 
@@ -23,7 +29,10 @@ export default function Home() {
                     <span>Deals</span>
                 </button>
 
-                <button className="coming btn-icon">
+                <button
+                    className="coming btn-icon"
+                    onClick={() => navigate('/coming-soon')}
+                >
                     <i className="fi fi-rr-calendar"></i>
                     <span>Coming Soon</span>
                 </button>
