@@ -7,3 +7,7 @@ export const obtenerJuegos = async () => {
   return res.data;
 };
 
+export const obtenerJuegos2 = async () => {
+  const res = await axios.get('http://localhost:5000/api/juegos_2');
+  return res.data;
+};
