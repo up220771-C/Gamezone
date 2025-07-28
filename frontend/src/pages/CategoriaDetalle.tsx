@@ -15,7 +15,6 @@ export default function CategoriaDetalle() {
 
   return (
     <div className="homepage">
-      <h2 style={{ textAlign: 'center' }}>Juegos de {nombre}</h2>
       <main className="juegos">
         {juegos.map((juego: any) => (
           <div className="card" key={juego._id}>
