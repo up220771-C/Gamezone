@@ -39,7 +39,8 @@ export default function Navbar() {
     const res = await loginUser(loginData);
     if (res.token) {
       localStorage.setItem('token', res.token);
-      setUsuario(res.usuario?.username || 'user');
+      setUsuario(res.usuario?.username || window.location.reload());
+      
       setShowLogin(false);
       setLoginData({ correo: '', contraseña: '' });
       setMobileOpen(false);

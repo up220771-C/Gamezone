@@ -58,3 +58,14 @@
   font-weight: bold;
   text-align: center;
 }
+
+.cat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.second-row {
+  grid-template-columns: repeat(2, 1fr);
+}

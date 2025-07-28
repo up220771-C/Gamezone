@@ -257,7 +257,9 @@ dialog.modal {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+
+  /* ¡Sube el z‑index por encima de la navbar! */
+  z-index: 2000;
 }
 
 .modal {
@@ -267,6 +269,8 @@ dialog.modal {
   width: 370px;
   box-shadow: 0 0 20px rgba(0,255,255,0.2);
   position: relative;
+  position: relative;
+  z-index: 2001;
 }
 
 .btn {
