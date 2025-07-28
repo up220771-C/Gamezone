@@ -102,7 +102,11 @@ export default function Navbar() {
           <LinkItem to="/">Home</LinkItem>
           <LinkItem to="/categorias">Categories</LinkItem>
           <LinkItem to="/about">About</LinkItem>
-          <button className="icon-btn" title="Carrito">
+          <button
+            className="icon-btn"
+            title="Carrito"
+            onClick={() => navigate('/cart')}
+          >
             <i className="fi fi-sr-shopping-cart"></i>
           </button>
         </nav>
