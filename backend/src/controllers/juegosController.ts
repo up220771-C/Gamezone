@@ -2,11 +2,6 @@
 import { Request, Response } from 'express';
 import Juego from '../models/juegos';
 
-export const obtenerJuegosEnOferta = async (_: Request, res: Response) => {
-  const ofertas = await Juego.find({ descuento: { $gt: 0 } });
-  res.json(ofertas);
-};
-
 export const crearJuego = async (req: Request, res: Response) => {
   try {
     const nuevoJuego = new Juego(req.body);
@@ -20,9 +15,7 @@ export const crearJuego = async (req: Request, res: Response) => {
 export const obtenerJuegos = async (req: Request, res: Response) => {
   try {
     const filtro: any = {};
-    if (req.query.plataforma) {
-      filtro.plataforma = req.query.plataforma;
-    }
+    if (req.query.plataforma) filtro.plataforma = req.query.plataforma;
     const juegos = await Juego.find(filtro);
     res.json(juegos);
   } catch (error) {
@@ -30,6 +23,14 @@ export const obtenerJuegos = async (req: Request, res: Response) => {
   }
 };
 
+export const obtenerJuegosEnOferta = async (_: Request, res: Response) => {
+  try {
+    const ofertas = await Juego.find({ descuento: { $gt: 0 } });
+    res.json(ofertas);
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al obtener ofertas', error });
+  }
+};
 
 export const obtenerJuegoPorId = async (req: Request, res: Response) => {
   try {

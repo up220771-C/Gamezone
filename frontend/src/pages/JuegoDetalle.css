@@ -1,0 +1,141 @@
+/* src/pages/JuegoDetalle.css */
+
+/* Página completa */
+.detalle-page {
+  padding: 2rem;
+  background-color: #0b0f25;
+  min-height: calc(100vh - 64px);
+}
+
+/* Contenedor principal */
+.detalle-container {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+/* Columna Imagen */
+.detalle-imagen img {
+  width: 350px;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Columna Info */
+.detalle-info {
+  flex: 2;
+  background-color: #1e1e2e;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+}
+.detalle-title {
+  color: #ff00ff;
+  margin-bottom: 1rem;
+}
+
+/* Sección de datos en grid 2x2 */
+.detalle-sections {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.detalle-section {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+.detalle-icon {
+  font-size: 1.5rem;
+  color: #00ffff;
+  flex-shrink: 0;
+}
+.detalle-section h3 {
+  color: #ff00ff;
+  margin: 0 0 0.25rem;
+}
+.detalle-section p {
+  color: #00ffff;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Posicionamiento específico */
+.detalle-section.descripcion { grid-column: 1; grid-row: span 2; }
+.detalle-section.global      { grid-column: 2; grid-row: 1; }
+.detalle-section.codigo      { grid-column: 2; grid-row: 2; }
+
+/* Columna Acciones */
+.detalle-actions {
+  flex: 1;
+  background-color: #1e1e2e;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Estrellas rellenas */
+.detalle-stars {
+  display: flex;
+  gap: 0.25rem;
+}
+.estrella-rellena {
+  color: #ffd700;
+  font-size: 1.5rem;
+}
+
+/* Botones */
+.btn {
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.btn.comprar {
+  background-color: #ff00ff;
+  color: #fff;
+}
+.btn.carrito {
+  background-color: transparent;
+  color: #ff00ff;
+  border: 2px solid #ff00ff;
+}
+
+/* Precios */
+.detalle-precio {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+.precio-original {
+  text-decoration: line-through;
+  color: #888;
+}
+.precio-oferta {
+  font-size: 1.5rem;
+  color: #ff00ff;
+  font-weight: bold;
+}
+.badge-descuento {
+  background-color: #ff00ff;
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+}
+
+/* Métodos de pago: íconos más grandes */
+.detalle-metodos-icons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.pay-icon {
+  font-size: 3rem;
+  color: #fff;
+}

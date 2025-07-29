@@ -16,3 +16,8 @@ export const obtenerJuegosEnOferta = async () => {
   const res = await axios.get(`${API_URL}/deals`);
   return res.data;
 };
+
+export const obtenerJuegoPorId = async (id: string) => {
+  const res = await axios.get(`${API_URL}/${id}`);
+  return res.data;
+};

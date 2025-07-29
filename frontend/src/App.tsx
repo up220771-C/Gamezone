@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Perfil from './pages/Perfil';
 import ComingSoon from './pages/ComingSoon';
+import JuegoDetalle from './pages/JuegoDetalle';
 // otros imports...
 
 <Routes>
@@ -32,6 +33,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/coming-soon" element={<ComingSoon />} />
+        <Route path="/juego/:id" element={<JuegoDetalle />} />
       </Routes>
     </Router>
   );
