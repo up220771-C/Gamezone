@@ -1,33 +1,51 @@
-import { useEffect, useState } from 'react';
+// src/pages/Home.tsx
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import { obtenerJuegos } from '../services/juegosService';
-import { useNavigate } from 'react-router-dom';
-
 
 export default function Home() {
-    const [juegos, setJuegos] = useState<any[]>([]);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  interface Juego {
+    _id: string;
+    nombre: string;
+    descripcion: string;
+    imagen: string;
+    precio: number;
+    descuento?: number;
+  }
 
-    useEffect(() => {
-        obtenerJuegos()
-            .then(data => {
-                // Solo juegos disponibles y con precio > 0
-                const disponibles = data.filter((juego: any) => juego.disponible !== false && juego.precio > 0);
-                setJuegos(disponibles);
-            })
-            .catch(err => console.error('Error al obtener juegos:', err));
-    }, []);
+  const [juegos, setJuegos] = useState<Juego[]>([]);
 
-    return (
-        <div className="homepage">
+  useEffect(() => {
+    obtenerJuegos()
+      .then((data: Juego[]) => {
+        // Filtramos solo los juegos sin descuento (descuento === 0 o undefined)
+        const normales = data.filter((j: Juego) => !j.descuento || j.descuento === 0);
+        setJuegos(normales);
+      })
+      .catch(err => console.error('Error al obtener juegos:', err));
+  }, []);
 
+  return (
+    <div className="homepage">
+      <div className="destacados">
+        <button
+          className="deal btn-icon"
+          onClick={() => navigate('/deals')}
+        >
+          <i className="fi fi-rr-badge-percent"></i>
+          <span>Deals</span>
+        </button>
 
-            <div className="destacados">
-                {/* Deals con icono */}
-                <button className="deal btn-icon">
-                    <i className="fi fi-rr-badge-percent"></i>
-                    <span>Deals</span>
-                </button>
+        <button
+          className="coming btn-icon"
+          onClick={() => navigate('/coming-soon')}
+        >
+          <i className="fi fi-rr-calendar"></i>
+          <span>Coming Soon</span>
+        </button>
+      </div>
 
                 <button
                     className="coming btn-icon"
@@ -36,22 +54,24 @@ export default function Home() {
                     <i className="fi fi-rr-calendar"></i>
                     <span>Coming Soon</span>
                 </button>
+      <main className="juegos">
+        {juegos.map(juego => (
+          <div className="card" key={juego._id}>
+            <img src={juego.imagen} alt={juego.nombre} />
+            <div className="card-content">
+              <h3>{juego.nombre}</h3>
+              <p>{juego.descripcion}</p>
+              <span className="precio">${juego.precio.toFixed(2)}</span>
+              <button
+                className="detalle"
+                onClick={() => navigate(`/juego/${juego._id}`)}
+              >
+                Detail
+              </button>
             </div>
-
-            <main className="juegos">
-                {juegos.map((juego) => (
-                    <div className="card" key={juego._id}>
-                        <img src={juego.imagen} alt={juego.nombre} />
-                        <div className="card-content">
-                            <h3>{juego.nombre}</h3>
-                            <p>{juego.descripcion}</p>
-                            <span className="precio">${juego.precio.toFixed(2)}</span>
-                            <button className="detalle">Detail</button>
-                        </div>
-                    </div>
-                ))}
-            </main>
-
-        </div>
-    );
+          </div>
+        ))}
+      </main>
+    </div>
+  );
 }

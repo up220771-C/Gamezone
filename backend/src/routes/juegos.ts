@@ -4,13 +4,14 @@ import {
   obtenerJuegos,
   obtenerJuegoPorId,
   actualizarJuego,
-  eliminarJuego
+  eliminarJuego,
+  obtenerJuegosEnOferta
 } from '../controllers/juegosController';
 import { verificarToken } from '../middleware/authMiddleware';
 
 const router = Router();
 
-// No hagas lógica de filtro aquí, ya está en el controlador
+router.get('/deals', obtenerJuegosEnOferta);
 router.get('/', obtenerJuegos);
 router.get('/:id', obtenerJuegoPorId);
 router.post('/', verificarToken, crearJuego);
