@@ -97,10 +97,10 @@ export default function Navbar() {
     <>
       <header className="navbar">
         <div className="navbar__left">
-          <img 
-            src="/logo.png" 
-            alt="Gamezone Logo" 
-            className="navbar__logo" 
+          <img
+            src="/logo.png"
+            alt="Gamezone Logo"
+            className="navbar__logo"
           />
         </div>
 
@@ -109,11 +109,13 @@ export default function Navbar() {
           <LinkItem to="/categorias">Categories</LinkItem>
           <LinkItem to="/about">About</LinkItem>
           <button
-            className="icon-btn"
+            className="cart-icon-btn"
             title="Carrito"
             onClick={() => navigate('/cart')}
           >
-            <i className="fi fi-sr-shopping-cart"></i>
+            <svg className="cart-icon" viewBox="0 0 24 24" width="24" height="24">
+              <path fill="currentColor" d="M17 18a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2c0-1.11.89-2 2-2M1 2h3.27l.94 2H20a1 1 0 0 1 1 1c0 .17-.05.34-.12.5l-3.58 6.47c-.34.61-1 1.03-1.8 1.03H8.1l-.9 1.63-.03.12a.25.25 0 0 0 .25.25H19v2H7a2 2 0 0 1-2-2c0-.35.09-.68.24-.96l1.36-2.45L3 4H1V2m6 16a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2c0-1.11.89-2 2-2m9-7l2.78-5H6.14l2.36 5H16z" />
+            </svg>
           </button>
         </nav>
 
@@ -177,13 +179,19 @@ export default function Navbar() {
           <LinkItem to="/categorias">Categories</LinkItem>
           <LinkItem to="/about">About</LinkItem>
           <button
-            className="icon-btn nav-item"
+            className="nav-item cart-mobile-btn"  // Clase adicional cart-mobile-btn
             title="Carrito"
-            onClick={() => navigate('/cart')}
+            onClick={() => {
+              navigate('/cart');
+              setMobileOpen(false);
+            }}
           >
-            <i className="fi fi-sr-shopping-cart"></i> Cart
+            <svg className="cart-icon" viewBox="0 0 24 24" width="24" height="24">
+              <path fill="currentColor" d="M17 18a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2c0-1.11.89-2 2-2M1 2h3.27l.94 2H20a1 1 0 0 1 1 1c0 .17-.05.34-.12.5l-3.58 6.47c-.34.61-1 1.03-1.8 1.03H8.1l-.9 1.63-.03.12a.25.25 0 0 0 .25.25H19v2H7a2 2 0 0 1-2-2c0-.35.09-.68.24-.96l1.36-2.45L3 4H1V2m6 16a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2c0-1.11.89-2 2-2m9-7l2.78-5H6.14l2.36 5H16z" />
+            </svg>
+            Cart
           </button>
-          
+
           {usuario ? (
             <div className="mobile-profile">
               <NavLink
@@ -201,7 +209,7 @@ export default function Navbar() {
                 />
                 <span className="navbar__username">{usuario}</span>
               </NavLink>
-              <button 
+              <button
                 className="nav-item logout-btn"
                 onClick={handleLogout}
               >
