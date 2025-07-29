@@ -29,5 +29,8 @@ export const loginUser = async (data: LoginData) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
-  return res.json();
+  const payload = await res.json();
+  console.log('🔥 loginUser payload:', payload);
+  return payload;
 };
+

@@ -54,7 +54,14 @@ export const iniciarSesion = async (req: Request, res: Response) => {
       { expiresIn: '1h' }
     );
 
-    res.json({ mensaje: 'Login exitoso.', token });
+    res.json({
+    mensaje: 'Login exitoso.',
+    token,
+    usuario: {
+      username: usuario.username,
+      rol: usuario.rol
+    }
+  });
   } catch (err: any) {
     console.error(err);
     res.status(500).json({ error: 'Error interno del servidor.' });

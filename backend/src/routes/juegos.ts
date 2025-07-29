@@ -1,20 +1,25 @@
+// src/routes/juegos.ts
 import { Router } from 'express';
 import {
   crearJuego,
   obtenerJuegos,
+  obtenerJuegosEnOferta,
   obtenerJuegoPorId,
   actualizarJuego,
-  eliminarJuego
+  eliminarJuego,
 } from '../controllers/juegosController';
 import { verificarToken } from '../middleware/authMiddleware';
 
 const router = Router();
 
-// No hagas lógica de filtro aquí, ya está en el controlador
-router.get('/', obtenerJuegos);
-router.get('/:id', obtenerJuegoPorId);
-router.post('/', verificarToken, crearJuego);
-router.put('/:id', verificarToken, actualizarJuego);
-router.delete('/:id', verificarToken, eliminarJuego);
+// Rutas de ofertas y detalle
+router.get('/deals', obtenerJuegosEnOferta);
+router.get('/',       obtenerJuegos);
+router.get('/:id',    obtenerJuegoPorId);
+
+// Rutas protegidas
+router.post('/',       verificarToken, crearJuego);
+router.put('/:id',     verificarToken, actualizarJuego);
+router.delete('/:id',  verificarToken, eliminarJuego);
 
 export default router;
