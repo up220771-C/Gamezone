@@ -2,6 +2,11 @@
 import { Request, Response } from 'express';
 import Juego from '../models/juegos';
 
+export const obtenerJuegosEnOferta = async (_: Request, res: Response) => {
+  const ofertas = await Juego.find({ descuento: { $gt: 0 } });
+  res.json(ofertas);
+};
+
 export const crearJuego = async (req: Request, res: Response) => {
   try {
     const nuevoJuego = new Juego(req.body);

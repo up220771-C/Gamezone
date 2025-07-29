@@ -1,0 +1,135 @@
+/* src/pages/Deals.css */
+
+/* --- Container principal --- */
+.deals-page {
+  padding: 2rem;
+  background-color: #0b0f25;
+  min-height: calc(100vh - 64px); /* ajusta 64px al alto de tu navbar */
+}
+
+/* --- Header “Deals” alineado a la izquierda --- */
+.deals-header {
+  margin-bottom: 1.5rem;
+}
+
+/* --- Botón “Deals” --- */
+.deals-header-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid #9c1aff;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: #9c1aff;
+  font-size: 1.1rem;
+  cursor: default;
+}
+.deals-header-btn i {
+  font-size: 1.2rem;
+}
+
+/* --- Grid de tarjetas --- */
+.deals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+/* --- Tarjeta --- */
+.deal-card {
+  background-color: #1e1e2e;
+  border: 2px solid #00ffff;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+}
+.deal-card:hover {
+  transform: translateY(-4px);
+}
+
+/* --- Imagen de la tarjeta --- */
+.deal-image {
+  width: 120px;
+  height: 160px;
+  object-fit: cover;
+}
+
+/* --- Información de la tarjeta --- */
+.deal-info {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  flex: 1;
+}
+
+.deal-title {
+  margin: 0;
+  color: #00ffff;
+  font-size: 1rem;
+}
+
+.deal-stars {
+  margin: 0.5rem 0;
+}
+.deal-stars .fi-sr-star {
+  color: #ffd700;
+  margin-right: 0.2rem;
+}
+
+.deal-desc {
+  flex: 1;
+  margin: 0.5rem 0;
+  color: #aaaaaa;
+  font-size: 0.875rem;
+  line-height: 1.2;
+}
+
+/* --- Footer de la tarjeta (precios y botón) --- */
+.deal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+/* Precio estándar (antes de descuento) */
+.precio-original {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 0.5rem;
+}
+
+/* Precio con descuento */
+.precio-oferta {
+  color: #ff00ff;
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+}
+
+/* Badge de porcentaje */
+.badge-descuento {
+  background-color: #ff00ff;
+  color: #fff;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+}
+
+/* Botón “Detail” */
+.deal-btn {
+  padding: 0.5rem 1rem;
+  background-color: #ff00ff;
+  border: none;
+  border-radius: 0.5rem;
+  color: #ffffff;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.deal-btn:hover {
+  background-color: #e600e6;
+}
