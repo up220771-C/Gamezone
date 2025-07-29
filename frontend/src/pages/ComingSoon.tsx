@@ -1,4 +1,3 @@
-// src/pages/ComingSoon.tsx
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { obtenerJuegos2 } from '../services/juegosService';

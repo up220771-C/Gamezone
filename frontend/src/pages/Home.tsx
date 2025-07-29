@@ -40,7 +40,7 @@ export default function Home() {
 
         <button
           className="coming btn-icon"
-          onClick={() => navigate('/coming-soon')}
+          onClick={() => navigate('/comingsoon')}
         >
           <i className="fi fi-rr-calendar"></i>
           <span>Coming Soon</span>

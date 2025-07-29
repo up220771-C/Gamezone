@@ -4,7 +4,6 @@ import Juego2 from '../models/juegos2';   // tu modelo apuntando a la colección
 import { verificarToken } from '../middleware/authMiddleware';
 
 const router = Router();
-router.use(verificarToken);
 // GET /api/juegos_2
 router.get('/', async (_req: Request, res: Response) => {
   try {
