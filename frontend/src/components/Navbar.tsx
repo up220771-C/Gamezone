@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import './Navbar.css';
 import { useState, useEffect } from 'react';
 import { registerUser, loginUser } from '../services/authService';
+import './Navbar.css';
 
 export default function Navbar() {
   const [showLogin, setShowLogin] = useState(false);
@@ -21,6 +21,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
     if (!token) return;
 
     fetch('http://localhost:5000/api/auth/perfil', {
@@ -39,8 +40,8 @@ export default function Navbar() {
     const res = await loginUser(loginData);
     if (res.token) {
       localStorage.setItem('token', res.token);
+      localStorage.setItem('role', res.usuario.rol);
       setUsuario(res.usuario?.username || window.location.reload());
-      
       setShowLogin(false);
       setLoginData({ correo: '', contraseña: '' });
       setMobileOpen(false);
@@ -96,7 +97,11 @@ export default function Navbar() {
     <>
       <header className="navbar">
         <div className="navbar__left">
-          <img src="/logo.png" alt="Gamezone Logo" className="navbar__logo" />
+          <img 
+            src="/logo.png" 
+            alt="Gamezone Logo" 
+            className="navbar__logo" 
+          />
         </div>
 
         <nav className="navbar__menu">
@@ -114,22 +119,27 @@ export default function Navbar() {
 
         <div className="navbar__auth">
           {usuario ? (
-            <NavLink
-              to="/perfil"
-              title="Perfil"
-              className={({ isActive }) =>
-                `icon-btn navbar__profile-link${isActive ? ' active' : ''}`
-              }
-            >
-              <img
-                src="https://www.pngmart.com/files/15/Fallout-Pip-Boy-PNG-HD.png"
-                alt="Perfil"
-                className="navbar__profile-icon"
-              />
-              <span className="navbar__username">{usuario}</span>
-            </NavLink>
+            <div className="navbar__profile-container">
+              <NavLink
+                to="/perfil"
+                title="Perfil"
+                className={({ isActive }) =>
+                  `navbar__profile-link${isActive ? ' active' : ''}`
+                }
+              >
+                <img
+                  src="https://www.pngmart.com/files/15/Fallout-Pip-Boy-PNG-HD.png"
+                  alt="Perfil"
+                  className="navbar__profile-icon"
+                />
+                <span className="navbar__username">{usuario}</span>
+              </NavLink>
+              <button className="logout-btn" onClick={handleLogout}>
+                <i className="fi fi-sr-exit"></i>
+              </button>
+            </div>
           ) : (
-            <>
+            <div className="auth-buttons">
               <button
                 className="nav-item"
                 onClick={() => {
@@ -148,7 +158,7 @@ export default function Navbar() {
               >
                 Register
               </button>
-            </>
+            </div>
           )}
         </div>
 
@@ -157,27 +167,30 @@ export default function Navbar() {
           onClick={() => setMobileOpen(o => !o)}
           aria-label="Toggle menu"
         >
-          <i className="fi fi-sr-menu-burger"></i>
+          <div className="hamburger-inner">
+            <span className="hamburger-icon"></span>
+          </div>
         </button>
 
-        {mobileOpen && (
-          <div className="mobile-menu open">
-            <LinkItem to="/">Home</LinkItem>
-            <LinkItem to="/categorias">Categories</LinkItem>
-            <LinkItem to="/about">About</LinkItem>
-            <button
-              className="icon-btn"
-              title="Carrito"
-              onClick={() => setMobileOpen(false)}
-            >
-              <i className="fi fi-sr-shopping-cart"></i>
-            </button>
-            {usuario ? (
+        <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`}>
+          <LinkItem to="/">Home</LinkItem>
+          <LinkItem to="/categorias">Categories</LinkItem>
+          <LinkItem to="/about">About</LinkItem>
+          <button
+            className="icon-btn nav-item"
+            title="Carrito"
+            onClick={() => navigate('/cart')}
+          >
+            <i className="fi fi-sr-shopping-cart"></i> Cart
+          </button>
+          
+          {usuario ? (
+            <div className="mobile-profile">
               <NavLink
                 to="/perfil"
                 title="Perfil"
                 className={({ isActive }) =>
-                  `icon-btn navbar__profile-link${isActive ? ' active' : ''}`
+                  `nav-item${isActive ? ' active' : ''}`
                 }
                 onClick={() => setMobileOpen(false)}
               >
@@ -188,30 +201,36 @@ export default function Navbar() {
                 />
                 <span className="navbar__username">{usuario}</span>
               </NavLink>
-            ) : (
-              <>
-                <button
-                  className="nav-item"
-                  onClick={() => {
-                    setShowLogin(true);
-                    setMobileOpen(false);
-                  }}
-                >
-                  Log-in
-                </button>
-                <button
-                  className="nav-item"
-                  onClick={() => {
-                    setShowRegister(true);
-                    setMobileOpen(false);
-                  }}
-                >
-                  Register
-                </button>
-              </>
-            )}
-          </div>
-        )}
+              <button 
+                className="nav-item logout-btn"
+                onClick={handleLogout}
+              >
+                <i className="fi fi-sr-exit"></i> Logout
+              </button>
+            </div>
+          ) : (
+            <div className="mobile-auth-buttons">
+              <button
+                className="nav-item"
+                onClick={() => {
+                  setShowLogin(true);
+                  setMobileOpen(false);
+                }}
+              >
+                Log-in
+              </button>
+              <button
+                className="nav-item"
+                onClick={() => {
+                  setShowRegister(true);
+                  setMobileOpen(false);
+                }}
+              >
+                Register
+              </button>
+            </div>
+          )}
+        </div>
       </header>
 
       {showLogin && (
@@ -241,7 +260,7 @@ export default function Navbar() {
                 Log In
               </button>
               <p className="switch-modal">
-                Don’t have an account?{' '}
+                Don't have an account?{' '}
                 <button
                   type="button"
                   className="link"
@@ -267,7 +286,7 @@ export default function Navbar() {
 
       {showRegister && (
         <div className="modal-overlay">
-          <div className="modal">
+          <div className="modal register-form">
             <form onSubmit={handleRegisterSubmit} className="modal__form">
               <h2>Register</h2>
               <input

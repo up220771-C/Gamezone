@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { obtenerJuegos2 } from '../services/juegosService';
-import './ComingSoon.css';
 
 interface Juego {
   _id: string;
@@ -10,7 +9,6 @@ interface Juego {
   descripcion: string;
   imagen: string;
   estrellas?: number;
-  // no esperamos precio aquí
 }
 
 export default function ComingSoon() {
@@ -24,35 +22,41 @@ export default function ComingSoon() {
   }, []);
 
   return (
-    <div className="coming-container">
-      <header className="coming-header">
+    <div className="page-container">
+      <header className="page-header">
         <i className="fi fi-rr-calendar calendar-icon" />
         <h2>Coming Soon</h2>
       </header>
 
-      <section className="coming-grid">
+      <section className="juegos">
         {juegos.length === 0
           ? <p className="no-games">No upcoming games found.</p>
           : juegos.map(juego => (
-              <div key={juego._id} className="coming-card">
-                <img src={juego.imagen} alt={juego.nombre} className="coming-img" />
+              <div key={juego._id} className="card">
+                <img 
+                  src={juego.imagen} 
+                  alt={juego.nombre} 
+                  className="card-image" 
+                />
 
-                <h3 className="coming-title">{juego.nombre}</h3>
+                <div className="card-content">
+                  <h3>{juego.nombre}</h3>
 
-                <div className="coming-stars">
-                  {Array.from({ length: juego.estrellas || 0 }).map((_, i) =>
-                    <span key={i} className="star">★</span>
-                  )}
+                  <div className="stars">
+                    {Array.from({ length: juego.estrellas || 0 }).map((_, i) =>
+                      <span key={i} className="star">★</span>
+                    )}
+                  </div>
+
+                  <p>{juego.descripcion}</p>
+
+                  <button
+                    className="detalle"
+                    onClick={() => navigate(`/detail/${juego._id}`)}
+                  >
+                    Ver detalle
+                  </button>
                 </div>
-
-                <p className="coming-desc">{juego.descripcion}</p>
-
-                <button
-                  className="coming-btn"
-                  onClick={() => navigate(`/detail/${juego._id}`)}
-                >
-                  Ver detalle
-                </button>
               </div>
             ))
         }

@@ -46,14 +46,6 @@ export default function Home() {
           <span>Coming Soon</span>
         </button>
       </div>
-
-                <button
-                    className="coming btn-icon"
-                    onClick={() => navigate('/coming-soon')}
-                >
-                    <i className="fi fi-rr-calendar"></i>
-                    <span>Coming Soon</span>
-                </button>
       <main className="juegos">
         {juegos.map(juego => (
           <div className="card" key={juego._id}>

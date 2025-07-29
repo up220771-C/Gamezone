@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 
 interface JwtPayload {
   id: string;
+  rol: 'cliente'|'admin'
 }
 
 export const verificarToken = (req: Request, res: Response, next: NextFunction) => {
@@ -17,6 +18,7 @@ export const verificarToken = (req: Request, res: Response, next: NextFunction) 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
     (req as any).usuarioId = payload.id;
+    (req as any).usuarioRol = payload.rol;
     next();
   } catch (error) {
     res.status(401).json({ mensaje: 'Token inválido o expirado' });
