@@ -1,8 +1,12 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../contexts/CartContext';
+import '../App.css';
 import './Cart.css';
 
 export default function Cart() {
-  const [cart, setCart] = useState<any[]>([]);
+  const navigate = useNavigate();
+  const { cart, updateQuantity, removeFromCart, clearCart, getCartTotal } = useCart();
   const [showPayment, setShowPayment] = useState(false);
   const [cardData, setCardData] = useState({
     number: '',
@@ -10,92 +14,103 @@ export default function Cart() {
     expiry: '',
     cvv: '',
   });
+  const [notification, setNotification] = useState<string | null>(null);
 
-  useEffect(() => {
-    const stored = localStorage.getItem('cart');
-    if (stored) setCart(JSON.parse(stored));
-  }, []);
+  // Handlers to enforce per-item limit and show neon notification on error
+  const handleIncrease = (id: string, currentQty: number) => {
+    try {
+      updateQuantity(id, currentQty + 1);
+    } catch (error: any) {
+      setNotification(error.message);
+      setTimeout(() => setNotification(null), 2000);
+    }
+  };
 
-  const shipping = 4.99;
-  const subtotal = cart.reduce((acc, juego) => acc + juego.precio, 0);
-  const total = subtotal + (cart.length > 0 ? shipping : 0);
+  const handleDecrease = (id: string, currentQty: number) => {
+    // decreasing won't exceed limits
+    updateQuantity(id, currentQty - 1);
+  };
+
+  // CartContext loads saved cart automatically
+
+  const subtotal = getCartTotal();
+  const total = subtotal;
 
   const handleCancel = () => {
-    setCart([]);
-    localStorage.removeItem('cart');
+    clearCart();
     setShowPayment(false);
   };
 
   const handleBuy = () => {
     setShowPayment(true);
+    setNotification('Preparando pago...');
+    setTimeout(() => setNotification(null), 2000);
   };
 
   const handlePaymentSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Pago realizado con éxito!');
-    setCart([]);
-    localStorage.removeItem('cart');
+    setNotification('Pago realizado con éxito!');
+    setTimeout(() => setNotification(null), 2000);
+    clearCart();
     setShowPayment(false);
     setCardData({ number: '', name: '', expiry: '', cvv: '' });
+    navigate('/');
   };
 
   return (
     <div className="cart-container">
+      <h1 className="cart-title neon-text">Tu Carrito</h1>
       <div className="cart-main">
         <div className="cart-items">
           {cart.length === 0 ? (
-            <p style={{ color: '#fff', fontSize: '1.2rem' }}>Your cart is empty.</p>
+            <p className="empty-message">Tu carrito está vacío.</p>
           ) : (
-            cart.map(juego => (
-              <div key={juego._id} className="cart-item">
-                <img src={juego.imagen} alt={juego.nombre} className="cart-img" />
+            cart.map(item => (
+              <div key={item._id} className="cart-item">
+                <img src={item.imagen} alt={item.nombre} className="cart-img" />
                 <div className="cart-item-info">
-                  <h3 className="cart-item-title">{juego.nombre}</h3>
-                  <p className="cart-item-desc">{juego.descripcion}</p>
-                  <div>
-                    {Array.from({ length: juego.estrellas || 5 }).map((_, i) => (
-                      <span key={i} style={{ color: '#ff0', fontSize: '1.1rem' }}>★</span>
-                    ))}
+                  <h3 className="cart-item-title">{item.nombre}</h3>
+                  <p className="cart-item-desc">{item.descripcion}</p>
+                  <div className="quantity-controls">
+                    <button
+                      className="cart-btn-buy"
+                      onClick={() => handleDecrease(item._id, item.quantity)}
+                      disabled={item.quantity <= 1}
+                    >
+                      -
+                    </button>
+                    <span className="cart-qty">{item.quantity}</span>
+                    <button
+                      className="cart-btn-buy"
+                      onClick={() => handleIncrease(item._id, item.quantity)}
+                    >
+                      +
+                    </button>
                   </div>
+                  <button className="cart-btn-cancel" onClick={() => removeFromCart(item._id)}>Eliminar</button>
                 </div>
-                <span className="cart-item-price">${juego.precio.toFixed(2)}</span>
+                <span className="cart-item-price">${(item.precio * item.quantity).toFixed(2)}</span>
               </div>
             ))
           )}
         </div>
         <div className="cart-summary">
-          <div className="cart-summary-row">
-            <div>Send: <span style={{ color: '#00ffff' }}>${cart.length > 0 ? shipping.toFixed(2) : '0.00'}</span></div>
-            <div>Products: <span style={{ color: '#00ffff' }}>${subtotal.toFixed(2)}</span></div>
-          </div>
-          <div className="cart-summary-total">
-            Total cost: <span style={{ color: '#ff00ff' }}>${total.toFixed(2)}</span>
-          </div>
+          <div className="summary-line"><span>Productos:</span><span>${subtotal.toFixed(2)}</span></div>
+          <div className="summary-total"><span>Total cost:</span><span>${total.toFixed(2)}</span></div>
           <div className="cart-btn-row">
-            <button
-              className="cart-btn-cancel"
-              onClick={handleCancel}
-              disabled={cart.length === 0 || showPayment}
-            >
-              Cancel buy
-            </button>
-            <button
-              className="cart-btn-buy"
-              onClick={handleBuy}
-              disabled={cart.length === 0 || showPayment}
-            >
-              Buy now
-            </button>
+            <button className="cart-btn-cancel" onClick={clearCart} disabled={cart.length === 0}>Cancelar compra</button>
+            <button className="cart-btn-buy" onClick={handleBuy} disabled={cart.length === 0}>Comprar ahora</button>
           </div>
         </div>
       </div>
       {showPayment && (
         <div className="cart-payment-modal">
+          <button className="modal-close" onClick={handleCancel}>X</button>
           <form onSubmit={handlePaymentSubmit} className="cart-payment-form">
-            <h2 className="cart-payment-title">Payment</h2>
+            <h2 className="cart-payment-title">Datos de Pago</h2>
             <input
               type="text"
-              placeholder="Card number"
+              placeholder="Número de tarjeta"
               value={cardData.number}
               onChange={e => setCardData({ ...cardData, number: e.target.value })}
               required
@@ -104,13 +119,13 @@ export default function Cart() {
             />
             <input
               type="text"
-              placeholder="Cardholder name"
+              placeholder="Nombre en la tarjeta"
               value={cardData.name}
               onChange={e => setCardData({ ...cardData, name: e.target.value })}
               required
               className="cart-payment-input"
             />
-            <div style={{ display: 'flex', gap: '1rem' }}>
+            <div className="payment-row">
               <input
                 type="text"
                 placeholder="MM/YY"
@@ -130,23 +145,17 @@ export default function Cart() {
                 className="cart-payment-input-half"
               />
             </div>
-            <button type="submit" className="cart-payment-btn">
-              Pay ${total.toFixed(2)}
-            </button>
-            <button
-              type="button"
-              onClick={() => setShowPayment(false)}
-              className="cart-payment-cancel"
-            >
-              Cancel
-            </button>
+            <button type="submit" className="confirm-btn">Confirmar pago</button>
           </form>
         </div>
       )}
+      {/* Fondo de estrellas decorativas */}
       <div className="cart-stars-bg">
-        <div className="cart-stars-left">★ ★ ★ ★ ★</div>
-        <div className="cart-stars-right">★ ★ ★ ★ ★</div>
+        <div className="cart-stars-left">★</div>
+        <div className="cart-stars-right">★</div>
       </div>
+      {/* Imagen decorativa estilo Vault Boy */}
+      <img src="/assets/Vallue_Boy.png" alt="Vallue Boy" className="cart-vaultboy" />
     </div>
   );
 }

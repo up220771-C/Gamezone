@@ -1,9 +1,10 @@
 // src/pages/JuegoDetalle.tsx
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../App.css';
 import './JuegoDetalle.css';
 import { obtenerJuegoPorId } from '../services/juegosService';
+import { useCart } from '../contexts/CartContext';
 
 // Iconos casteados a any para esquivar TS2786
 import { FiGlobe, FiInfo, FiCode } from 'react-icons/fi';
@@ -37,7 +38,10 @@ interface Juego {
 
 export default function JuegoDetalle() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
   const [juego, setJuego] = useState<Juego | null>(null);
+  const [notification, setNotification] = useState<string | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -55,8 +59,38 @@ export default function JuegoDetalle() {
     ? +(precioOriginal * (1 - juego.descuento! / 100)).toFixed(2)
     : precioOriginal;
 
+  const handleBuyNow = () => {
+    if (juego) {
+      try {
+        addToCart(juego);
+        setNotification('Juego añadido. Redirigiendo al carrito...');
+        setTimeout(() => navigate('/cart'), 1000);
+      } catch (error: any) {
+        setNotification(error.message);
+        setTimeout(() => setNotification(null), 2000);
+      }
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (juego) {
+      try {
+        addToCart(juego);
+        setNotification('Juego agregado al carrito!');
+        setTimeout(() => setNotification(null), 2000);
+      } catch (error: any) {
+        setNotification(error.message);
+        setTimeout(() => setNotification(null), 2000);
+      }
+    }
+  };
+
   return (
-    <div className="detalle-page">
+    <>
+      {notification && (
+        <div className="neon-alert neon-text">{notification}</div>
+      )}
+      <div className="detalle-page">
       <div className="detalle-container">
         {/* Columna 1: Imagen */}
         <div className="detalle-imagen">
@@ -106,8 +140,8 @@ export default function JuegoDetalle() {
             ))}
           </div>
 
-          <button className="btn comprar">Comprar Ahora</button>
-          <button className="btn carrito">Agregar al carrito</button>
+          <button className="btn comprar" onClick={handleBuyNow}>Comprar Ahora</button>
+          <button className="btn carrito" onClick={handleAddToCart}>Agregar al carrito</button>
 
           <div className="detalle-precio">
             {hasDesc && (
@@ -127,5 +161,6 @@ export default function JuegoDetalle() {
         </div>
       </div>
     </div>
+    </>  
   );
 }

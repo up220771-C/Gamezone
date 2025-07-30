@@ -154,25 +154,89 @@
   cursor: pointer;
   margin-top: 0.5rem;
 }
+/* Estrellas de fondo decorativas */
 .cart-stars-bg {
   position: absolute;
   left: 0; right: 0; bottom: 0; top: 0;
   z-index: -1;
   pointer-events: none;
 }
-.cart-stars-left {
+.cart-stars-left, .cart-stars-right {
   position: absolute;
-  left: 10%;
-  top: 60%;
-  font-size: 5rem;
+  font-size: 6rem;
   color: #00ffff;
-  opacity: 0.2;
+  opacity: 0.15;
 }
-.cart-stars-right {
+.cart-stars-left { left: 5%; top: 60%; }
+.cart-stars-right { right: 5%; top: 20%; }
+/* Imagen decorativa Vault Boy */
+.cart-vaultboy {
   position: absolute;
-  right: 10%;
-  top: 20%;
-  font-size: 5rem;
+  bottom: 0;
+  right: 0;
+  height: 300px;
+  pointer-events: none;
+  z-index: 0;
+}
+/* Ajustar capas para que contenido esté encima */
+.cart-container, .cart-main, .cart-payment-modal {
+  position: relative;
+  z-index: 1;
+}
+/* Neon alert window style */
+/* Neon alert window style */
+.alert-window {
+  position: fixed;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #1e1f3b, #2a2b50);
+  border-top: 4px solid #ff00ff;
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+  padding: 1rem 2rem;
+  border-radius: 8px;
   color: #00ffff;
-  opacity: 0.2;
+  text-align: center;
+  z-index: 10000;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  animation: slideDown 0.3s ease-out, fadeOut 0.5s ease-in 1.8s forwards;
+}
+@keyframes slideDown {
+  from { transform: translate(-50%, -30%) scale(0.8); opacity: 0; }
+  to   { transform: translate(-50%, 0) scale(1);     opacity: 1; }
+}
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+/* Texto neón */
+.neon-text {
+  color: #00ffff;
+  text-shadow:
+    0 0 5px #00ffff,
+    0 0 10px #00ffff,
+    0 0 20px #00ffff,
+    0 0 30px #ff00ff,
+    0 0 40px #ff00ff;
+  letter-spacing: 2px;
+}
+
+/* Aplicar al resumen y títulos */
+.cart-title {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+.cart-title.neon-text {
+  margin-bottom: 1.5rem;
+}
+.summary-line span:first-child,
+.summary-total span:first-child {
+  font-weight: bold;
+  color: #00ffea;
+  letter-spacing: 1px;
+}
+.summary-line span:last-child,
+.summary-total span:last-child {
+  color: #ff00ff;
+  letter-spacing: 1px;
 }

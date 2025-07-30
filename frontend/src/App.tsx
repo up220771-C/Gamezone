@@ -13,16 +13,7 @@ import Perfil from './pages/Perfil';
 import ComingSoon from './pages/ComingSoon';
 import JuegoDetalle from './pages/JuegoDetalle';
 import AdminDashboard from './pages/AdminDashboard';
-
-<Routes>
-  <Route path="/" element={<Home />} />
-  <Route path="/perfil" element={<Perfil />} />
-
-</Routes>
-
-
-
-
+import Cart from './pages/Cart';
 
 function App() {
   return (
@@ -30,7 +21,6 @@ function App() {
       <Navbar />
 
       <Routes>
-
         <Route path="/" element={<Home />} />
         <Route path="/categorias" element={<Categorias />} />
         <Route path="/categoria/:nombre" element={<CategoriaDetalle />} />
@@ -41,6 +31,7 @@ function App() {
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/coming-soon" element={<ComingSoon />} />
         <Route path="/juego/:id" element={<JuegoDetalle />} />
+        <Route path="/cart" element={<Cart />} />
 
         {/* Rutas públicas */}
         <Route path="/login" element={<Login />} />
