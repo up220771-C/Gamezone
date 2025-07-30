@@ -6,6 +6,8 @@ import { obtenerJuegos } from '../services/juegosService';
 
 export default function Home() {
   const navigate = useNavigate();
+
+  // Estado para los juegos
   interface Juego {
     _id: string;
     nombre: string;
@@ -14,22 +16,29 @@ export default function Home() {
     precio: number;
     descuento?: number;
   }
-
   const [juegos, setJuegos] = useState<Juego[]>([]);
 
+  // Estado para el rol
+  const [rol, setRol] = useState<string | null>(null);
+
   useEffect(() => {
+    // obtenemos los juegos
     obtenerJuegos()
       .then((data: Juego[]) => {
-        // Filtramos solo los juegos sin descuento (descuento === 0 o undefined)
-        const normales = data.filter((j: Juego) => !j.descuento || j.descuento === 0);
+        const normales = data.filter(j => !j.descuento || j.descuento === 0);
         setJuegos(normales);
       })
       .catch(err => console.error('Error al obtener juegos:', err));
+
+    // leemos el rol del usuario (lo guardaste así en el login)
+    const storedRole = localStorage.getItem('role');
+    setRol(storedRole);
   }, []);
 
   return (
     <div className="homepage">
       <div className="destacados">
+        {/* Botones siempre visibles */}
         <button
           className="deal btn-icon"
           onClick={() => navigate('/deals')}
@@ -45,7 +54,29 @@ export default function Home() {
           <i className="fi fi-rr-calendar"></i>
           <span>Coming Soon</span>
         </button>
+
+        {/*  Sólo si el usuario es admin  */}
+        {rol === 'admin' && (
+          <>
+            <button
+              className="deal btn-icon"
+              onClick={() => navigate('/admin/games')}
+            >
+              <i className="fi fi-rr-badge-percent"></i>
+              <span>Agregar & Administrar Juegos</span>
+            </button>
+
+            <button
+              className="deal btn-icon"
+              onClick={() => navigate('/admin/users')}
+            >
+              <i className="fi fi-rr-badge-percent"></i>
+              <span>Administrar Usuarios</span>
+            </button>
+          </>
+        )}
       </div>
+
       <main className="juegos">
         {juegos.map(juego => (
           <div className="card" key={juego._id}>

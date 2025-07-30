@@ -12,7 +12,6 @@ import Register from './pages/Register';
 import Perfil from './pages/Perfil';
 import ComingSoon from './pages/ComingSoon';
 import JuegoDetalle from './pages/JuegoDetalle';
-import AdminDashboard from './pages/AdminDashboard';
 
 <Routes>
   <Route path="/" element={<Home />} />
@@ -31,25 +30,18 @@ function App() {
 
       <Routes>
 
-        <Route path="/" element={<Home />} />
-        <Route path="/categorias" element={<Categorias />} />
-        <Route path="/categoria/:nombre" element={<CategoriaDetalle />} />
-        <Route path="/deals" element={<Deals />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/perfil" element={<Perfil />} />
-        <Route path="/coming-soon" element={<ComingSoon />} />
-        <Route path="/juego/:id" element={<JuegoDetalle />} />
-
         {/* Rutas públicas */}
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/deals" element={<Deals />} />
+        <Route path="/juego/:id" element={<JuegoDetalle />} />
         <Route path="/comingsoon" element={<ComingSoon />} />
         <Route path="/about" element={<About />} />
         <Route path="/categorias" element={<Categorias />} />
         <Route path="/categoria/:nombre" element={<CategoriaDetalle />} />
+      
+
         {/* Rutas autenticadas para cliente y admin */}
         <Route element={<ProtectedRoute roles={['cliente', 'admin']} />}>
           <Route path="/perfil" element={<Perfil />} />
@@ -57,7 +49,12 @@ function App() {
 
         {/* Rutas sólo admin */}
         <Route element={<ProtectedRoute roles={['admin']} />}>
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          
+          {/*<Route path="/admin/games"        element={<GameManager />} />*/}
+          {/*<Route path="/admin/games/:id"    element={<GameEdit />} />*/}
+          {/*<Route path="/admin/deals"        element={<DealsManager />} />*/}
+          {/*<Route path="/admin/coming-soon"  element={<ComingSoonManager />} />*/}
+          {/*<Route path="/admin/users"        element={<UsersManager />} />*/}
         </Route>
 
         {/* Ruta catch‑all opcional */}
