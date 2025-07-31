@@ -13,6 +13,8 @@ import Perfil from './pages/Perfil';
 import ComingSoon from './pages/ComingSoon';
 import JuegoDetalle from './pages/JuegoDetalle';
 import AdminGames from './pages/AdminGames'; // ✅ nuevo
+import Cart from './pages/Cart'; // asegúrate de tener el componente Cart.tsx creado
+
 
 function App() {
 
@@ -32,6 +34,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/categorias" element={<Categorias />} />
         <Route path="/categoria/:nombre" element={<CategoriaDetalle />} />
+        <Route path="/cart" element={<Cart />} />
+
 
         {/* Rutas autenticadas para cliente y admin */}
         <Route element={<ProtectedRoute roles={['cliente', 'admin']} />}>

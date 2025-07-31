@@ -16,7 +16,6 @@ export default function Cart() {
   });
   const [notification, setNotification] = useState<string | null>(null);
 
-  // Handlers to enforce per-item limit and show neon notification on error
   const handleIncrease = (id: string, currentQty: number) => {
     try {
       updateQuantity(id, currentQty + 1);
@@ -27,18 +26,21 @@ export default function Cart() {
   };
 
   const handleDecrease = (id: string, currentQty: number) => {
-    // decreasing won't exceed limits
     updateQuantity(id, currentQty - 1);
   };
 
-  // CartContext loads saved cart automatically
-
   const subtotal = getCartTotal();
   const total = subtotal;
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const handleCancel = () => {
     clearCart();
     setShowPayment(false);
+  };
+
+  const handleClosePayment = () => {
+    setShowPayment(false);
+    setCardData({ number: '', name: '', expiry: '', cvv: '' }); // opcional: limpiar datos
   };
 
   const handleBuy = () => {
@@ -59,11 +61,11 @@ export default function Cart() {
 
   return (
     <div className="cart-container">
-      <h1 className="cart-title neon-text">Tu Carrito</h1>
+      <h1 className="cart-title neon-text">Your cart</h1>
       <div className="cart-main">
         <div className="cart-items">
           {cart.length === 0 ? (
-            <p className="empty-message">Tu carrito está vacío.</p>
+            <p className="empty-message">Your shopping cart is empty.</p>
           ) : (
             cart.map(item => (
               <div key={item._id} className="cart-item">
@@ -87,27 +89,43 @@ export default function Cart() {
                       +
                     </button>
                   </div>
-                  <button className="cart-btn-cancel" onClick={() => removeFromCart(item._id)}>Eliminar</button>
+                  <div>
+                    <button className="cart-btn-cancel" onClick={() => removeFromCart(item._id)}>Delete</button>
+                  </div>
                 </div>
                 <span className="cart-item-price">${(item.precio * item.quantity).toFixed(2)}</span>
               </div>
             ))
           )}
         </div>
+
         <div className="cart-summary">
-          <div className="summary-line"><span>Productos:</span><span>${subtotal.toFixed(2)}</span></div>
-          <div className="summary-total"><span>Total cost:</span><span>${total.toFixed(2)}</span></div>
+          <div className="summary-line">
+            <span>Products:</span>
+            <span>{totalItems}</span>
+          </div>
+          <div className="summary-total">
+            <span>Total cost:</span>
+            <span>${total.toFixed(2)}</span>
+          </div>
           <div className="cart-btn-row">
-            <button className="cart-btn-cancel" onClick={clearCart} disabled={cart.length === 0}>Cancelar compra</button>
-            <button className="cart-btn-buy" onClick={handleBuy} disabled={cart.length === 0}>Comprar ahora</button>
+            <button className="cart-btn-cancel" onClick={clearCart} disabled={cart.length === 0}>Cancel buy</button>
+            <button className="cart-btn-buy" onClick={handleBuy} disabled={cart.length === 0}>Buy now</button>
           </div>
         </div>
       </div>
+
       {showPayment && (
         <div className="cart-payment-modal">
-          <button className="modal-close" onClick={handleCancel}>X</button>
           <form onSubmit={handlePaymentSubmit} className="cart-payment-form">
-            <h2 className="cart-payment-title">Datos de Pago</h2>
+            <button
+              type="button"
+              className="cart-payment-close"
+              onClick={handleClosePayment}
+            >
+              ✕
+            </button>
+            <h2 className="cart-payment-title">Payment details</h2>
             <input
               type="text"
               placeholder="Número de tarjeta"
@@ -145,16 +163,17 @@ export default function Cart() {
                 className="cart-payment-input-half"
               />
             </div>
-            <button type="submit" className="confirm-btn">Confirmar pago</button>
+            <button type="submit" className="confirm-btn">
+              Confirm purchase
+            </button>
           </form>
         </div>
       )}
-      {/* Fondo de estrellas decorativas */}
+
       <div className="cart-stars-bg">
         <div className="cart-stars-left">★</div>
         <div className="cart-stars-right">★</div>
       </div>
-      {/* Imagen decorativa estilo Vault Boy */}
       <img src="/assets/Vallue_Boy.png" alt="Vallue Boy" className="cart-vaultboy" />
     </div>
   );
