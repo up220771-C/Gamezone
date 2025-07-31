@@ -12,24 +12,16 @@ import Register from './pages/Register';
 import Perfil from './pages/Perfil';
 import ComingSoon from './pages/ComingSoon';
 import JuegoDetalle from './pages/JuegoDetalle';
-
-<Routes>
-  <Route path="/" element={<Home />} />
-  <Route path="/perfil" element={<Perfil />} />
-
-</Routes>
-
-
-
-
+import AdminGames from './pages/AdminGames'; // ✅ nuevo
 
 function App() {
+
+  
   return (
     <Router>
       <Navbar />
 
       <Routes>
-
         {/* Rutas públicas */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -40,21 +32,15 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/categorias" element={<Categorias />} />
         <Route path="/categoria/:nombre" element={<CategoriaDetalle />} />
-      
 
         {/* Rutas autenticadas para cliente y admin */}
         <Route element={<ProtectedRoute roles={['cliente', 'admin']} />}>
           <Route path="/perfil" element={<Perfil />} />
         </Route>
 
-        {/* Rutas sólo admin */}
+        {/* Rutas solo para administrador */}
         <Route element={<ProtectedRoute roles={['admin']} />}>
-          
-          {/*<Route path="/admin/games"        element={<GameManager />} />*/}
-          {/*<Route path="/admin/games/:id"    element={<GameEdit />} />*/}
-          {/*<Route path="/admin/deals"        element={<DealsManager />} />*/}
-          {/*<Route path="/admin/coming-soon"  element={<ComingSoonManager />} />*/}
-          {/*<Route path="/admin/users"        element={<UsersManager />} />*/}
+          <Route path="/admin/games" element={<AdminGames />} />
         </Route>
 
         {/* Ruta catch‑all opcional */}

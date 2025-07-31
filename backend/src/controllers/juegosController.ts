@@ -1,16 +1,45 @@
-// src/controllers/juegosController.ts
 import { Request, Response } from 'express';
 import Juego from '../models/juegos';
 
+// Crear juego con imagen de archivo
 export const crearJuego = async (req: Request, res: Response) => {
   try {
-    const nuevoJuego = new Juego(req.body);
+    // 🔍 Logs para diagnóstico
+    console.log('📦 Body recibido:', req.body);
+    console.log('🖼 Ruta absoluta del archivo:', req.file?.path);
+    console.log('🖼 Nombre de archivo:', req.file?.filename);
+
+    const { nombre, descripcion, precio, plataforma, genero, stock } = req.body;
+    const file = req.file;
+    if (!file) {
+      return res.status(400).json({ mensaje: 'Imagen no proporcionada.' });
+    }
+
+    // Construyo la URL pública completa de la imagen
+    const protocol = req.protocol;
+    const host = req.get('host'); // ej. "localhost:5000"
+    const imagenUrl = `${protocol}://${host}/uploads/${file.filename}`;
+
+    const nuevoJuego = new Juego({
+      nombre,
+      descripcion,
+      precio: parseFloat(precio),
+      plataforma,
+      genero,
+      stock: parseInt(stock, 10),
+      imagen: imagenUrl
+    });
+
     await nuevoJuego.save();
-    res.status(201).json(nuevoJuego);
+    return res.status(201).json(nuevoJuego);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al crear el juego', error });
+    console.error('💥 Error al crear juego:', error);
+    return res.status(500).json({ mensaje: 'Error al crear el juego', error });
   }
 };
+
+
+
 
 export const obtenerJuegos = async (req: Request, res: Response) => {
   try {

@@ -11,16 +11,13 @@ export const registrarUsuario = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Faltan datos obligatorios.' });
     }
 
-    // 2) Comprobar duplicados
     const correoExistente  = await User.findOne({ correo });
     const userExistente    = await User.findOne({ username });
     if (correoExistente) return res.status(409).json({ error: 'Correo ya registrado.' });
     if (userExistente)   return res.status(409).json({ error: 'Username en uso.' });
 
-    // 3) Hashear contraseña
     const hash = await bcrypt.hash(contraseña, 10);
 
-    // 4) Crear y guardar usuario
     const nuevoUsuario = new User({
       nombre,
       apellido,
@@ -29,9 +26,9 @@ export const registrarUsuario = async (req: Request, res: Response) => {
       contraseña: hash,
       rol: 'cliente'
     });
+
     await nuevoUsuario.save();
 
-    // 5) Responder éxito
     res.status(201).json({ mensaje: 'Usuario registrado correctamente.' });
   } catch (err: any) {
     console.error(err);
@@ -42,6 +39,7 @@ export const registrarUsuario = async (req: Request, res: Response) => {
 export const iniciarSesion = async (req: Request, res: Response) => {
   try {
     const { correo, contraseña } = req.body;
+
     const usuario = await User.findOne({ correo });
     if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado.' });
 
@@ -51,17 +49,18 @@ export const iniciarSesion = async (req: Request, res: Response) => {
     const token = jwt.sign(
       { id: usuario._id, rol: usuario.rol },
       process.env.JWT_SECRET || 'secret',
-      { expiresIn: '1h' }
+      { expiresIn: '2h' }  // Puedes ajustar el tiempo si lo deseas
     );
 
-    res.json({
-    mensaje: 'Login exitoso.',
-    token,
-    usuario: {
-      username: usuario.username,
-      rol: usuario.rol
-    }
-  });
+    res.status(200).json({
+      mensaje: 'Login exitoso.',
+      token,
+      usuario: {
+        username: usuario.username,
+        rol: usuario.rol,
+        correo: usuario.correo
+      }
+    });
   } catch (err: any) {
     console.error(err);
     res.status(500).json({ error: 'Error interno del servidor.' });

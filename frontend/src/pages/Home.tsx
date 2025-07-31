@@ -63,7 +63,7 @@ export default function Home() {
               onClick={() => navigate('/admin/games')}
             >
               <i className="fi fi-rr-badge-percent"></i>
-              <span>Agregar & Administrar Juegos</span>
+              <span>Manage games</span>
             </button>
 
             <button
@@ -71,7 +71,7 @@ export default function Home() {
               onClick={() => navigate('/admin/users')}
             >
               <i className="fi fi-rr-badge-percent"></i>
-              <span>Administrar Usuarios</span>
+              <span>Manage users</span>
             </button>
           </>
         )}

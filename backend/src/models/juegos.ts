@@ -10,6 +10,7 @@ export interface IJuego extends Document {
   imagen: string;
   disponible: boolean;
   descuento: number;
+  stock: number;
 }
 
 const juegoSchema = new Schema<IJuego>({
@@ -20,7 +21,8 @@ const juegoSchema = new Schema<IJuego>({
   genero:      { type: String,  required: true },
   imagen:      { type: String,  required: true },
   disponible:  { type: Boolean, default: true },
-  descuento:   { type: Number,  default: 0 }, // porcentaje de oferta
+  descuento:   { type: Number,  default: 0 },
+  stock:       { type: Number,  required: true }
 });
 
 export default mongoose.model<IJuego>('Juego', juegoSchema);

@@ -8,18 +8,26 @@ import {
   actualizarJuego,
   eliminarJuego,
 } from '../controllers/juegosController';
+
 import { verificarToken } from '../middleware/authMiddleware';
+import upload from '../middleware/upload'; // ⬅️ middleware para subir archivos
 
 const router = Router();
 
-// Rutas de ofertas y detalle
+// Rutas públicas
 router.get('/deals', obtenerJuegosEnOferta);
-router.get('/',       obtenerJuegos);
-router.get('/:id',    obtenerJuegoPorId);
+router.get('/', obtenerJuegos);
+router.get('/:id', obtenerJuegoPorId);
 
 // Rutas protegidas
-router.post('/',       verificarToken, crearJuego);
-router.put('/:id',     verificarToken, actualizarJuego);
-router.delete('/:id',  verificarToken, eliminarJuego);
+router.post('/', verificarToken, upload.single('imagen'), crearJuego); // ⬅️ ajustado
+router.put('/:id', verificarToken, actualizarJuego);
+router.delete('/:id', verificarToken, eliminarJuego);
+
+// ✂ src/routes/juegos.ts
+router.delete('/:id',
+  verificarToken,
+  eliminarJuego
+);
 
 export default router;

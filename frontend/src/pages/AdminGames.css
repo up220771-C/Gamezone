@@ -1,0 +1,238 @@
+/* src/pages/AdminGames.css */
+
+.admin-games-container {
+  background-color: transparent;
+  color: #00ffff;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  max-width: 900px;
+  margin: auto;
+}
+
+.admin-games-container h1 {
+  text-align: center;
+  color: #ff00ff;
+  text-shadow: 0 0 10px #ff00ff;
+  margin-bottom: 2.5rem;
+  font-size: 2rem;
+}
+
+/* ----------------------------------------------------
+   Formulario de agregar juego
+----------------------------------------------------- */
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.form-group input,
+.form-group textarea {
+  background: #1a1a1a;
+  border: 1px solid #00ffff;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.input-icon-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #1a1a1a;
+  border: 1px solid #00ffff;
+  padding: 0.75rem;
+  border-radius: 8px;
+  color: #00ffff;
+}
+
+.input-icon-group input {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: white;
+  font-size: 1rem;
+  flex: 1;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.admin-form button {
+  align-self: center;
+  background-color: transparent;
+  border: 2px solid #ff00ff;
+  color: #ff00ff;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 1.5rem;
+}
+
+.admin-form button:hover {
+  background-color: #ff00ff;
+  color: #0d0d0d;
+  box-shadow: 0 0 12px #ff00ff;
+}
+
+.mensaje {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 1rem;
+  color: #00ff88;
+}
+
+/* ----------------------------------------------------
+   Controles de filtro y búsqueda al mismo nivel
+----------------------------------------------------- */
+.controls {
+  display: flex;
+  justify-content: space-between; /* filtro izquierda, buscador derecha */
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.filtro {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filtro label {
+  color: #00ffff;
+  font-weight: bold;
+}
+
+.filtro select {
+  background: #1a1a40;
+  color: #fff;
+  border: 1px solid #00ffff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.buscador input {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #00ffff;
+  background: #1a1a40;
+  color: #fff;
+  width: 200px;
+}
+
+/* ----------------------------------------------------
+   Tabla de juegos (sin columna imagen)
+----------------------------------------------------- */
+.tabla-juegos {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-juegos th,
+.tabla-juegos td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #333;
+  text-align: left;
+}
+
+.tabla-juegos th {
+  color: #ff00ff;
+}
+
+.sin-resultados {
+  text-align: center;
+  color: #f39c12;
+  padding: 1rem;
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ----------------------------------------------------
+   Modal de confirmación
+----------------------------------------------------- */
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-contenido {
+  background: #1b1b3a;
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+}
+
+.modal-contenido input {
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background: #0d0d1f;
+  color: #fff;
+  border: 1px solid #00ffff;
+  border-radius: 4px;
+}
+
+.modal-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-buttons button:first-child {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.modal-buttons button:last-child {
+  background: #333;
+  color: #fff;
+}
+
+.error-global,
+.error-delete {
+  color: #e74c3c;
+  margin-top: 0.5rem;
+}
