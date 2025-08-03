@@ -1,3 +1,28 @@
+:root {
+  font-family: 'Roboto Mono', monospace;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #23244a;
+}
+
+#root {
+  width: 100%;
+}
+
 .cart-container {
   min-height: 100vh;
   background: #23244a;
@@ -7,6 +32,11 @@
   padding-top: 2rem;
   position: relative;
   z-index: 1;
+}
+
+.cart-title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .cart-main {
@@ -19,6 +49,13 @@
   display: flex;
   gap: 2rem;
   position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .cart-main {
+    flex-direction: column;
+  }
 }
 
 .cart-items { flex: 2; }
@@ -68,16 +105,14 @@
   font-weight: bold;
   font-size: 1.3rem;
   margin-left: 1rem;
-  
 }
 
 .quantity-controls {
   display: flex;
   align-items: center;
-  gap: 0.8rem; /* Aumentamos la separación */
+  gap: 0.8rem;
   margin-top: 0.3rem;
 }
-
 
 .quantity-controls button {
   width: 50px;
@@ -146,6 +181,7 @@
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 0 8px;
+  transition: all 0.3s ease;
 }
 
 .cart-btn-cancel {
@@ -154,46 +190,80 @@
   box-shadow: 0 0 8px #ff00ff;
   align-self: flex-start;
 }
+.cart-btn-cancel:hover {
+  background: #e600e6;
+}
 
 .cart-btn-buy {
   background: #00ffff;
   color: #23244a;
   box-shadow: 0 0 8px #00ffff;
 }
+.cart-btn-buy:hover {
+  background: #00e6e6;
+}
 
+.cart-btn-buy:disabled, .cart-btn-cancel:disabled {
+  background: #4a4a4a;
+  box-shadow: none;
+  cursor: not-allowed;
+  color: #999;
+}
+
+/* --- ESTILOS MEJORADOS PARA EL MODAL DE PAGO --- */
 .cart-payment-modal {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(30,31,59,0.95);
-  z-index: 9999; /* 🔼 Lo elevamos más que cualquier navbar */
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
-
 
 .cart-payment-form {
   background: #23244a;
   border-radius: 18px;
-  padding: 2rem;
+  padding: 2rem 3rem 1.5rem;
   min-width: 320px;
-  box-shadow: 0 2px 20px #00ffff;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 0 20px #00ffff;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   color: #fff;
-  margin-top: 80px; /* 👈 solución al solapamiento */
+  position: relative;
+  border: 2px solid #00ffff;
+  margin-top: 200px;
 }
-
-
 
 .cart-payment-title {
   color: #00ffff;
   margin-bottom: 1rem;
 }
 
-.cart-payment-input,
+/* Contenedor para inputs en una misma línea */
+.payment-full-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cart-payment-input {
+  padding: 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #00ffff;
+  font-size: 1rem;
+  background: #1e1f3b;
+  color: #fff;
+  width: 100%;
+}
+
 .cart-payment-input-half {
+  flex: 1; /* Ocupa la mitad del espacio */
   padding: 0.7rem;
   border-radius: 8px;
   border: 1px solid #00ffff;
@@ -202,30 +272,48 @@
   color: #fff;
 }
 
-.cart-payment-input-half {
-  width: 50%;
+/* Contenedor de las imágenes de pago */
+.payment-logos {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.cart-payment-btn {
+.confirm-btn {
   background: #ff00ff;
   color: #fff;
   border: none;
   border-radius: 12px;
-  padding: 0.7rem 1.2rem;
+  padding: 1rem 1.5rem;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   cursor: pointer;
-  box-shadow: 0 0 8px #ff00ff;
-  margin-top: 1rem;
+  box-shadow: 0 0 10px #ff00ff;
+  margin-top: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.confirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px #ff00ff;
 }
 
-.cart-payment-cancel {
+.cart-payment-close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
   background: transparent;
-  color: #fff;
   border: none;
-  font-size: 1.5rem;
+  color: #ff00ff;
+  font-size: 1.6rem;
   cursor: pointer;
-  margin-top: 0.5rem;
+  z-index: 10;
+  text-shadow: 0 0 6px #ff00ff, 0 0 12px #ff00ff;
+  transition: transform 0.2s ease;
+}
+.cart-payment-close:hover {
+  transform: scale(1.2);
 }
 
 .alert-window {
@@ -248,7 +336,7 @@
 
 @keyframes slideDown {
   from { transform: translate(-50%, -30%) scale(0.8); opacity: 0; }
-  to   { transform: translate(-50%, 0) scale(1);     opacity: 1; }
+  to { transform: translate(-50%, 0) scale(1); opacity: 1; }
 }
 
 @keyframes fadeOut {
@@ -266,7 +354,13 @@
   letter-spacing: 2px;
 }
 
-/* Fondo y decoraciones */
+.empty-message {
+  color: #00ffff;
+  font-size: 1.5rem;
+  text-align: center;
+  width: 100%;
+}
+
 .cart-stars-bg {
   position: absolute;
   left: 0; right: 0; bottom: 0; top: 0;
@@ -294,39 +388,6 @@
   z-index: 0;
 }
 
-.modal-close {
-  position: absolute;
-  top: 25px;
-  right: 35px;
-  font-size: 2rem;
-  background: transparent;
-  color: #ff00ff;
-  border: none;
-  cursor: pointer;
-  z-index: 10001;
-  text-shadow:
-    0 0 5px #ff00ff
+@media (max-width: 768px) {
+  .cart-vaultboy { display: none; }
 }
-
-.cart-payment-form {
-  position: relative; /* NECESARIO para posicionar la X */
-}
-
-.cart-payment-close {
-  position: absolute;
-  top: 12px;
-  right: 18px;
-  background: transparent;
-  border: none;
-  color: #ff00ff;
-  font-size: 1.6rem;
-  cursor: pointer;
-  z-index: 10;
-  text-shadow: 0 0 6px #ff00ff, 0 0 12px #ff00ff;
-  transition: transform 0.2s ease;
-}
-
-.cart-payment-close:hover {
-  transform: scale(1.2);
-}
-

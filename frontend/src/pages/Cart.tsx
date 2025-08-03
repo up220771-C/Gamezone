@@ -40,7 +40,7 @@ export default function Cart() {
 
   const handleClosePayment = () => {
     setShowPayment(false);
-    setCardData({ number: '', name: '', expiry: '', cvv: '' }); // opcional: limpiar datos
+    setCardData({ number: '', name: '', expiry: '', cvv: '' });
   };
 
   const handleBuy = () => {
@@ -126,23 +126,27 @@ export default function Cart() {
               ✕
             </button>
             <h2 className="cart-payment-title">Payment details</h2>
-            <input
-              type="text"
-              placeholder="Número de tarjeta"
-              value={cardData.number}
-              onChange={e => setCardData({ ...cardData, number: e.target.value })}
-              required
-              maxLength={19}
-              className="cart-payment-input"
-            />
-            <input
-              type="text"
-              placeholder="Nombre en la tarjeta"
-              value={cardData.name}
-              onChange={e => setCardData({ ...cardData, name: e.target.value })}
-              required
-              className="cart-payment-input"
-            />
+            {/* <-- INICIO DEL CAMBIO MINIMO --> */}
+            <div className="payment-full-row">
+              <input
+                type="text"
+                placeholder="Número de tarjeta"
+                value={cardData.number}
+                onChange={e => setCardData({ ...cardData, number: e.target.value })}
+                required
+                maxLength={19}
+                className="cart-payment-input-half"
+              />
+              <input
+                type="text"
+                placeholder="Nombre en la tarjeta"
+                value={cardData.name}
+                onChange={e => setCardData({ ...cardData, name: e.target.value })}
+                required
+                className="cart-payment-input-half"
+              />
+            </div>
+            {/* <-- FIN DEL CAMBIO MINIMO --> */}
             <div className="payment-row">
               <input
                 type="text"
@@ -166,6 +170,11 @@ export default function Cart() {
             <button type="submit" className="confirm-btn">
               Confirm purchase
             </button>
+            <div className="payment-logos">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" style={{ height: '30px' }} />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" style={{ height: '30px' }} />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" style={{ height: '30px' }} />
+            </div>
           </form>
         </div>
       )}
@@ -174,7 +183,7 @@ export default function Cart() {
         <div className="cart-stars-left">★</div>
         <div className="cart-stars-right">★</div>
       </div>
-      <img src="/assets/Vallue_Boy.png" alt="Vallue Boy" className="cart-vaultboy" />
+      <img src="https://i.imgur.com/C1vqLxU.png" alt="Vallue Boy" className="cart-vaultboy" />
     </div>
   );
 }
