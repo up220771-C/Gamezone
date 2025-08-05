@@ -24,14 +24,11 @@ export default function Deals() {
   }, []);
 
   return (
-    <div className="homepage">
-      <div className="destacados">
-        {/* Botón Deals marcado como activo */}
-        <button className="deal btn-icon" disabled>
-          <i className="fi fi-rr-badge-percent"></i>
-          <span>Deals</span>
-        </button>
-      </div>
+    <div className="page-container">
+      <header className="page-header">
+        <i className="fi fi-rr-badge-percent" />
+        <h2>Deals</h2>
+      </header>
 
       <main className="juegos">
         {juegos.map(juego => {
