@@ -3,24 +3,18 @@ import './Perfil.css';
 import { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getPurchases, Compra } from '../services/comprasService';
+import { useAuth } from '../contexts/AuthContext';
 
-interface Usuario {
-  nombre: string;
-  apellido: string;
-  username: string;
-  correo: string;
-}
 
 export default function Perfil() {
-  const [usuario, setUsuario] = useState<Usuario | null>(null);
-  const [editField, setEditField] = useState<keyof Usuario | null>(null);
+  const { usuario, setUsuario } = useAuth(); // ✅ usamos el contexto
+  const [editField, setEditField] = useState<keyof typeof usuario | null>(null);
   const [tempValue, setTempValue] = useState<string>('');
   const [totalExpenses, setTotalExpenses] = useState<number>(0);
   const [purchases, setPurchases] = useState<Compra[]>([]);
   const [showHistory, setShowHistory] = useState(false);
   const navigate = useNavigate();
 
-  // Helper to calculate paid price if not provided by backend
   const getPrecioPagado = (compra: Compra): number => {
     return compra.precioPagado !== undefined
       ? compra.precioPagado
@@ -28,25 +22,12 @@ export default function Perfil() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) return;
-    fetch('http://localhost:5000/api/auth/perfil', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(res => res.json())
-      .then(data => data.usuario && setUsuario(data.usuario));
-  }, []);
-
-  // Obtener compras y calcular gastos totales
-  useEffect(() => {
     getPurchases()
-      .then((data: Compra[]) => {
-        setPurchases(data);
-      })
+      .then((data: Compra[]) => setPurchases(data))
       .catch(err => console.error('Error cargando compras:', err));
   }, []);
 
-  const startEdit = (field: keyof Usuario) => {
+  const startEdit = (field: keyof typeof usuario) => {
     if (!usuario) return;
     setEditField(field);
     setTempValue(usuario[field]);
@@ -74,7 +55,7 @@ export default function Perfil() {
         throw new Error(err.message || 'Error al guardar cambios');
       }
       const data = await res.json();
-      setUsuario(data.usuario);
+      setUsuario(prev => ({ ...prev!, ...data.usuario })); // ✅ actualiza contexto
       cancelEdit();
     } catch (error: any) {
       alert(error.message);
@@ -84,10 +65,9 @@ export default function Perfil() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/');
-    window.location.reload()
+    window.location.reload();
   };
 
-  // Agrupar compras por juego para mostrar cantidad y gasto total por juego
   const purchaseSummary = useMemo(() => {
     const map: Record<string, { juego: any; quantity: number; total: number }> = {};
     purchases.forEach(compra => {
@@ -103,7 +83,6 @@ export default function Perfil() {
     return Object.values(map);
   }, [purchases]);
 
-  // Recalcular totalExpenses a partir del resumen agrupado
   useEffect(() => {
     const sum = purchaseSummary.reduce((acc, ps) => acc + ps.total, 0);
     setTotalExpenses(sum);
@@ -128,7 +107,7 @@ export default function Perfil() {
       <h3 className="subtitulo">Personal Information</h3>
       <div className="card-seccion">
         <div className="personal-info-grid">
-          {(['nombre', 'apellido', 'username', 'correo'] as (keyof Usuario)[]).map(
+          {(['nombre', 'apellido', 'username', 'correo'] as (keyof typeof usuario)[]).map(
             field => (
               <div key={field}>
                 <div className="info-header">
@@ -187,7 +166,6 @@ export default function Perfil() {
         {purchases.length === 0 ? (
           <p>No purchases yet.</p>
         ) : showHistory ? (
-          // Detailed history: each purchase entry
           purchases.map(compra => (
             <div key={compra._id} className="purchase-item">
               <img src={compra.juego.imagen} alt={compra.juego.nombre} />
@@ -199,7 +177,6 @@ export default function Perfil() {
             </div>
           ))
         ) : (
-          // Summary view: grouped by game
           purchaseSummary.slice(-5).map(ps => (
             <div key={ps.juego._id} className="purchase-item">
               <img src={ps.juego.imagen} alt={ps.juego.nombre} />

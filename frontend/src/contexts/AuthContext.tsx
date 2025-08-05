@@ -1,26 +1,38 @@
-// src/contexts/AuthContext.tsx
 import React, {
   createContext,
   useContext,
   useState,
   useEffect,
-  ReactNode
+  ReactNode,
+  Dispatch,
+  SetStateAction
 } from 'react';
 
 type Role = 'admin' | 'cliente';
 
+interface Usuario {
+  nombre: string;
+  apellido: string;
+  username: string;
+  correo: string;
+}
+
 interface AuthCtx {
   token: string | null;
   role: Role | null;
+  usuario: Usuario | null;
   login: (token: string, role: Role) => void;
   logout: () => void;
+  setUsuario: Dispatch<SetStateAction<Usuario | null>>; // ✅ permite función o valor directo
 }
 
 const AuthContext = createContext<AuthCtx>({
   token: null,
   role: null,
+  usuario: null,
   login: () => {},
-  logout: () => {}
+  logout: () => {},
+  setUsuario: () => {}
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -30,8 +42,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [role, setRole] = useState<Role | null>(
     (localStorage.getItem('role') as Role) || null
   );
+  const [usuario, setUsuario] = useState<Usuario | null>(null); // ✅ manejado como estado global
 
-  // ✅ Manejo de login
+  useEffect(() => {
+    if (!token) return;
+
+    fetch('http://localhost:5000/api/auth/perfil', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => res.json())
+      .then(data => data.usuario && setUsuario(data.usuario))
+      .catch(() => setUsuario(null));
+  }, [token]);
+
   const login = (t: string, r: Role) => {
     localStorage.setItem('token', t);
     localStorage.setItem('role', r);
@@ -39,15 +62,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setRole(r);
   };
 
-  // ✅ Manejo de logout
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     setToken(null);
     setRole(null);
+    setUsuario(null); // ✅ limpiamos también el usuario
   };
 
-  // ✅ Sincroniza token/rol si otra pestaña cambia el localStorage
   useEffect(() => {
     const syncAuth = (e: StorageEvent) => {
       if (e.key === 'token' || e.key === 'role') {
@@ -56,13 +78,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setRole(r || null);
       }
     };
-
     window.addEventListener('storage', syncAuth);
     return () => window.removeEventListener('storage', syncAuth);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ token, role, login, logout }}>
+    <AuthContext.Provider
+      value={{ token, role, usuario, login, logout, setUsuario }}
+    >
       {children}
     </AuthContext.Provider>
   );
