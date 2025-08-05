@@ -1,4 +1,3 @@
-/* App.css */
 body {
   margin: 0;
   padding: 0;
@@ -97,12 +96,12 @@ body {
   position: relative;
   z-index: 1;
 }
+
 .card:hover {
   transform: translateY(-15px);
   box-shadow: 0 8px 16px rgba(0, 255, 255, 0.3);
 }
 
-/* Efecto de cometa (destello luminoso) */
 .card::before {
   content: "";
   position: absolute;
@@ -111,9 +110,9 @@ body {
   width: 200%;
   height: 200%;
   background: linear-gradient(
-    45deg, 
-    transparent, 
-    rgba(0, 255, 255, 0.1), 
+    45deg,
+    transparent,
+    rgba(0, 255, 255, 0.1),
     rgba(0, 255, 255, 0.3),
     rgba(0, 255, 255, 0.1),
     transparent
@@ -138,7 +137,6 @@ body {
   }
 }
 
-/* Estela del cometa (brillo residual) */
 .card::after {
   content: "";
   position: absolute;
@@ -160,7 +158,6 @@ body {
   opacity: 1;
 }
 
-/* ─── IMAGEN ─── */
 .card img {
   width: 200px;
   height: 260px;
@@ -180,7 +177,6 @@ body {
   box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
 }
 
-/* ─── CONTENIDO ─── */
 .card-content {
   padding: 1rem;
   display: flex;
@@ -189,6 +185,7 @@ body {
   position: relative;
   z-index: 1;
 }
+
 .card-content h3 {
   margin: 0 0 0.5rem;
   font-size: 1.2rem;
@@ -196,6 +193,7 @@ body {
   text-align: center;
   transition: all 0.3s ease;
 }
+
 .card:hover .card-content h3 {
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
 }
@@ -213,7 +211,6 @@ body {
   -webkit-box-orient: vertical;
 }
 
-/* ─── PRECIO ─── */
 .card-content .precio {
   font-size: 1.4rem;
   color: #ff00ff;
@@ -222,7 +219,6 @@ body {
   text-align: center;
 }
 
-/* ─── BOTÓN DETALLE ─── */
 .card-content .detalle {
   align-self: center;
   background: #ff00ff;
@@ -236,6 +232,7 @@ body {
   position: relative;
   z-index: 1;
 }
+
 .card-content .detalle:hover {
   background: #e600e6;
   transform: translateY(-2px);
@@ -269,83 +266,6 @@ body {
 }
 
 /* Variante: icono + texto */
-.btn-icon {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Tamaño de los iconos de Flaticon */
-.btn-icon .fi {
-  font-size: 1.2rem;
-}
-
-/* Colores específicos */
-.deal {
-  color: #FF00FF;
-}
-
-.coming {
-  color: #00FFFF;
-}
-
-/* Contenedor de los botones */
-/* —————————————
-   Sección Deals / Coming Soon
-   ————————————— */
-.destacados {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin: 2rem auto;
-  max-width: 600px;
-}
-
-/* Botón con icono + texto en columna */
-.destacados .btn-icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0.8rem 1.5rem;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px;
-  cursor: pointer;
-   border: 1px solid #00ffff;
-  transition: all 0.3s ease;
-}
-.destacados .btn-icon:hover {
-  background: rgba(255,255,255,0.1);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
-}
-
-/* Icono */
-.destacados .btn-icon .fi {
-  font-size: 1.6rem;
-}
-
-/* Texto */
-.destacados .btn-icon span {
-  margin-top: 0.3rem;
-  font-size: 0.9rem;
-  font-weight: bold;
-  line-height: 1;
-}
-
-/* Colores por variante */
-.destacados .deal .fi,
-.destacados .deal span {
-  color: #FF00FF;
-}
-
-.destacados .coming .fi,
-.destacados .coming span {
-  color: #FF00FF;
-}
-
-/* Base de los botones con icono+texto */
 .btn-icon {
   display: flex;
   flex-direction: column;
@@ -384,7 +304,6 @@ body {
     padding: 1.5rem;
     gap: 1rem;
   }
-  
   .destacados {
     flex-direction: column;
     align-items: center;
@@ -397,12 +316,12 @@ body {
     padding: 1rem 0.5rem;
     gap: 0.8rem;
   }
-  
   .navbar {
     flex-direction: column;
     gap: 1rem;
   }
 }
+
 /* Estilos para ComingSoon */
 .page-container {
   padding: 2rem;
@@ -433,46 +352,58 @@ body {
   font-size: 1.2rem;
   grid-column: 1 / -1;
 }
-
-.card-image {
-  width: 200px;
-  height: 260px;
-  display: block;
-  object-fit: cover;
-  border-bottom: 1px solid #00ffff;
-  padding: 6px;
-  border-radius: 8px;
-  margin: 5px auto;
+/* Barra de búsqueda centrada */
+.search-container {
   position: relative;
-  z-index: 1;
-  transition: all 0.4s ease;
+  width: 80%;
+  max-width: 500px;
+  margin: 1.5rem auto;
 }
 
-.star {
-  color: gold;
-  text-shadow: 0 0 4px rgba(255, 215, 0, 0.8);
-  font-size: 1.2rem;
+/* Input ocupa todo el ancho del contenedor */
+.search-container input {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 1rem; /* espacio a la derecha para el icono */
+  border-radius: 30px;
+  border: 2px solid #00ffff;
+  background: #1e1f3b;
+  color: #fff;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-/* Ajustes específicos para Coming Soon */
-.coming-soon-card .card-content {
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+/* Placeholder atenuado */
+.search-container input::placeholder {
+  color: #aaa;
 }
 
-.coming-soon-card .detalle {
-  margin-top: 1rem;
+/* Focus neón */
+.search-container input:focus {
+  outline: none;
+  border-color: #ff00ff;
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
 }
 
-/* Efecto hover para las tarjetas de Coming Soon */
-.card:hover .card-image {
-  transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+/* Icono dentro del input, alineado a la derecha */
+.search-container .search-icon {
+  position: absolute;
+  top: 50%;
+  right: -2rem;
+  transform: translateY(-40%);
+  font-size: 1.4rem;
+  color: #00ffff;
+  pointer-events: none;
 }
 
-.card:hover h3 {
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+/* Responsive */
+@media (max-width: 480px) {
+  .search-container {
+    width: 90%;
+  }
+  .search-container input {
+    padding: 0.6rem 2rem 0.6rem 1rem;
+  }
+  .search-container .search-icon {
+    right: 0.75rem;
+  }
 }
