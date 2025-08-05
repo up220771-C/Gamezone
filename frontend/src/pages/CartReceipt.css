@@ -43,18 +43,19 @@
   color: #00ffff;
   font-weight: bold;
   background-color: #1e1f3b;
-  padding: 4px 8px;
-  margin: 4px 2px;
+  padding: 8px 12px;
+  margin: 6px 4px;
+  font-size: 1.1rem;
   border: 1px solid #00ffff;
   border-radius: 4px;
-  text-shadow: 0 0 6px #00ffff;
+  text-shadow: 0 0 8px #00ffff;
 }
 /* Grouping for different game codes */
 .redeem-group {
   margin-bottom: 12px;
 }
 .redeem-group-title {
-  font-size: 1rem;
+  font-size: 1.4rem;
   color: #ff00ff;
   margin-bottom: 6px;
   text-shadow: 0 0 6px #ff00ff;

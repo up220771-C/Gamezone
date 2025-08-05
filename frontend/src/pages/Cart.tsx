@@ -44,25 +44,25 @@ export default function Cart() {
       return `<tr><td>${item.quantity}</td><td>${item.nombre}</td><td>$${unit}</td><td>$${sub}</td></tr>`;
     }).join('');
     const receiptHTML = `
-      <div class="receipt-container" style="width:100%; height:100%;">
+      <div class="receipt-container" style="width:18cm; height:24cm; margin:0 auto; padding:12px;">
         <div style="text-align:center; margin-bottom:10px;">
           <img src="/logo512.png" alt="Gamezone Logo" style="width:120px; filter: drop-shadow(0 0 8px #0ff);" />
         </div>
-        <h1 class="receipt-header">Recibo de Compra</h1>
-        <p style="text-align:center; color:#ffffff; font-size:0.85rem; margin-top:-5px; ">Dirección Fiscal: Calle Falsa 123, Ciudad, País | RFC: ABC123456789 | Tel: +1-234-567-890 | support@gamezone.com</p>
+        <h1 class="receipt-header">Purchase Receipt</h1>
+        <p style="text-align:center; color:#ffffff; font-size:0.85rem; margin-top:-5px; ">Billing Address: 123 Fake St, City, Country | Tax ID: ABC123456789 | Phone: +1-234-567-890 | Email: support@gamezone.com</p>
         <hr style="border:1px solid #00ffff; opacity:0.5; margin:10px 0;" />
         <div class="receipt-section">
-          <h2 class="receipt-section-title">Datos del cliente</h2>
-          <p style="color:#ffffff; text-shadow:0 0 4px #00ffff; font-size:0.9rem; margin:2px 0;">Nombre: ${clientName}</p>
+          <h2 class="receipt-section-title">Client Details</h2>
+          <p style="color:#ffffff; text-shadow:0 0 4px #00ffff; font-size:0.9rem; margin:2px 0;">Name: ${clientName}</p>
           <p style="color:#ffffff; text-shadow:0 0 4px #00ffff; font-size:0.9rem; margin:2px 0;">Email: ${usuario?.correo||''}</p>
         </div>
         <div class="receipt-section">
-          <h2 class="receipt-section-title">Información del pedido</h2>
-          <p style="color:#ffffff; text-shadow:0 0 4px #00ffff; font-size:0.9rem; margin:2px 0;">Orden: ${orderId}</p>
-          <p style="color:#ffffff; text-shadow:0 0 4px #00ffff; font-size:0.9rem; margin:2px 0;">Fecha: ${dateStr}</p>
+          <h2 class="receipt-section-title">Order Information</h2>
+          <p style="color:#ffffff; text-shadow:0 0 4px #00ffff; font-size:0.9rem; margin:2px 0;">Order #: ${orderId}</p>
+          <p style="color:#ffffff; text-shadow:0 0 4px #00ffff; font-size:0.9rem; margin:2px 0;">Date: ${dateStr}</p>
         </div>
         <table class="receipt-table">
-          <thead><tr><th>Cantidad</th><th>Descripción</th><th>P.Unit.</th><th>Subtotal</th></tr></thead>
+          <thead><tr><th>Quantity</th><th>Description</th><th>Unit Price</th><th>Subtotal</th></tr></thead>
           <tbody>${tableRows}</tbody>
         </table>
         <div class="receipt-section">
@@ -92,8 +92,10 @@ export default function Cart() {
         doc.save(`receipt_${orderId}.pdf`);
         document.body.removeChild(container);
       },
-      x: 20, y: 20,
-      html2canvas: { scale: 0.5 }
+      x: 0, y: 0,
+      html2canvas: { scale: 0.85 },
+      autoPaging: 'slice',
+      pagebreak: { mode: ['css', 'legacy'] }
     });
   };
 
