@@ -73,13 +73,52 @@ export const obtenerJuegoPorId = async (req: Request, res: Response) => {
 
 export const actualizarJuego = async (req: Request, res: Response) => {
   try {
-    const juego = await Juego.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!juego) return res.status(404).json({ mensaje: 'Juego no encontrado' });
-    res.json(juego);
+    const { id } = req.params;
+    // Extraemos cada campo del formulario
+    const {
+      nombre,
+      descripcion,
+      precio,
+      plataforma,
+      genero,
+      stock
+    } = req.body;
+
+    // Construimos el objeto de actualización
+    const updateData: any = {
+      nombre,
+      descripcion,
+      precio: parseFloat(precio),
+      plataforma,
+      genero,
+      stock: parseInt(stock, 10),
+    };
+
+    // Si Multer detectó nueva imagen, actualizamos la URL pública
+    if (req.file) {
+      const protocol = req.protocol;
+      const host = req.get('host');
+      updateData.imagen = `${protocol}://${host}/uploads/${req.file.filename}`;
+    }
+
+    // findByIdAndUpdate con { new: true } devuelve el documento ya modificado
+    const juegoActualizado = await Juego.findByIdAndUpdate(
+      id,
+      updateData,
+      { new: true }
+    );
+
+    if (!juegoActualizado) {
+      return res.status(404).json({ mensaje: 'Juego no encontrado' });
+    }
+
+    return res.json(juegoActualizado);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al actualizar el juego', error });
+    console.error('💥 Error al actualizar juego:', error);
+    return res.status(500).json({ mensaje: 'Error al actualizar el juego', error });
   }
 };
+
 
 export const eliminarJuego = async (req: Request, res: Response) => {
   try {

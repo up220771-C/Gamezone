@@ -21,7 +21,12 @@ router.get('/:id', obtenerJuegoPorId);
 
 // Rutas protegidas
 router.post('/', verificarToken, upload.single('imagen'), crearJuego); // ⬅️ ajustado
-router.put('/:id', verificarToken, actualizarJuego);
+router.put(
+  '/:id',
+  verificarToken,
+  upload.single('imagen'),      // <-- aquí usamos Multer
+  actualizarJuego
+);
 router.delete('/:id', verificarToken, eliminarJuego);
 
 // ✂ src/routes/juegos.ts
