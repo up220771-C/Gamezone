@@ -18,12 +18,16 @@ export default function CategoriaDetalle() {
       <main className="juegos">
         {juegos.map((juego: any) => (
           <div className="card" key={juego._id}>
+            {/* Badge si el juego está agotado */}
+            {!juego.disponible && <div className="sold-out">Agotado</div>}
             <img src={juego.imagen} alt={juego.nombre} />
             <div className="card-content">
               <h3>{juego.nombre}</h3>
               <p>{juego.descripcion}</p>
               <span className="precio">${juego.precio.toFixed(2)}</span>
-              <button className="detalle">Detail</button>
+              <button className="detalle" disabled={!juego.disponible}>
+                Detail
+              </button>
             </div>
           </div>
         ))}

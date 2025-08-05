@@ -239,6 +239,33 @@ body {
   box-shadow: 0 5px 15px rgba(255, 0, 255, 0.4);
 }
 
+/* Sold out badge on cards */
+.card {
+  position: relative;
+  /* ...existing styles... */
+}
+
+.sold-out {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 0, 0, 0.8);
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  z-index: 2;
+  text-transform: uppercase;
+}
+
+/* Botones deshabilitados */
+.detalle.disabled,
+.btn.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* Contenedor de los botones */
 .destacados {
   display: flex;
@@ -406,4 +433,14 @@ body {
   .search-container .search-icon {
     right: 0.75rem;
   }
+}
+
+/* Sold-out card styling */
+.sold-out-card {
+  filter: grayscale(100%) opacity(0.6);
+  pointer-events: none;
+}
+.sold-out-card:hover {
+  transform: none;
+  box-shadow: none;
 }

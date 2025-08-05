@@ -13,6 +13,7 @@ export default function Home() {
     imagen: string;
     precio: number;
     descuento?: number;
+    disponible: boolean;
   }
 
   const [juegos, setJuegos] = useState<Juego[]>([]);
@@ -72,13 +73,18 @@ export default function Home() {
 
       <main className="juegos">
         {filtered.map(juego => (
-          <div className="card" key={juego._id}>
+          <div className={`card ${!juego.disponible ? 'sold-out-card' : ''}`} key={juego._id}>
+            {!juego.disponible && <div className="sold-out">Agotado</div>}
             <img src={juego.imagen} alt={juego.nombre} />
             <div className="card-content">
               <h3>{juego.nombre}</h3>
               <p>{juego.descripcion}</p>
               <span className="precio">${juego.precio.toFixed(2)}</span>
-              <button className="detalle" onClick={() => navigate(`/juego/${juego._id}`)}>
+              <button
+                className={`detalle${!juego.disponible ? ' disabled' : ''}`}
+                onClick={() => juego.disponible && navigate(`/juego/${juego._id}`)}
+                disabled={!juego.disponible}
+              >
                 Detail
               </button>
             </div>

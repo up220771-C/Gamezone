@@ -11,6 +11,7 @@ interface JuegoOferta {
   precio: number;
   descuento: number; 
   imagen: string;
+  disponible: boolean;
 }
 
 export default function Deals() {
@@ -38,6 +39,7 @@ export default function Deals() {
           );
           return (
             <div className="card" key={juego._id}>
+             {!juego.disponible && <div className="sold-out">Agotado</div>}
               <img src={juego.imagen} alt={juego.nombre} />
               <div className="card-content">
                 <h3>{juego.nombre}</h3>
@@ -56,8 +58,9 @@ export default function Deals() {
                 </div>
 
                 <button
-                  className="detalle"
-                  onClick={() => navigate(`/juego/${juego._id}`)}
+                  className={`detalle${!juego.disponible ? ' disabled' : ''}`}
+                  onClick={() => juego.disponible && navigate(`/juego/${juego._id}`)}
+                  disabled={!juego.disponible}
                 >
                   Detail
                 </button>
