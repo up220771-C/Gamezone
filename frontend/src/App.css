@@ -379,6 +379,7 @@ body {
   font-size: 1.2rem;
   grid-column: 1 / -1;
 }
+
 /* Barra de búsqueda centrada */
 .search-container {
   position: relative;
@@ -443,4 +444,160 @@ body {
 .sold-out-card:hover {
   transform: none;
   box-shadow: none;
+}
+
+/* Badge para mostrar el número de ventas en Más Vendidos */
+.badge-ventas {
+  display: inline-block;
+  background: #ff00ff;
+  color: #000;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+/* Mejora de diseño para Más Vendidos: espaciado y centrado */
+.page-container h2.seccion-titulo {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.page-container .juegos {
+  justify-items: center;
+}
+
+/* Estilos para página Más Vendidos */
+.masvendidos-container .page-header,
+.masvendidos-container .seccion-titulo {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #00ffff;
+}
+.masvendidos-container .juegos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  justify-items: center;
+}
+.masvendidos-container .card {
+  max-width: 300px;
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #1e1f3b;
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+.masvendidos-container .card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0, 255, 255, 0.2);
+}
+.masvendidos-container .card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.masvendidos-container .card-content {
+  padding: 1rem;
+  text-align: center;
+}
+.masvendidos-container .card-content h3 {
+  font-size: 1.1rem;
+  color: #ff00ff;
+  margin-bottom: 0.5rem;
+}
+.masvendidos-container .card-content p {
+  font-size: 0.9rem;
+  color: #ccc;
+  height: 3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.masvendidos-container .precio-container {
+  margin-top: 0.8rem;
+}
+.masvendidos-container .precio-oferta {
+  font-size: 1.3rem;
+  color: #00ffff;
+  font-weight: bold;
+}
+
+/* Eliminar badge de ventas si quedara */
+.badge-ventas {
+  display: none;
+}
+
+/* Estilos específicos para MasVendidos cards mejorados */
+.masvendidos-container .masvendidos-card {
+  display: flex;
+  flex-direction: column;
+  background: #1e1f3b;
+  border: 2px solid #00ffff;
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 280px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.masvendidos-container .masvendidos-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 10px rgba(0,255,255,0.4), 0 0 20px rgba(0,255,255,0.2);
+}
+.masvendidos-container .masvendidos-img-wrapper {
+  width: 100%;
+  /* wrapper expands to image height, no cropping */
+}
+.masvendidos-container .masvendidos-img-wrapper img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+.masvendidos-container .masvendidos-info {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.masvendidos-container .masvendidos-info h3 {
+  font-size: 1.1rem;
+  color: #ff00ff;
+  margin: 0 0 0.5rem;
+  text-align: center;
+}
+.masvendidos-container .masvendidos-info p {
+  font-size: 0.9rem;
+  color: #fff;
+  flex: 1;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.masvendidos-container .masvendidos-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.masvendidos-container .masvendidos-footer .precio-oferta {
+  font-size: 1.2rem;
+  color: #ff00ff;
+  font-weight: bold;
+}
+.masvendidos-container .masvendidos-footer .detalle {
+  background: #ff00ff;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.masvendidos-container .masvendidos-footer .detalle:hover {
+  background: #e600e6;
 }

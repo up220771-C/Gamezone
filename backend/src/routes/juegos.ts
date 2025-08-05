@@ -7,6 +7,7 @@ import {
   obtenerJuegoPorId,
   actualizarJuego,
   eliminarJuego,
+  obtenerMasVendidos,
 } from '../controllers/juegosController';
 
 import { verificarToken } from '../middleware/authMiddleware';
@@ -17,7 +18,12 @@ const router = Router();
 // Rutas públicas
 router.get('/deals', obtenerJuegosEnOferta);
 router.get('/', obtenerJuegos);
+// Endpoint para juegos más vendidos (ventas >5)
+router.get('/masvendidos', obtenerMasVendidos);
+// Detalle de juego por ID (colocar al final)
 router.get('/:id', obtenerJuegoPorId);
+// Endpoint para juegos más vendidos (ventas >5)
+router.get('/masvendidos', obtenerMasVendidos);
 
 // Rutas protegidas
 router.post('/', verificarToken, upload.single('imagen'), crearJuego); // ⬅️ ajustado

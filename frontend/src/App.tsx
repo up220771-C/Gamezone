@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import Perfil from './pages/Perfil';
 import ComingSoon from './pages/ComingSoon';
 import JuegoDetalle from './pages/JuegoDetalle';
+import MasVendidos from './pages/MasVendidos';
 import AdminGames from './pages/AdminGames'; // ✅ nuevo
 import Cart from './pages/Cart'; // asegúrate de tener el componente Cart.tsx creado
 
@@ -23,6 +24,8 @@ function App() {
       <Navbar />
 
       <Routes>
+        {/* Más vendidos */}
+        <Route path="/categoria/best" element={<MasVendidos />} />
         {/* Rutas públicas */}
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />

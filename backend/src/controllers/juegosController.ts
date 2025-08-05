@@ -129,3 +129,26 @@ export const eliminarJuego = async (req: Request, res: Response) => {
     res.status(500).json({ mensaje: 'Error al eliminar el juego', error });
   }
 };
+// Obtener juegos más vendidos (ventas > 5)
+import Compra from '../models/compras';
+export const obtenerMasVendidos = async (_: Request, res: Response) => {
+  try {
+    // Agrupar compras por juego y contar ventas
+    const top = await Compra.aggregate([
+      { $group: { _id: '$juego', count: { $sum: 1 } } },
+      { $match: { count: { $gt: 5 } } },
+      { $sort: { count: -1 } }
+    ]);
+    const gameIds = top.map((item: any) => item._id);
+    // Obtener detalles de juegos
+    const juegos = await Juego.find({ _id: { $in: gameIds } });
+    // Combinar datos
+    const result = juegos.map(j => {
+      const stats = top.find((t: any) => t._id.equals(j._id));
+      return { juego: j, ventas: stats ? stats.count : 0 };
+    });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al obtener juegos más vendidos', error });
+  }
+};

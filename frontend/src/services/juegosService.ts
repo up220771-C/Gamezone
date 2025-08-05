@@ -21,3 +21,10 @@ export const obtenerJuegoPorId = async (id: string) => {
   const res = await axios.get(`${API_URL}/${id}`);
   return res.data;
 };
+/**
+ * Obtiene los juegos con más de 5 ventas.
+ */
+export const obtenerMasVendidos = async () => {
+  const res = await axios.get(`${API_URL}/masvendidos`);
+  return res.data;
+};

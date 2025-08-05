@@ -1,10 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../App.css';
 
 export default function CategoriaDetalle() {
   const { nombre } = useParams();
+  const navigate = useNavigate();
   const [juegos, setJuegos] = useState([]);
 
   useEffect(() => {
@@ -17,7 +18,11 @@ export default function CategoriaDetalle() {
     <div className="homepage">
       <main className="juegos">
         {juegos.map((juego: any) => (
-          <div className="card" key={juego._id}>
+          <div
+            key={juego._id}
+            className={`card${!juego.disponible ? ' sold-out-card' : ''}`}
+            onClick={() => juego.disponible && navigate(`/juego/${juego._id}`)}
+          >
             {/* Badge si el juego está agotado */}
             {!juego.disponible && <div className="sold-out">Agotado</div>}
             <img src={juego.imagen} alt={juego.nombre} />
@@ -25,7 +30,11 @@ export default function CategoriaDetalle() {
               <h3>{juego.nombre}</h3>
               <p>{juego.descripcion}</p>
               <span className="precio">${juego.precio.toFixed(2)}</span>
-              <button className="detalle" disabled={!juego.disponible}>
+              <button
+                className={`detalle${!juego.disponible ? ' disabled' : ''}`}
+                onClick={e => { e.stopPropagation(); juego.disponible && navigate(`/juego/${juego._id}`); }}
+                disabled={!juego.disponible}
+              >
                 Detail
               </button>
             </div>
