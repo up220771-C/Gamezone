@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { registerUser, loginUser } from '../services/authService';
 import { useCart } from '../contexts/CartContext';
+import { useAuth } from '../contexts/AuthContext'; // ✅ nuevo
 import './Navbar.css';
 
 export default function Navbar() {
@@ -9,8 +10,11 @@ export default function Navbar() {
   const [showRegister, setShowRegister] = useState(false);
   const [usuario, setUsuario] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+
   const navigate = useNavigate();
   const { getCartItemCount } = useCart();
+  const { login, logout } = useAuth(); // ✅ nuevo
+
   const cartCount = getCartItemCount();
 
   const [loginData, setLoginData] = useState({ correo: '', contraseña: '' });
@@ -24,7 +28,6 @@ export default function Navbar() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
     if (!token) return;
 
     fetch('http://localhost:5000/api/auth/perfil', {
@@ -42,9 +45,8 @@ export default function Navbar() {
     e.preventDefault();
     const res = await loginUser(loginData);
     if (res.token) {
-      localStorage.setItem('token', res.token);
-      localStorage.setItem('role', res.usuario.rol);
-      setUsuario(res.usuario?.username || window.location.reload());
+      login(res.token, res.usuario.rol); // ✅ actualiza contexto
+      setUsuario(res.usuario?.username || '');
       setShowLogin(false);
       setLoginData({ correo: '', contraseña: '' });
       setMobileOpen(false);
@@ -73,7 +75,7 @@ export default function Navbar() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    logout(); // ✅ también borra token del contexto
     setUsuario(null);
     navigate('/');
     setMobileOpen(false);
@@ -235,8 +237,8 @@ export default function Navbar() {
               <button
                 className="nav-item"
                 onClick={() => {
-                  setShowRegister(true);
-                  setMobileOpen(false);
+                  setShowRegister(false);
+                  setShowLogin(true);
                 }}
               >
                 Register
@@ -246,6 +248,7 @@ export default function Navbar() {
         </div>
       </header>
 
+      {/* Login Modal */}
       {showLogin && (
         <div className="modal-overlay">
           <div className="modal">
@@ -255,121 +258,54 @@ export default function Navbar() {
                 type="email"
                 placeholder="Correo"
                 value={loginData.correo}
-                onChange={e =>
-                  setLoginData({ ...loginData, correo: e.target.value })
-                }
+                onChange={e => setLoginData({ ...loginData, correo: e.target.value })}
                 required
               />
               <input
                 type="password"
                 placeholder="Contraseña"
                 value={loginData.contraseña}
-                onChange={e =>
-                  setLoginData({ ...loginData, contraseña: e.target.value })
-                }
+                onChange={e => setLoginData({ ...loginData, contraseña: e.target.value })}
                 required
               />
-              <button type="submit" className="btn">
-                Log In
-              </button>
+              <button type="submit" className="btn">Log In</button>
               <p className="switch-modal">
                 Don't have an account?{' '}
-                <button
-                  type="button"
-                  className="link"
-                  onClick={() => {
-                    setShowLogin(false);
-                    setShowRegister(true);
-                  }}
-                >
+                <button type="button" className="link" onClick={() => {
+                  setShowLogin(false);
+                  setShowRegister(true);
+                }}>
                   Register
                 </button>
               </p>
-              <button
-                type="button"
-                className="modal-close"
-                onClick={() => setShowLogin(false)}
-              >
-                ✕
-              </button>
+              <button type="button" className="modal-close" onClick={() => setShowLogin(false)}>✕</button>
             </form>
           </div>
         </div>
       )}
 
+      {/* Register Modal */}
       {showRegister && (
         <div className="modal-overlay">
           <div className="modal register-form">
             <form onSubmit={handleRegisterSubmit} className="modal__form">
               <h2>Register</h2>
-              <input
-                type="text"
-                placeholder="Nombre"
-                value={regData.nombre}
-                onChange={e =>
-                  setRegData({ ...regData, nombre: e.target.value })
-                }
-                required
-              />
-              <input
-                type="text"
-                placeholder="Apellido"
-                value={regData.apellido}
-                onChange={e =>
-                  setRegData({ ...regData, apellido: e.target.value })
-                }
-                required
-              />
-              <input
-                type="text"
-                placeholder="Username"
-                value={regData.username}
-                onChange={e =>
-                  setRegData({ ...regData, username: e.target.value })
-                }
-                required
-              />
-              <input
-                type="email"
-                placeholder="Correo"
-                value={regData.correo}
-                onChange={e =>
-                  setRegData({ ...regData, correo: e.target.value })
-                }
-                required
-              />
-              <input
-                type="password"
-                placeholder="Contraseña"
-                value={regData.contraseña}
-                onChange={e =>
-                  setRegData({ ...regData, contraseña: e.target.value })
-                }
-                required
-              />
-              <button type="submit" className="btn">
-                Create Account
-              </button>
+              <input type="text" placeholder="Nombre" value={regData.nombre} onChange={e => setRegData({ ...regData, nombre: e.target.value })} required />
+              <input type="text" placeholder="Apellido" value={regData.apellido} onChange={e => setRegData({ ...regData, apellido: e.target.value })} required />
+              <input type="text" placeholder="Username" value={regData.username} onChange={e => setRegData({ ...regData, username: e.target.value })} required />
+              <input type="email" placeholder="Correo" value={regData.correo} onChange={e => setRegData({ ...regData, correo: e.target.value })} required />
+              <input type="password" placeholder="Contraseña" value={regData.contraseña} onChange={e => setRegData({ ...regData, contraseña: e.target.value })} required />
+              <button type="submit" className="btn">Create Account</button>
               <p className="switch-modal">
                 Already have an account?{' '}
-                <button
-                  type="button"
-                  className="link"
-                  onClick={() => {
-                    setShowRegister(false);
-                    setShowLogin(true);
-                  }}
-                >
+                <button type="button" className="link" onClick={() => {
+                  setShowRegister(false);
+                  setShowLogin(true);
+                }}>
                   Log-in
                 </button>
               </p>
-              <button
-                type="button"
-                className="modal-close"
-                onClick={() => setShowRegister(false)}
-              >
-                ✕
-              </button>
+              <button type="button" className="modal-close" onClick={() => setShowRegister(false)}>✕</button>
             </form>
           </div>
         </div>

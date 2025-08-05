@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import { useAuth } from '../contexts/AuthContext';
 import '../App.css';
 import './Cart.css';
 
 export default function Cart() {
   const navigate = useNavigate();
   const { cart, updateQuantity, removeFromCart, clearCart, getCartTotal } = useCart();
+  const { token } = useAuth();
+  const isAuthenticated = !!token;
+
   const [showPayment, setShowPayment] = useState(false);
   const [cardData, setCardData] = useState({
     number: '',
@@ -15,6 +19,16 @@ export default function Cart() {
     cvv: '',
   });
   const [notification, setNotification] = useState<string | null>(null);
+
+  // ⛔️ Si no hay sesión, no mostramos el carrito
+  if (!isAuthenticated) {
+    return (
+      <div className="cart-container">
+        <h1 className="cart-title neon-text">Your cart</h1>
+        <p className="empty-message">Debes iniciar sesión para ver tu carrito.</p>
+      </div>
+    );
+  }
 
   const handleIncrease = (id: string, currentQty: number) => {
     try {
@@ -27,6 +41,10 @@ export default function Cart() {
 
   const handleDecrease = (id: string, currentQty: number) => {
     updateQuantity(id, currentQty - 1);
+  };
+
+  const handleRemove = (id: string) => {
+    removeFromCart(id);
   };
 
   const subtotal = getCartTotal();
@@ -62,6 +80,7 @@ export default function Cart() {
   return (
     <div className="cart-container">
       <h1 className="cart-title neon-text">Your cart</h1>
+      {notification && <p className="cart-notification">{notification}</p>}
       <div className="cart-main">
         <div className="cart-items">
           {cart.length === 0 ? (
@@ -90,7 +109,9 @@ export default function Cart() {
                     </button>
                   </div>
                   <div>
-                    <button className="cart-btn-cancel" onClick={() => removeFromCart(item._id)}>Delete</button>
+                    <button className="cart-btn-cancel" onClick={() => handleRemove(item._id)}>
+                      Delete
+                    </button>
                   </div>
                 </div>
                 <span className="cart-item-price">${(item.precio * item.quantity).toFixed(2)}</span>
@@ -109,8 +130,12 @@ export default function Cart() {
             <span>${total.toFixed(2)}</span>
           </div>
           <div className="cart-btn-row">
-            <button className="cart-btn-cancel" onClick={clearCart} disabled={cart.length === 0}>Cancel buy</button>
-            <button className="cart-btn-buy" onClick={handleBuy} disabled={cart.length === 0}>Buy now</button>
+            <button className="cart-btn-cancel" onClick={handleCancel} disabled={cart.length === 0}>
+              Cancel buy
+            </button>
+            <button className="cart-btn-buy" onClick={handleBuy} disabled={cart.length === 0}>
+              Buy now
+            </button>
           </div>
         </div>
       </div>
@@ -126,7 +151,7 @@ export default function Cart() {
               ✕
             </button>
             <h2 className="cart-payment-title">Payment details</h2>
-            {/* <-- INICIO DEL CAMBIO MINIMO --> */}
+
             <div className="payment-full-row">
               <input
                 type="text"
@@ -146,7 +171,7 @@ export default function Cart() {
                 className="cart-payment-input-half"
               />
             </div>
-            {/* <-- FIN DEL CAMBIO MINIMO --> */}
+
             <div className="payment-row">
               <input
                 type="text"

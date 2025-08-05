@@ -3,6 +3,7 @@ import React, {
   createContext,
   useContext,
   useState,
+  useEffect,
   ReactNode
 } from 'react';
 
@@ -15,7 +16,6 @@ interface AuthCtx {
   logout: () => void;
 }
 
-// 1️⃣ Creamos el contexto con valores por defecto
 const AuthContext = createContext<AuthCtx>({
   token: null,
   role: null,
@@ -23,7 +23,6 @@ const AuthContext = createContext<AuthCtx>({
   logout: () => {}
 });
 
-// 2️⃣ Provider que envuelve tu App
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(
     localStorage.getItem('token')
@@ -32,6 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     (localStorage.getItem('role') as Role) || null
   );
 
+  // ✅ Manejo de login
   const login = (t: string, r: Role) => {
     localStorage.setItem('token', t);
     localStorage.setItem('role', r);
@@ -39,12 +39,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setRole(r);
   };
 
+  // ✅ Manejo de logout
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     setToken(null);
     setRole(null);
   };
+
+  // ✅ Sincroniza token/rol si otra pestaña cambia el localStorage
+  useEffect(() => {
+    const syncAuth = (e: StorageEvent) => {
+      if (e.key === 'token' || e.key === 'role') {
+        setToken(localStorage.getItem('token'));
+        const r = localStorage.getItem('role') as Role;
+        setRole(r || null);
+      }
+    };
+
+    window.addEventListener('storage', syncAuth);
+    return () => window.removeEventListener('storage', syncAuth);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ token, role, login, logout }}>
@@ -53,7 +68,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// 3️⃣ Hook de conveniencia para consumir el contexto
 export function useAuth() {
   return useContext(AuthContext);
 }

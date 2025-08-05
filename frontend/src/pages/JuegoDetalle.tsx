@@ -1,12 +1,11 @@
-// src/pages/JuegoDetalle.tsx
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../App.css';
 import './JuegoDetalle.css';
 import { obtenerJuegoPorId } from '../services/juegosService';
 import { useCart } from '../contexts/CartContext';
+import { useAuth } from '../contexts/AuthContext';
 
-// Iconos casteados a any para esquivar TS2786
 import { FiGlobe, FiInfo, FiCode } from 'react-icons/fi';
 import {
   FaStar,
@@ -40,6 +39,9 @@ export default function JuegoDetalle() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const { token } = useAuth();
+  const isAuthenticated = !!token;
+
   const [juego, setJuego] = useState<Juego | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
 
@@ -60,28 +62,36 @@ export default function JuegoDetalle() {
     : precioOriginal;
 
   const handleBuyNow = () => {
-    if (juego) {
-      try {
-        addToCart(juego);
-        setNotification('Juego añadido. Redirigiendo al carrito...');
-        setTimeout(() => navigate('/cart'), 1000);
-      } catch (error: any) {
-        setNotification(error.message);
-        setTimeout(() => setNotification(null), 2000);
-      }
+    if (!isAuthenticated) {
+      setNotification("⚠️ Debes iniciar sesión para comprar.");
+      setTimeout(() => setNotification(null), 3000);
+      return;
+    }
+
+    try {
+      addToCart(juego);
+      setNotification('✅ Juego añadido. Redirigiendo al carrito...');
+      setTimeout(() => navigate('/cart'), 1000);
+    } catch (error: any) {
+      setNotification(error.message);
+      setTimeout(() => setNotification(null), 3000);
     }
   };
 
   const handleAddToCart = () => {
-    if (juego) {
-      try {
-        addToCart(juego);
-        setNotification('Juego agregado al carrito!');
-        setTimeout(() => setNotification(null), 2000);
-      } catch (error: any) {
-        setNotification(error.message);
-        setTimeout(() => setNotification(null), 2000);
-      }
+    if (!isAuthenticated) {
+      setNotification("⚠️ Debes iniciar sesión para agregar al carrito.");
+      setTimeout(() => setNotification(null), 3000);
+      return;
+    }
+
+    try {
+      addToCart(juego);
+      setNotification('✅ Juego agregado al carrito!');
+      setTimeout(() => setNotification(null), 2000);
+    } catch (error: any) {
+      setNotification(error.message);
+      setTimeout(() => setNotification(null), 2000);
     }
   };
 
@@ -91,76 +101,71 @@ export default function JuegoDetalle() {
         <div className="neon-alert neon-text">{notification}</div>
       )}
       <div className="detalle-page">
-      <div className="detalle-container">
-        {/* Columna 1: Imagen */}
-        <div className="detalle-imagen">
-          <img src={juego.imagen} alt={juego.nombre} />
-        </div>
+        <div className="detalle-container">
+          <div className="detalle-imagen">
+            <img src={juego.imagen} alt={juego.nombre} />
+          </div>
 
-        {/* Columna 2: Info */}
-        <div className="detalle-info">
-          <h2 className="detalle-title">
-            {juego.nombre} – {juego.plataforma}
-          </h2>
-          <div className="detalle-sections">
-            {/* Descripción (izquierda, ocupa dos filas) */}
-            <div className="detalle-section descripcion">
-              <InfoIcon className="detalle-icon" />
-              <div>
-                <h3>Descripción</h3>
-                <p>{juego.descripcion}</p>
+          <div className="detalle-info">
+            <h2 className="detalle-title">
+              {juego.nombre} – {juego.plataforma}
+            </h2>
+            <div className="detalle-sections">
+              <div className="detalle-section descripcion">
+                <InfoIcon className="detalle-icon" />
+                <div>
+                  <h3>Descripción</h3>
+                  <p>{juego.descripcion}</p>
+                </div>
               </div>
-            </div>
-            {/* Global (arriba derecha) */}
-            <div className="detalle-section global">
-              <GlobeIcon className="detalle-icon" />
-              <div>
-                <h3>Global</h3>
-                <p>Este código digital se puede canjear en cualquier región.</p>
+
+              <div className="detalle-section global">
+                <GlobeIcon className="detalle-icon" />
+                <div>
+                  <h3>Global</h3>
+                  <p>Este código digital se puede canjear en cualquier región.</p>
+                </div>
               </div>
-            </div>
-            {/* Código (abajo derecha) */}
-            <div className="detalle-section codigo">
-              <CodeIcon className="detalle-icon" />
-              <div>
-                <h3>Código</h3>
-                <p>
-                  Tras la compra recibirás un código único que canjearás en la plataforma correspondiente.
-                </p>
+
+              <div className="detalle-section codigo">
+                <CodeIcon className="detalle-icon" />
+                <div>
+                  <h3>Código</h3>
+                  <p>
+                    Tras la compra recibirás un código único que canjearás en la plataforma correspondiente.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Columna 3: Estrellas, precios y acciones */}
-        <div className="detalle-actions">
-          <div className="detalle-stars">
-            {[...Array(5)].map((_, i) => (
-              <StarIcon key={i} className="estrella-rellena" />
-            ))}
-          </div>
+          <div className="detalle-actions">
+            <div className="detalle-stars">
+              {[...Array(5)].map((_, i) => (
+                <StarIcon key={i} className="estrella-rellena" />
+              ))}
+            </div>
 
-          <button className="btn comprar" onClick={handleBuyNow}>Comprar Ahora</button>
-          <button className="btn carrito" onClick={handleAddToCart}>Agregar al carrito</button>
+            <button className="btn comprar" onClick={handleBuyNow}>Comprar Ahora</button>
+            <button className="btn carrito" onClick={handleAddToCart}>Agregar al carrito</button>
 
-          <div className="detalle-precio">
-            {hasDesc && (
-              <span className="precio-original">${precioOriginal.toFixed(2)}</span>
-            )}
-            <span className="precio-oferta">${precioOferta.toFixed(2)}</span>
-            {hasDesc && <span className="badge-descuento">-{juego.descuento}%</span>}
-          </div>
+            <div className="detalle-precio">
+              {hasDesc && (
+                <span className="precio-original">${precioOriginal.toFixed(2)}</span>
+              )}
+              <span className="precio-oferta">${precioOferta.toFixed(2)}</span>
+              {hasDesc && <span className="badge-descuento">-{juego.descuento}%</span>}
+            </div>
 
-          {/* Métodos de pago: íconos casteados */}
-          <div className="detalle-metodos-icons">
-            <VisaIcon className="pay-icon" />
-            <MastercardIcon className="pay-icon" />
-            <AmexIcon className="pay-icon" />
-            <PaypalIcon className="pay-icon" />
+            <div className="detalle-metodos-icons">
+              <VisaIcon className="pay-icon" />
+              <MastercardIcon className="pay-icon" />
+              <AmexIcon className="pay-icon" />
+              <PaypalIcon className="pay-icon" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    </>  
+    </>
   );
 }

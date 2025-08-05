@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useAuth } from './AuthContext'; // ✅ Importar el AuthContext
 
 interface Juego {
   _id: string;
@@ -30,38 +31,45 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  const { token } = useAuth(); // ✅ Hook de sesión
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  // Cargar carrito desde localStorage al inicializar
+  // ✅ Cargar carrito solo si hay sesión
   useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      try {
-        const parsedCart = JSON.parse(savedCart);
-        // Asegurar que todos los items tengan quantity
-        const normalizedCart = parsedCart.map((item: any) => ({
-          ...item,
-          quantity: item.quantity || 1
-        }));
-        setCart(normalizedCart);
-      } catch (error) {
-        console.error('Error parsing cart from localStorage:', error);
-        localStorage.removeItem('cart');
+    if (token) {
+      const savedCart = localStorage.getItem('cart');
+      if (savedCart) {
+        try {
+          const parsedCart = JSON.parse(savedCart);
+          const normalizedCart = parsedCart.map((item: any) => ({
+            ...item,
+            quantity: item.quantity || 1
+          }));
+          setCart(normalizedCart);
+        } catch (error) {
+          console.error('Error parsing cart from localStorage:', error);
+          localStorage.removeItem('cart');
+        }
       }
+    } else {
+      setCart([]); // ✅ Limpiar carrito si se cierra sesión
+      localStorage.removeItem('cart');
     }
-  }, []);
+  }, [token]); // ← se ejecuta cada vez que cambia el token
 
-  // Guardar carrito en localStorage cuando cambie
+  // ✅ Guardar carrito si hay sesión
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart]);
+    if (token) {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+  }, [cart, token]);
 
   const addToCart = (juego: Juego) => {
-    // Only enforce per-item max quantity
     const existingItem = cart.find(item => item._id === juego._id);
     if (existingItem && existingItem.quantity >= 5) {
       throw new Error('Cantidad máxima por juego es 5.');
     }
+
     setCart(prevCart => {
       const found = prevCart.find(item => item._id === juego._id);
       if (found) {
@@ -84,7 +92,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
       removeFromCart(id);
       return;
     }
-    // Only enforce per-item max
     if (quantity > 5) {
       throw new Error('Cantidad máxima por juego es 5.');
     }
@@ -102,7 +109,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const getCartTotal = () => {
     return cart.reduce((total, item) => {
-      const precio = item.descuento 
+      const precio = item.descuento
         ? item.precio * (1 - item.descuento / 100)
         : item.precio;
       return total + (precio * item.quantity);

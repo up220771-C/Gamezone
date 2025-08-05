@@ -1,4 +1,4 @@
-
+// src/services/authService.ts
 const API = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 export interface RegisterData {
@@ -29,8 +29,15 @@ export const loginUser = async (data: LoginData) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
+
   const payload = await res.json();
+
+  // ⚠️ Verificación adicional
+  if (res.ok && payload.token && payload.role) {
+    localStorage.setItem('token', payload.token);
+    localStorage.setItem('role', payload.role);
+  }
+
   console.log('🔥 loginUser payload:', payload);
   return payload;
 };
-
