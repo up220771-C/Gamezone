@@ -67,15 +67,45 @@ export default function Cart() {
     setTimeout(() => setNotification(null), 2000);
   };
 
-  const handlePaymentSubmit = (e: React.FormEvent) => {
+  const handlePaymentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setNotification('Pago realizado con éxito!');
-    setTimeout(() => setNotification(null), 2000);
-    clearCart();
-    setShowPayment(false);
-    setCardData({ number: '', name: '', expiry: '', cvv: '' });
-    navigate('/');
+
+    try {
+      for (const item of cart) {
+        for (let i = 0; i < item.quantity; i++) {
+          const res = await fetch('http://localhost:5000/api/compras', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ juego: item._id })
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            console.error(`❌ Error al comprar ${item.nombre}:`, data);
+            setNotification(`Error al comprar ${item.nombre}: ${data.mensaje}`);
+            return;
+          }
+        }
+      }
+
+      // Si todo salió bien
+      setNotification('Pago realizado con éxito!');
+      setTimeout(() => setNotification(null), 2000);
+      clearCart();
+      setShowPayment(false);
+      setCardData({ number: '', name: '', expiry: '', cvv: '' });
+      navigate('/');
+    } catch (error) {
+      console.error('Error en la compra:', error);
+      setNotification('Error al realizar la compra');
+    }
   };
+
+
 
   return (
     <div className="cart-container">
@@ -212,3 +242,4 @@ export default function Cart() {
     </div>
   );
 }
+
