@@ -1,0 +1,77 @@
+/* CartReceipt.css - Neon styling for receipt preview or print */
+.receipt-container {
+  background-color: #0b0c2a;
+  padding: 20px;
+  color: #fff;
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+  font-family: 'Segoe UI', sans-serif;
+}
+.receipt-header {
+  font-size: 1.8rem;
+  color: #00ffff;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-shadow: 0 0 8px #00ffff;
+}
+.receipt-section {
+  margin-bottom: 1.5rem;
+}
+.receipt-section-title {
+  font-size: 1.2rem;
+  color: #ff00ff;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 6px #ff00ff;
+}
+.receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.receipt-table th,
+.receipt-table td {
+  border: 1px solid #00ffff;
+  padding: 6px 8px;
+  text-align: left;
+}
+.receipt-table th {
+  background-color: #1e1f3b;
+  color: #ff00ff;
+}
+.redeem-code {
+  display: inline-block;
+  color: #00ffff;
+  font-weight: bold;
+  background-color: #1e1f3b;
+  padding: 4px 8px;
+  margin: 4px 2px;
+  border: 1px solid #00ffff;
+  border-radius: 4px;
+  text-shadow: 0 0 6px #00ffff;
+}
+/* Grouping for different game codes */
+.redeem-group {
+  margin-bottom: 12px;
+}
+.redeem-group-title {
+  font-size: 1rem;
+  color: #ff00ff;
+  margin-bottom: 6px;
+  text-shadow: 0 0 6px #ff00ff;
+}
+/* Utility neon text */
+.neon-text {
+  color: #00ffff;
+  text-shadow: 0 0 6px #00ffff;
+}
+/* Neon styled footer text */
+.receipt-footer {
+  margin-top: 20px;
+  text-align: center;
+}
+.neon-footer-text {
+  color: #00ffff;
+  text-shadow: 0 0 6px #00ffff;
+  font-size: 0.85rem;
+  margin: 4px 0;
+}

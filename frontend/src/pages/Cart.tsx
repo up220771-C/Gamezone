@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
+import jsPDF from 'jspdf';
 import '../App.css';
 import './Cart.css';
+import './CartReceipt.css';
 
 export default function Cart() {
   const navigate = useNavigate();
   const { cart, updateQuantity, removeFromCart, clearCart, getCartTotal } = useCart();
-  const { token } = useAuth();
+  const { token, usuario } = useAuth();
   const isAuthenticated = !!token;
 
   const [showPayment, setShowPayment] = useState(false);
@@ -19,6 +21,81 @@ export default function Cart() {
     cvv: '',
   });
   const [notification, setNotification] = useState<string | null>(null);
+
+  // Genera y descarga un PDF con el recibo de la compra
+  const generatePDF = async () => {
+    const orderId = Date.now();
+    const dateStr = new Date().toLocaleString();
+    const clientName = usuario ? `${usuario.nombre} ${usuario.apellido}` : '';
+    const total = getCartTotal();
+    // Build receipt HTML with grouped redeem codes per game
+    const groupedCodes: Record<string, string[]> = {};
+    cart.forEach(item => {
+      groupedCodes[item.nombre] = [];
+      for (let i = 0; i < item.quantity; i++) {
+        groupedCodes[item.nombre].push(
+          `${item.nombre} (${i+1}/${item.quantity}): ${Math.random().toString(36).substring(2,10).toUpperCase()}`
+        );
+      }
+    });
+    const tableRows = cart.map(item => {
+      const unit = item.descuento ? (item.precio*(1-item.descuento/100)).toFixed(2) : item.precio.toFixed(2);
+      const sub = (parseFloat(unit)*item.quantity).toFixed(2);
+      return `<tr><td>${item.quantity}</td><td>${item.nombre}</td><td>$${unit}</td><td>$${sub}</td></tr>`;
+    }).join('');
+    const receiptHTML = `
+      <div class="receipt-container" style="width:100%; height:100%;">
+        <div style="text-align:center; margin-bottom:10px;">
+          <img src="/logo512.png" alt="Gamezone Logo" style="width:120px; filter: drop-shadow(0 0 8px #0ff);" />
+        </div>
+        <h1 class="receipt-header">Recibo de Compra</h1>
+        <p style="text-align:center; color:#ffffff; font-size:0.85rem; margin-top:-5px; ">Dirección Fiscal: Calle Falsa 123, Ciudad, País | RFC: ABC123456789 | Tel: +1-234-567-890 | support@gamezone.com</p>
+        <hr style="border:1px solid #00ffff; opacity:0.5; margin:10px 0;" />
+        <div class="receipt-section">
+          <h2 class="receipt-section-title">Datos del cliente</h2>
+          <p style="color:#ffffff; text-shadow:0 0 4px #00ffff; font-size:0.9rem; margin:2px 0;">Nombre: ${clientName}</p>
+          <p style="color:#ffffff; text-shadow:0 0 4px #00ffff; font-size:0.9rem; margin:2px 0;">Email: ${usuario?.correo||''}</p>
+        </div>
+        <div class="receipt-section">
+          <h2 class="receipt-section-title">Información del pedido</h2>
+          <p style="color:#ffffff; text-shadow:0 0 4px #00ffff; font-size:0.9rem; margin:2px 0;">Orden: ${orderId}</p>
+          <p style="color:#ffffff; text-shadow:0 0 4px #00ffff; font-size:0.9rem; margin:2px 0;">Fecha: ${dateStr}</p>
+        </div>
+        <table class="receipt-table">
+          <thead><tr><th>Cantidad</th><th>Descripción</th><th>P.Unit.</th><th>Subtotal</th></tr></thead>
+          <tbody>${tableRows}</tbody>
+        </table>
+        <div class="receipt-section">
+          <h2 class="receipt-section-title">Total</h2>
+          <p style="color:#ffffff; text-shadow:0 0 4px #00ffff; font-size:1.1rem; margin:2px 0;">$${total.toFixed(2)}</p>
+        </div>
+        <div class="receipt-section">
+          <h2 class="receipt-section-title">Códigos de canjeo</h2>
+          ${Object.entries(groupedCodes).map(([name, codes]) => `
+            <div class="redeem-group">
+              <h3 class="redeem-group-title">${name}</h3>
+              <div>${codes.map(code => `<span class=\"redeem-code\">${code}</span>`).join('')}</div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="receipt-footer">
+          <p class="neon-footer-text">¡Gracias por tu compra!</p>
+          <p class="neon-footer-text">Visita nuestra tienda en línea para más productos.</p>
+        </div>
+      </div>`;
+    const container = document.createElement('div');
+    container.innerHTML = receiptHTML;
+    document.body.appendChild(container);
+    const doc = new jsPDF({unit:'pt', format:'a4'});
+    await (doc as any).html(container, {
+      callback: () => {
+        doc.save(`receipt_${orderId}.pdf`);
+        document.body.removeChild(container);
+      },
+      x: 20, y: 20,
+      html2canvas: { scale: 0.5 }
+    });
+  };
 
   // ⛔️ Si no hay sesión, no mostramos el carrito
   if (!isAuthenticated) {
@@ -95,6 +172,8 @@ export default function Cart() {
       // Si todo salió bien
       setNotification('Pago realizado con éxito!');
       setTimeout(() => setNotification(null), 2000);
+      // Generar y descargar recibo en PDF
+      generatePDF();
       clearCart();
       setShowPayment(false);
       setCardData({ number: '', name: '', expiry: '', cvv: '' });
@@ -105,7 +184,17 @@ export default function Cart() {
     }
   };
 
-
+  // neon‐text utility
+  function neonText(doc: jsPDF, text: string, x: number, y: number, color: string) {
+    // draw a thicker, translucent outline first
+    doc.setDrawColor(color);
+    doc.setLineWidth(1.5);
+    doc.text(text, x, y, { renderMode: 'stroke' });
+    // then fill with the same color
+    doc.setTextColor(color);
+    doc.setFontSize(doc.internal.getFontSize());
+    doc.text(text, x, y, { renderMode: 'fill' });
+  }
 
   return (
     <div className="cart-container">
