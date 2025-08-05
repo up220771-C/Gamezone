@@ -1,0 +1,196 @@
+.admin-users-container {
+  background: #0d0d1a;
+  color: #00ffff;
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+.admin-users-container h1 {
+  text-align: center;
+  color: #ff00ff;
+  margin-bottom: 2rem;
+}
+
+/* --- Crear usuario --- */
+.create-section {
+  background: rgba(26,26,40,0.7);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,255,255,0.2);
+  margin-bottom: 2rem;
+}
+.user-form .form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.user-form input,
+.user-form select {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #00ffff;
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: #fff;
+  transition: border-color 0.3s;
+}
+.user-form input:focus,
+.user-form select:focus {
+  border-color: #ff00ff;
+  outline: none;
+}
+.user-form button {
+  background: linear-gradient(45deg,#ff00ff,#00ffff);
+  border: none;
+  color: #0d0d1a;
+  padding: 0.75rem 2rem;
+  border-radius: 30px;
+  cursor: pointer;
+}
+.mensaje {
+  margin-top: 0.5rem;
+  color: #00ff88;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* --- Filtros --- */
+.filter-section {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.filter-section label {
+  color: #fff;
+  font-weight: bold;
+}
+.filter-section select,
+.filter-section input {
+  padding: 0.5rem 1rem;
+  border: 1px solid #00ffff;
+  border-radius: 30px;
+  background: #1a1a40;
+  color: #fff;
+}
+
+/* --- Tabla --- */
+.table-section table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(26,26,40,0.7);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0,255,255,0.1);
+}
+.table-section th,
+.table-section td {
+  padding: 1rem;
+  text-align: left;
+}
+.table-section th {
+  background: rgba(0,0,0,0.3);
+  color: #ff00ff;
+}
+.table-section tbody tr:nth-child(even) {
+  background: rgba(26,26,40,0.5);
+}
+.actions button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #00ffff;
+  margin-right: 0.5rem;
+}
+.actions button:last-child {
+  color: #ff5555;
+}
+.no-results {
+  text-align: center;
+  color: #f39c12;
+  padding: 1rem;
+}
+
+/* --- Modales --- */
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-box {
+  background: linear-gradient(135deg,#1b1b3a,#0d0d1f);
+  padding: 1.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  border: 1px solid #00ffff;
+  box-shadow: 0 0 30px rgba(0,255,255,0.3);
+}
+.detail-modal h3,
+.edit-modal h3,
+.delete-modal h3 {
+  color: #ff00ff;
+  margin-bottom: 1rem;
+}
+.detail-modal p {
+  margin: 0.5rem 0;
+}
+.edit-modal .user-form .form-row {
+  margin-bottom: 1rem;
+}
+.edit-modal .user-form button {
+  margin: 0 0.5rem;
+}
+.delete-modal input {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #00ffff;
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: #fff;
+}
+.delete-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.delete-buttons button {
+  padding: 0.6rem 1.5rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+.delete-buttons button:first-child {
+  background: #ff5555;
+  color: #fff;
+}
+.delete-buttons button:last-child {
+  background: #333;
+  color: #fff;
+}
+.error {
+  color: #ff5555;
+  margin-bottom: 0.5rem;
+}
+
+/* --- Responsivo --- */
+@media (max-width: 768px) {
+  .user-form .form-row {
+    flex-direction: column;
+  }
+  .filter-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .actions button {
+    margin: 0 0.25rem;
+  }
+}

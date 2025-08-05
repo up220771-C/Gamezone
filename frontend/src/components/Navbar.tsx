@@ -1,18 +1,19 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { registerUser, loginUser } from '../services/authService';
 import { useCart } from '../contexts/CartContext';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext'; // ✅ nuevo
 import './Navbar.css';
 
 export default function Navbar() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [usuario, setUsuario] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navigate = useNavigate();
   const { getCartItemCount } = useCart();
-  const { login, logout, usuario } = useAuth(); // 👈 usamos el usuario desde el contexto
+  const { login, logout } = useAuth(); // ✅ nuevo
 
   const cartCount = getCartItemCount();
 
@@ -25,11 +26,28 @@ export default function Navbar() {
     contraseña: ''
   });
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    fetch('http://localhost:5000/api/auth/perfil', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('No autorizado');
+        return res.json();
+      })
+      .then(data => setUsuario(data.usuario.username))
+      .catch(() => setUsuario(null));
+  }, []);
+
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await loginUser(loginData);
     if (res.token) {
-      login(res.token, res.usuario.rol); // 👈 esto ya actualiza el usuario en contexto
+      login(res.token, res.usuario.rol); // ✅ actualiza contexto
+      setUsuario(res.usuario?.username || window.location.reload());
+      window.location.reload();
       setShowLogin(false);
       setLoginData({ correo: '', contraseña: '' });
       setMobileOpen(false);
@@ -58,8 +76,10 @@ export default function Navbar() {
   };
 
   const handleLogout = () => {
-    logout();
+    logout(); // ✅ también borra token del contexto
+    setUsuario(null);
     navigate('/');
+    window.location.reload();
     setMobileOpen(false);
   };
 
@@ -122,7 +142,7 @@ export default function Navbar() {
                   alt="Perfil"
                   className="navbar__profile-icon"
                 />
-                <span className="navbar__username">{usuario.username}</span>
+                <span className="navbar__username">{usuario}</span>
               </NavLink>
               <button className="logout-btn" onClick={handleLogout}>
                 <i className="fi fi-sr-exit"></i>
@@ -196,7 +216,7 @@ export default function Navbar() {
                   alt="Perfil"
                   className="navbar__profile-icon"
                 />
-                <span className="navbar__username">{usuario.username}</span>
+                <span className="navbar__username">{usuario}</span>
               </NavLink>
               <button
                 className="nav-item logout-btn"
