@@ -47,6 +47,7 @@ export default function Navbar() {
     if (res.token) {
       login(res.token, res.usuario.rol); // ✅ actualiza contexto
       setUsuario(res.usuario?.username || '');
+      window.location.reload();
       setShowLogin(false);
       setLoginData({ correo: '', contraseña: '' });
       setMobileOpen(false);
@@ -78,6 +79,7 @@ export default function Navbar() {
     logout(); // ✅ también borra token del contexto
     setUsuario(null);
     navigate('/');
+    window.location.reload();
     setMobileOpen(false);
   };
 
