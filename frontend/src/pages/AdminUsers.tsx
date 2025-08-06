@@ -1,7 +1,21 @@
+// src/pages/AdminUsers.tsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminUsers.css';
 
+// ► Ajustamos la URL base de nuestras llamadas
+axios.defaults.baseURL = 'http://localhost:5000';
+
+// ▶️ Tipo tal como viene del backend
+interface UsuarioAPI {
+  _id: string;
+  nombre: string;
+  correo: string;
+  rol: 'cliente' | 'admin';
+  activo: boolean;
+}
+
+// ▶️ Tipo que usaremos en el frontend
 interface Usuario {
   _id: string;
   nombre: string;
@@ -11,13 +25,13 @@ interface Usuario {
 }
 
 export default function AdminUsers() {
-  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
+  const [users, setUsers] = useState<Usuario[]>([]);
   const [filterRole, setFilterRole] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [errorGlobal, setErrorGlobal] = useState<string>('');
   const [mensaje, setMensaje] = useState<string>('');
 
-  // Estados para crear usuario
+  // Formulario para crear usuario
   const [newUser, setNewUser] = useState({
     nombre: '',
     email: '',
@@ -25,35 +39,46 @@ export default function AdminUsers() {
     password: '',
   });
 
-  // Estados modales
-  const [viewModal, setViewModal] = useState<null | Usuario>(null);
-  const [editModal, setEditModal] = useState<null | Usuario>(null);
+  // Estados para los modales
+  const [viewModal, setViewModal] = useState<Usuario | null>(null);
+  const [editModal, setEditModal] = useState<Usuario | null>(null);
   const [editData, setEditData] = useState({
     nombre: '',
     email: '',
     role: 'user',
   });
-  const [deleteModal, setDeleteModal] = useState<null | Usuario>(null);
+  const [deleteModal, setDeleteModal] = useState<Usuario | null>(null);
   const [confirmPass, setConfirmPass] = useState<string>('');
   const [errorDelete, setErrorDelete] = useState<string>('');
 
+  // ► Carga inicial de usuarios
   useEffect(() => {
-    cargarUsuarios();
+    cargarUsers();
   }, []);
 
-  const cargarUsuarios = async () => {
+  const cargarUsers = async () => {
     try {
       const token = localStorage.getItem('token') || '';
-      const res = await axios.get<Usuario[]>('/api/usuarios', {
-        headers: { Authorization: `Bearer ${token}` },
+      const { data } = await axios.get<UsuarioAPI[]>('/api/users', {
+        headers: { Authorization: `Bearer ${token}` }
       });
-      setUsuarios(res.data);
+
+      // Mapeamos UsuarioAPI → Usuario
+      const mapped: Usuario[] = data.map(u => ({
+        _id:    u._id,
+        nombre: u.nombre,
+        email:  u.correo,
+        role:   u.rol === 'admin' ? 'admin' : 'user',
+        activo: u.activo
+      }));
+
+      setUsers(mapped);
     } catch {
       setErrorGlobal('Error al cargar usuarios.');
     }
   };
 
-  /** Handlers Crear */
+  // ► Crear usuario
   const handleNewChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setNewUser(prev => ({ ...prev, [name]: value }));
@@ -62,31 +87,45 @@ export default function AdminUsers() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token') || '';
-      await axios.post('/api/usuarios', newUser, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.post(
+        '/api/users',
+        {
+          nombre: newUser.nombre,
+          correo: newUser.email,
+          rol:    newUser.role,
+          contraseña: newUser.password
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setMensaje('Usuario creado con éxito');
       setNewUser({ nombre: '', email: '', role: 'user', password: '' });
-      cargarUsuarios();
+      cargarUsers();
     } catch {
       setMensaje('Error al crear usuario');
     }
   };
 
-  /** Filtrado + búsqueda */
-  const listaFiltrada = usuarios
+  // ► Filtrado + búsqueda
+  const listaFiltrada = users
     .filter(u => filterRole ? u.role === filterRole : true)
-    .filter(u => u.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                 u.email.toLowerCase().includes(searchTerm.toLowerCase()));
+    .filter(u =>
+      u.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      u.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
-  /** View */
-  const abrirView = (u: Usuario) => setViewModal(u);
-
-  /** Edit */
-  const abrirEdit = (u: Usuario) => {
+  // ► Abrir/poner datos en modales
+  const abrirView   = (u: Usuario) => setViewModal(u);
+  const abrirEdit   = (u: Usuario) => {
     setEditModal(u);
     setEditData({ nombre: u.nombre, email: u.email, role: u.role });
   };
+  const abrirDelete = (u: Usuario) => {
+    setDeleteModal(u);
+    setConfirmPass('');
+    setErrorDelete('');
+  };
+
+  // ► Editar usuario
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setEditData(prev => ({ ...prev, [name]: value }));
@@ -96,33 +135,34 @@ export default function AdminUsers() {
     if (!editModal) return;
     try {
       const token = localStorage.getItem('token') || '';
-      await axios.put(`/api/usuarios/${editModal._id}`, editData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.put(
+        `/api/users/${editModal._id}`,
+        {
+          nombre:  editData.nombre,
+          correo:  editData.email,
+          rol:     editData.role
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setMensaje('Usuario actualizado con éxito');
       setEditModal(null);
-      cargarUsuarios();
+      cargarUsers();
     } catch {
       setMensaje('Error al actualizar usuario');
     }
   };
 
-  /** Delete */
-  const abrirDelete = (u: Usuario) => {
-    setDeleteModal(u);
-    setConfirmPass('');
-    setErrorDelete('');
-  };
+  // ► Eliminar usuario
   const handleDelete = async () => {
     if (!deleteModal) return;
     try {
       const token = localStorage.getItem('token') || '';
-      await axios.delete(`/api/usuarios/${deleteModal._id}`, {
+      await axios.delete(`/api/users/${deleteModal._id}`, {
         data: { password: confirmPass },
         headers: { Authorization: `Bearer ${token}` }
       });
       setDeleteModal(null);
-      cargarUsuarios();
+      cargarUsers();
     } catch (err: any) {
       setErrorDelete(err.response?.data?.mensaje || 'Error al eliminar');
     }
@@ -132,7 +172,7 @@ export default function AdminUsers() {
     <div className="admin-users-container">
       <h1>Administrar Usuarios</h1>
 
-      {/* Crear Usuario */}
+      {/* ——— Crear usuario ——— */}
       <section className="create-section">
         <h2>Crear Nuevo Usuario</h2>
         <form onSubmit={handleCreateUser} className="user-form">
@@ -172,28 +212,24 @@ export default function AdminUsers() {
         </form>
       </section>
 
-      {/* Controles */}
+      {/* ——— Filtro y búsqueda ——— */}
       <section className="filter-section">
         {errorGlobal && <p className="error">{errorGlobal}</p>}
-        <div>
-          <label>Filtrar por rol:</label>
-          <select value={filterRole} onChange={e => setFilterRole(e.target.value)}>
-            <option value="">Todos</option>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-          </select>
-        </div>
-        <div>
-          <input
-            type="text"
-            placeholder="Buscar nombre o email…"
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-          />
-        </div>
+        <label>Filtrar por rol:</label>
+        <select value={filterRole} onChange={e => setFilterRole(e.target.value)}>
+          <option value="">Todos</option>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+        <input
+          type="text"
+          placeholder="Buscar nombre o email…"
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+        />
       </section>
 
-      {/* Tabla usuarios */}
+      {/* ——— Tabla de usuarios ——— */}
       <section className="table-section">
         <table>
           <thead>
@@ -213,20 +249,30 @@ export default function AdminUsers() {
                 <td>{u.role}</td>
                 <td>{u.activo ? 'Sí' : 'No'}</td>
                 <td className="actions">
-                  <button onClick={() => abrirView(u)} title="Ver"><i className="material-icons">visibility</i></button>
-                  <button onClick={() => abrirEdit(u)} title="Editar"><i className="material-icons">edit</i></button>
-                  <button onClick={() => abrirDelete(u)} title="Eliminar"><i className="material-icons">delete</i></button>
+                  <button onClick={() => abrirView(u)} title="Ver">
+                    <i className="material-icons">visibility</i>
+                  </button>
+                  <button onClick={() => abrirEdit(u)} title="Editar">
+                    <i className="material-icons">edit</i>
+                  </button>
+                  <button onClick={() => abrirDelete(u)} title="Eliminar">
+                    <i className="material-icons">delete</i>
+                  </button>
                 </td>
               </tr>
             ))}
             {listaFiltrada.length === 0 && (
-              <tr><td colSpan={5} className="no-results">No hay usuarios</td></tr>
+              <tr>
+                <td colSpan={5} className="no-results">
+                  No hay usuarios
+                </td>
+              </tr>
             )}
           </tbody>
         </table>
       </section>
 
-      {/* Ver Usuario */}
+      {/* ——— Modal Ver ——— */}
       {viewModal && (
         <div className="modal-backdrop">
           <div className="modal-box detail-modal">
@@ -239,7 +285,7 @@ export default function AdminUsers() {
         </div>
       )}
 
-      {/* Editar Usuario */}
+      {/* ——— Modal Editar ——— */}
       {editModal && (
         <div className="modal-backdrop">
           <div className="modal-box edit-modal">
@@ -261,19 +307,25 @@ export default function AdminUsers() {
                 />
               </div>
               <div className="form-row">
-                <select name="role" value={editData.role} onChange={handleEditChange}>
+                <select
+                  name="role"
+                  value={editData.role}
+                  onChange={handleEditChange}
+                >
                   <option value="user">User</option>
                   <option value="admin">Admin</option>
                 </select>
                 <button type="submit">Guardar</button>
-                <button type="button" onClick={() => setEditModal(null)}>Cancelar</button>
+                <button type="button" onClick={() => setEditModal(null)}>
+                  Cancelar
+                </button>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      {/* Eliminar Usuario */}
+      {/* ——— Modal Eliminar ——— */}
       {deleteModal && (
         <div className="modal-backdrop">
           <div className="modal-box delete-modal">
@@ -286,12 +338,16 @@ export default function AdminUsers() {
             />
             {errorDelete && <p className="error">{errorDelete}</p>}
             <div className="delete-buttons">
-              <button onClick={handleDelete} disabled={!confirmPass}>Eliminar</button>
-              <button onClick={() => setDeleteModal(null)}>Cancelar</button>
+              <button onClick={handleDelete} disabled={!confirmPass}>
+                Eliminar
+              </button>
+              <button type="button" onClick={() => setDeleteModal(null)}>
+                Cancelar
+              </button>
             </div>
           </div>
         </div>
       )}
     </div>
-);
+  );
 }

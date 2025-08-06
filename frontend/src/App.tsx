@@ -14,6 +14,7 @@ import JuegoDetalle from './pages/JuegoDetalle';
 import MasVendidos from './pages/MasVendidos';
 import AdminGames from './pages/AdminGames'; // ✅ nuevo
 import Cart from './pages/Cart'; // asegúrate de tener el componente Cart.tsx creado
+import AdminUsers from './pages/AdminUsers';
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         {/* Rutas solo para administrador */}
         <Route element={<ProtectedRoute roles={['admin']} />}>
           <Route path="/admin/games" element={<AdminGames />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
         </Route>
 
         {/* Ruta catch‑all opcional */}
