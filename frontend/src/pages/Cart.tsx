@@ -103,9 +103,10 @@ export default function Cart() {
   if (!isAuthenticated) {
     return (
       <div className="cart-container">
-        <h1 className="cart-title neon-text">Your cart</h1>
-        <p className="empty-message">You must log in to view your cart.</p>
-      </div>
+  <h1 className="cart-title neon-text">Your cart</h1>
+  <p className="empty-message">You must log in to view your cart.</p>
+</div>
+
     );
   }
 
@@ -329,7 +330,6 @@ export default function Cart() {
         <div className="cart-stars-left">★</div>
         <div className="cart-stars-right">★</div>
       </div>
-      <img src="https://i.imgur.com/C1vqLxU.png" alt="Vallue Boy" className="cart-vaultboy" />
     </div>
   );
 }

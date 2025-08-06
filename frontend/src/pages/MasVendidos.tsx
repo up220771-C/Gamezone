@@ -34,16 +34,16 @@ export default function MasVendidos() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p style={{ textAlign: 'center' }}>Cargando...</p>;
+  if (loading) return <p style={{ textAlign: 'center' }}>Loading...</p>;
   if (error) return <p style={{ textAlign: 'center', color: 'red' }}>{error}</p>;
 
   return (
     <div className="page-container masvendidos-container">
-      <h2 className="seccion-titulo masvendidos-title">Más Vendidos</h2>
+      <h2 className="seccion-titulo masvendidos-title">Best sellers</h2>
 
       <main className="juegos">
         {items.length === 0 ? (
-          <p style={{ textAlign: 'center' }}>No hay juegos más vendidos.</p>
+          <p style={{ textAlign: 'center' }}>There are no best-selling games.</p>
         ) : (
           items.map(item => {
             const { juego } = item;

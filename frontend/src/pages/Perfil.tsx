@@ -120,7 +120,7 @@ export default function Perfil() {
           />
           <div className="perfil-info">
             <p className="username">{usuario?.username}</p>
-            <p className="correo">{usuario?.correo}</p>
+            <p className="Mail">{usuario?.correo}</p>
           </div>
         </div>
       </div>
@@ -214,8 +214,8 @@ export default function Perfil() {
 
       <div className="logout-action">
         <button className="logout-btn" onClick={handleLogout}>
-          Cerrar sesión
         </button>
+        Log out
       </div>
     </div>
   );
