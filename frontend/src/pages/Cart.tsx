@@ -44,7 +44,7 @@ export default function Cart() {
       return `<tr><td>${item.quantity}</td><td>${item.nombre}</td><td>$${unit}</td><td>$${sub}</td></tr>`;
     }).join('');
     const receiptHTML = `
-      <div class="receipt-container" style="width:18cm; height:24cm; margin:0 auto; padding:12px;">
+      <div class="receipt-container" style="width:18cm; height:51cm; margin:0 auto; padding:12px;">
         <div style="text-align:center; margin-bottom:10px;">
           <img src="/logo512.png" alt="Gamezone Logo" style="width:120px; filter: drop-shadow(0 0 8px #0ff);" />
         </div>
@@ -79,8 +79,8 @@ export default function Cart() {
           `).join('')}
         </div>
         <div class="receipt-footer">
-          <p class="neon-footer-text">¡Gracias por tu compra!</p>
-          <p class="neon-footer-text">Visita nuestra tienda en línea para más productos.</p>
+          <p class="neon-footer-text">¡Thank you for your purchase!</p>
+          <p class="neon-footer-text">Visit our online store for more products.</p>
         </div>
       </div>`;
     const container = document.createElement('div');
