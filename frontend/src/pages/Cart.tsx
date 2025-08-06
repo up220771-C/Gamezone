@@ -25,7 +25,7 @@ export default function Cart() {
     return (
       <div className="cart-container">
         <h1 className="cart-title neon-text">Your cart</h1>
-        <p className="empty-message">Debes iniciar sesión para ver tu carrito.</p>
+        <p className="empty-message">You must log in to view your cart.</p>
       </div>
     );
   }

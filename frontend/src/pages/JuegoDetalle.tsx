@@ -53,7 +53,7 @@ export default function JuegoDetalle() {
     }
   }, [id]);
 
-  if (!juego) return <div className="detalle-page">Cargando...</div>;
+  if (!juego) return <div className="detalle-page">Loading...</div>;
 
   const precioOriginal = juego.precio;
   const hasDesc = juego.descuento != null && juego.descuento > 0;
@@ -63,14 +63,14 @@ export default function JuegoDetalle() {
 
   const handleBuyNow = () => {
     if (!isAuthenticated) {
-      setNotification("⚠️ Debes iniciar sesión para comprar.");
+      setNotification("⚠️ You must log in to purchase.");
       setTimeout(() => setNotification(null), 3000);
       return;
     }
 
     try {
       addToCart(juego);
-      setNotification('✅ Juego añadido. Redirigiendo al carrito...');
+      setNotification('✅ Game added. Redirecting to cart....');
       setTimeout(() => navigate('/cart'), 1000);
     } catch (error: any) {
       setNotification(error.message);
@@ -80,7 +80,7 @@ export default function JuegoDetalle() {
 
   const handleAddToCart = () => {
     if (!isAuthenticated) {
-      setNotification("⚠️ Debes iniciar sesión para agregar al carrito.");
+      setNotification("⚠️ You must log in to add to cart.");
       setTimeout(() => setNotification(null), 3000);
       return;
     }
@@ -114,7 +114,7 @@ export default function JuegoDetalle() {
               <div className="detalle-section descripcion">
                 <InfoIcon className="detalle-icon" />
                 <div>
-                  <h3>Descripción</h3>
+                  <h3>Description</h3>
                   <p>{juego.descripcion}</p>
                 </div>
               </div>
@@ -123,16 +123,16 @@ export default function JuegoDetalle() {
                 <GlobeIcon className="detalle-icon" />
                 <div>
                   <h3>Global</h3>
-                  <p>Este código digital se puede canjear en cualquier región.</p>
+                  <p>This digital code can be redeemed in any region.</p>
                 </div>
               </div>
 
               <div className="detalle-section codigo">
                 <CodeIcon className="detalle-icon" />
                 <div>
-                  <h3>Código</h3>
+                  <h3>Code</h3>
                   <p>
-                    Tras la compra recibirás un código único que canjearás en la plataforma correspondiente.
+                    After purchase you will receive a unique code that you will redeem on the corresponding platform.
                   </p>
                 </div>
               </div>
@@ -146,8 +146,8 @@ export default function JuegoDetalle() {
               ))}
             </div>
 
-            <button className="btn comprar" onClick={handleBuyNow}>Comprar Ahora</button>
-            <button className="btn carrito" onClick={handleAddToCart}>Agregar al carrito</button>
+            <button className="btn comprar" onClick={handleBuyNow}>Buy now</button>
+            <button className="btn carrito" onClick={handleAddToCart}>Add to shopping cart</button>
 
             <div className="detalle-precio">
               {hasDesc && (

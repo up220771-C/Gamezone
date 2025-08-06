@@ -5,11 +5,10 @@ import './Categorias.css';
 
 export default function Categorias() {
   const cards = [
-    { id: 'xbox',     img: '/assets/xbox.png',        label: 'Juegos Xbox' },
-    { id: 'PS4',      img: '/assets/playstation.png', label: 'Juegos PlayStation' },
-    { id: 'Nintendo', img: '/assets/nintendo.png',    label: 'Juegos Nintendo' },
-    { id: 'best',     icon: 'fi fi-rr-chat-arrow-grow', label: 'Juegos Más Vendidos' },
-    { id: 'gift',     icon: 'fi fi-sr-gift',           label: 'Tarjetas de regalo' },
+    { id: 'xbox',     img: '/assets/xbox.png',        label: 'Xbox games' },
+    { id: 'PS4',      img: '/assets/playstation.png', label: 'PlayStation games' },
+    { id: 'Nintendo', img: '/assets/nintendo.png',    label: 'Nintendo games' },
+    { id: 'best',     icon: 'fi fi-rr-chat-arrow-grow', label: 'Best selling games' },
   ];
 
   return (
@@ -29,8 +28,8 @@ export default function Categorias() {
         ))}
       </div>
 
-      {/* Segunda fila: categorías adicionales */}
-      <div className="cat-row second-row">
+      {/* Segunda fila: categoría única a pantalla completa */}
+      <div className="cat-row full-width">
         {cards.slice(3).map(c => (
           <Link to={`/categoria/${c.id}`} key={c.id} className="cat-card-link">
             <div className="cat-card">
@@ -43,5 +42,5 @@ export default function Categorias() {
         ))}
       </div>
     </div>
-);
+  );
 }
