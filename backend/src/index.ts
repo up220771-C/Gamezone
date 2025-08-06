@@ -12,7 +12,7 @@ import comprasRoutes from './routes/compras';
 import plataformaRoutes from './routes/plataforma';
 import generoRoutes from './routes/genero';
 import adminRoutes from './routes/admin';
-//import usersRoutes from './routes/users';
+import usersRoutes from './routes/users';
 
 
 dotenv.config();
@@ -35,7 +35,7 @@ app.use('/api/juegos_2', juegos2Routes);
 app.use('/api/compras', comprasRoutes);
 app.use('/api/plataformas', plataformaRoutes);
 app.use('/api/generos', generoRoutes);
-//app.use('/api/users', usersRoutes);
+app.use('/api/users', usersRoutes);
 
 // Conexión a la base de datos
 connectDB();

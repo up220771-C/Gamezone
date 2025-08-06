@@ -3,6 +3,14 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:5000/api/juegos';
 
+//-------------------------
+//import axios from 'axios';
+//axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
+//export const obtenerJuegos = () =>
+//  axios.get('/api/juegos').then(res => res.data);
+//-------------------------
+
 export const obtenerJuegos = async () => {
   const res = await axios.get(API_URL);
   return res.data;

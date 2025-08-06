@@ -1,18 +1,15 @@
-FROM node:18
+# syntax=docker/dockerfile:1
+FROM node:18-alpine AS build-backend
 
 WORKDIR /app
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
-COPY package*.json ./
-COPY tsconfig.json ./
-RUN npm install
-
-# Asegúrate de copiar también el código fuente
 COPY . .
-
-# (opcional pero útil para depuración)
-RUN ls -la && ls -la src
-
-RUN npm run build
+# si usas TS necesitas compilar, si no, comentar:
+# RUN yarn build
 
 EXPOSE 5000
-CMD ["node", "dist/index.js"]
+ENV NODE_ENV=production
+CMD ["node", "src/index.js"] 
+# o si no transpilas,: CMD ["node", "src/index.js"]
