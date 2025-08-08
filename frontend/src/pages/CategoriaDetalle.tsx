@@ -23,7 +23,6 @@ export default function CategoriaDetalle() {
             className={`card${!juego.disponible ? ' sold-out-card' : ''}`}
             onClick={() => juego.disponible && navigate(`/juego/${juego._id}`)}
           >
-            {/* Badge si el juego está agotado */}
             {!juego.disponible && <div className="sold-out">Agotado</div>}
             <img src={juego.imagen} alt={juego.nombre} />
             <div className="card-content">

@@ -20,7 +20,6 @@ export default function Perfil() {
   const [showHistory, setShowHistory] = useState(false);
   const navigate = useNavigate();
 
-  // Helper to calculate paid price if not provided by backend
   const getPrecioPagado = (compra: Compra): number => {
     return compra.precioPagado !== undefined
       ? compra.precioPagado
@@ -37,7 +36,6 @@ export default function Perfil() {
       .then(data => data.usuario && setUsuario(data.usuario));
   }, []);
 
-  // Obtener compras y calcular gastos totales
   useEffect(() => {
     getPurchases()
       .then((data: Compra[]) => {
@@ -87,7 +85,6 @@ export default function Perfil() {
     window.location.reload()
   };
 
-  // Agrupar compras por juego para mostrar cantidad y gasto total por juego
   const purchaseSummary = useMemo(() => {
     const map: Record<string, { juego: any; quantity: number; total: number }> = {};
     purchases.forEach(compra => {
@@ -103,7 +100,6 @@ export default function Perfil() {
     return Object.values(map);
   }, [purchases]);
 
-  // Recalcular totalExpenses a partir del resumen agrupado
   useEffect(() => {
     const sum = purchaseSummary.reduce((acc, ps) => acc + ps.total, 0);
     setTotalExpenses(sum);
@@ -187,7 +183,6 @@ export default function Perfil() {
         {purchases.length === 0 ? (
           <p>No purchases yet.</p>
         ) : showHistory ? (
-          // Detailed history: each purchase entry
           purchases.map(compra => (
             <div key={compra._id} className="purchase-item">
               <img src={compra.juego.imagen} alt={compra.juego.nombre} />
@@ -199,7 +194,6 @@ export default function Perfil() {
             </div>
           ))
         ) : (
-          // Summary view: grouped by game
           purchaseSummary.slice(-5).map(ps => (
             <div key={ps.juego._id} className="purchase-item">
               <img src={ps.juego.imagen} alt={ps.juego.nombre} />
@@ -214,7 +208,7 @@ export default function Perfil() {
 
       <div className="logout-action">
         <button className="logout-btn" onClick={handleLogout}>
-          Cerrar sesión
+          Log out
         </button>
       </div>
     </div>

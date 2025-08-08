@@ -26,7 +26,6 @@ export default function MasVendidos() {
     setLoading(true);
     obtenerMasVendidos()
       .then(data => {
-        // Mostrar solo juegos disponibles
         const disponibles = data.filter((item: any) => item.juego.disponible);
         setItems(disponibles);
       })

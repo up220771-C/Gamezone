@@ -9,14 +9,11 @@ export interface Compra {
     precio: number;
     descuento: number;
   };
-  // precioPagado opcional, puede calcularse si no lo retorna el backend
   precioPagado?: number;
   fecha: string;
 }
 
-/**
- * Obtiene las compras realizadas por el usuario autenticado.
- */
+
 export const getPurchases = async (): Promise<Compra[]> => {
   const token = localStorage.getItem('token');
   if (!token) throw new Error('No auth token');
@@ -31,7 +28,6 @@ export const getPurchases = async (): Promise<Compra[]> => {
 };
 
 /**
- * Registra una compra para el usuario autenticado.
  * @param juegoId ID del juego a comprar
  */
 export const addPurchase = async (juegoId: string): Promise<Compra> => {

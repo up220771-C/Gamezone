@@ -4,18 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from './contexts/AuthContext';
-import { CartProvider } from './contexts/CartContext';
+import { Provider } from 'react-redux';           // ✅ importa Redux Provider
+import { store } from './app/store';              // ✅ importa tu store
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
-
-  <AuthProvider>
-    <CartProvider>
-      <App />
-    </CartProvider>
-  </AuthProvider>
-
+  <React.StrictMode>
+    <AuthProvider>
+      <Provider store={store}>                     {/* ✅ Redux aquí */}
+        <App />
+      </Provider>
+    </AuthProvider>
+  </React.StrictMode>
 );
+
 reportWebVitals();

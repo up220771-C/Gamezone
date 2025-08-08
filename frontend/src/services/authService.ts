@@ -32,7 +32,6 @@ export const loginUser = async (data: LoginData) => {
 
   const payload = await res.json();
 
-  // ⚠️ Verificación adicional
   if (res.ok && payload.token && payload.role) {
     localStorage.setItem('token', payload.token);
     localStorage.setItem('role', payload.role);

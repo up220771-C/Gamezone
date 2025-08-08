@@ -3,10 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminUsers.css';
 
-// ► Ajustamos la URL base de nuestras llamadas
 axios.defaults.baseURL = 'http://localhost:5000';
 
-// ▶️ Tipo tal como viene del backend
 interface UsuarioAPI {
   _id: string;
   nombre: string;
@@ -15,7 +13,6 @@ interface UsuarioAPI {
   activo: boolean;
 }
 
-// ▶️ Tipo que usaremos en el frontend
 interface Usuario {
   _id: string;
   nombre: string;
@@ -31,7 +28,6 @@ export default function AdminUsers() {
   const [errorGlobal, setErrorGlobal] = useState<string>('');
   const [mensaje, setMensaje] = useState<string>('');
 
-  // Formulario para crear usuario
   const [newUser, setNewUser] = useState({
     nombre: '',
     email: '',
@@ -39,7 +35,6 @@ export default function AdminUsers() {
     password: '',
   });
 
-  // Estados para los modales
   const [viewModal, setViewModal] = useState<Usuario | null>(null);
   const [editModal, setEditModal] = useState<Usuario | null>(null);
   const [editData, setEditData] = useState({
@@ -51,7 +46,6 @@ export default function AdminUsers() {
   const [confirmPass, setConfirmPass] = useState<string>('');
   const [errorDelete, setErrorDelete] = useState<string>('');
 
-  // ► Carga inicial de usuarios
   useEffect(() => {
     cargarUsers();
   }, []);
@@ -63,7 +57,6 @@ export default function AdminUsers() {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      // Mapeamos UsuarioAPI → Usuario
       const mapped: Usuario[] = data.map(u => ({
         _id:    u._id,
         nombre: u.nombre,
@@ -78,7 +71,6 @@ export default function AdminUsers() {
     }
   };
 
-  // ► Crear usuario
   const handleNewChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setNewUser(prev => ({ ...prev, [name]: value }));
@@ -105,7 +97,6 @@ export default function AdminUsers() {
     }
   };
 
-  // ► Filtrado + búsqueda
   const listaFiltrada = users
     .filter(u => filterRole ? u.role === filterRole : true)
     .filter(u =>
@@ -113,7 +104,6 @@ export default function AdminUsers() {
       u.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-  // ► Abrir/poner datos en modales
   const abrirView   = (u: Usuario) => setViewModal(u);
   const abrirEdit   = (u: Usuario) => {
     setEditModal(u);
@@ -125,7 +115,6 @@ export default function AdminUsers() {
     setErrorDelete('');
   };
 
-  // ► Editar usuario
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setEditData(prev => ({ ...prev, [name]: value }));
@@ -152,7 +141,6 @@ export default function AdminUsers() {
     }
   };
 
-  // ► Eliminar usuario
   const handleDelete = async () => {
     if (!deleteModal) return;
     try {
@@ -172,7 +160,6 @@ export default function AdminUsers() {
     <div className="admin-users-container">
       <h1>Administrar Usuarios</h1>
 
-      {/* ——— Crear usuario ——— */}
       <section className="create-section">
         <h2>Crear Nuevo Usuario</h2>
         <form onSubmit={handleCreateUser} className="user-form">
@@ -212,7 +199,6 @@ export default function AdminUsers() {
         </form>
       </section>
 
-      {/* ——— Filtro y búsqueda ——— */}
       <section className="filter-section">
         {errorGlobal && <p className="error">{errorGlobal}</p>}
         <label>Filtrar por rol:</label>
@@ -229,7 +215,6 @@ export default function AdminUsers() {
         />
       </section>
 
-      {/* ——— Tabla de usuarios ——— */}
       <section className="table-section">
         <table>
           <thead>
@@ -272,7 +257,6 @@ export default function AdminUsers() {
         </table>
       </section>
 
-      {/* ——— Modal Ver ——— */}
       {viewModal && (
         <div className="modal-backdrop">
           <div className="modal-box detail-modal">
@@ -285,7 +269,6 @@ export default function AdminUsers() {
         </div>
       )}
 
-      {/* ——— Modal Editar ——— */}
       {editModal && (
         <div className="modal-backdrop">
           <div className="modal-box edit-modal">
@@ -325,7 +308,6 @@ export default function AdminUsers() {
         </div>
       )}
 
-      {/* ——— Modal Eliminar ——— */}
       {deleteModal && (
         <div className="modal-backdrop">
           <div className="modal-box delete-modal">

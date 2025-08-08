@@ -7,13 +7,12 @@ import Deals from './pages/Deals';
 import Categorias from './pages/Categorias';
 import CategoriaDetalle from './pages/CategoriaDetalle';
 import About from './pages/About';
-import Register from './pages/Register';
 import Perfil from './pages/Perfil';
 import ComingSoon from './pages/ComingSoon';
 import JuegoDetalle from './pages/JuegoDetalle';
 import MasVendidos from './pages/MasVendidos';
-import AdminGames from './pages/AdminGames'; // ✅ nuevo
-import Cart from './pages/Cart'; // asegúrate de tener el componente Cart.tsx creado
+import AdminGames from './pages/AdminGames'; 
+import Cart from './pages/Cart'; 
 import AdminUsers from './pages/AdminUsers';
 
 
@@ -25,11 +24,8 @@ function App() {
       <Navbar />
 
       <Routes>
-        {/* Más vendidos */}
         <Route path="/categoria/best" element={<MasVendidos />} />
-        {/* Rutas públicas */}
         <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/deals" element={<Deals />} />
         <Route path="/juego/:id" element={<JuegoDetalle />} />
         <Route path="/comingsoon" element={<ComingSoon />} />
@@ -39,18 +35,15 @@ function App() {
         <Route path="/cart" element={<Cart />} />
 
 
-        {/* Rutas autenticadas para cliente y admin */}
         <Route element={<ProtectedRoute roles={['cliente', 'admin']} />}>
           <Route path="/perfil" element={<Perfil />} />
         </Route>
 
-        {/* Rutas solo para administrador */}
         <Route element={<ProtectedRoute roles={['admin']} />}>
           <Route path="/admin/games" element={<AdminGames />} />
           <Route path="/admin/users" element={<AdminUsers />} />
         </Route>
 
-        {/* Ruta catch‑all opcional */}
         <Route path="*" element={<Home />} />
       </Routes>
     </Router>

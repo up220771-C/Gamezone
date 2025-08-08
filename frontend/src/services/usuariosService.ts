@@ -1,4 +1,3 @@
-// src/services/usuariosService.ts
 import axios from 'axios';
 
 export const obtenerUsuarios = () =>

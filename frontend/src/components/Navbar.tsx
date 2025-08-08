@@ -1,8 +1,9 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { registerUser, loginUser } from '../services/authService';
-import { useCart } from '../contexts/CartContext';
-import { useAuth } from '../contexts/AuthContext'; // ✅ nuevo
+import { useAuth } from '../contexts/AuthContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '../app/store';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -12,10 +13,10 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navigate = useNavigate();
-  const { getCartItemCount } = useCart();
-  const { login, logout } = useAuth(); // ✅ nuevo
+  const { login, logout } = useAuth();
 
-  const cartCount = getCartItemCount();
+  const cart = useSelector((state: RootState) => state.cart.items);
+  const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const [loginData, setLoginData] = useState({ correo: '', contraseña: '' });
   const [regData, setRegData] = useState({
@@ -45,7 +46,7 @@ export default function Navbar() {
     e.preventDefault();
     const res = await loginUser(loginData);
     if (res.token) {
-      login(res.token, res.usuario.rol); // ✅ actualiza contexto
+      login(res.token, res.usuario.rol);
       setUsuario(res.usuario?.username || '');
       window.location.reload();
       setShowLogin(false);
@@ -76,20 +77,14 @@ export default function Navbar() {
   };
 
   const handleLogout = () => {
-    logout(); // ✅ también borra token del contexto
+    logout();
     setUsuario(null);
     navigate('/');
     window.location.reload();
     setMobileOpen(false);
   };
 
-  const LinkItem = ({
-    to,
-    children
-  }: {
-    to: string;
-    children: React.ReactNode;
-  }) => (
+  const LinkItem = ({ to, children }: { to: string; children: React.ReactNode }) => (
     <NavLink
       to={to}
       end

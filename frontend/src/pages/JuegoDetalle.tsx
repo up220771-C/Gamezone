@@ -3,8 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import '../App.css';
 import './JuegoDetalle.css';
 import { obtenerJuegoPorId } from '../services/juegosService';
-import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../features/cart/cartSlice';
 
 import { FiGlobe, FiInfo, FiCode } from 'react-icons/fi';
 import {
@@ -38,7 +39,7 @@ interface Juego {
 export default function JuegoDetalle() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { addToCart } = useCart();
+  const dispatch = useDispatch();
   const { token } = useAuth();
   const isAuthenticated = !!token;
 
@@ -61,6 +62,18 @@ export default function JuegoDetalle() {
     ? +(precioOriginal * (1 - juego.descuento! / 100)).toFixed(2)
     : precioOriginal;
 
+  const dispatchAddToCart = () => {
+    dispatch(addToCart({
+      _id: juego._id,
+      nombre: juego.nombre,
+      descripcion: juego.descripcion,
+      imagen: juego.imagen,
+      precio: juego.precio,
+      descuento: juego.descuento,
+      quantity: 1
+    }));
+  };
+
   const handleBuyNow = () => {
     if (!isAuthenticated) {
       setNotification("⚠️ You must log in to purchase.");
@@ -69,7 +82,7 @@ export default function JuegoDetalle() {
     }
 
     try {
-      addToCart(juego);
+      dispatchAddToCart();
       setNotification('✅ Game added. Redirecting to cart....');
       setTimeout(() => navigate('/cart'), 1000);
     } catch (error: any) {
@@ -86,7 +99,7 @@ export default function JuegoDetalle() {
     }
 
     try {
-      addToCart(juego);
+      dispatchAddToCart();
       setNotification('✅ Juego agregado al carrito!');
       setTimeout(() => setNotification(null), 2000);
     } catch (error: any) {

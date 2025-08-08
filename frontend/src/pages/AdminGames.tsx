@@ -15,7 +15,6 @@ interface Juego {
 }
 
 export default function AdminGames() {
-  // Estados para el formulario de agregar
   const [formData, setFormData] = useState({
     nombre: '',
     descripcion: '',
@@ -27,14 +26,12 @@ export default function AdminGames() {
   const [imagen, setImagen] = useState<File | null>(null);
   const [mensaje, setMensaje] = useState('');
 
-  // Estados para el listado, filtrado y búsqueda
   const [todos, setTodos] = useState<Juego[]>([]);
   const [filter, setFilter] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [platforms, setPlatforms] = useState<string[]>([]);
   const [errorGlobal, setErrorGlobal] = useState<string>('');
 
-  // Estados para modales
   const [modalOpen, setModalOpen] = useState(false);
   const [selected, setSelected] = useState<Juego | null>(null);
   const [passDelete, setPassDelete] = useState('');
@@ -42,7 +39,6 @@ export default function AdminGames() {
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
-  // Estados para edición completa
   const [currentGame, setCurrentGame] = useState<Juego | null>(null);
   const [editFormData, setEditFormData] = useState({
     nombre: '',
@@ -54,7 +50,6 @@ export default function AdminGames() {
   });
   const [editImagen, setEditImagen] = useState<File | null>(null);
 
-  // Carga todos los juegos al montar
   useEffect(() => {
     cargarJuegos();
   }, []);
@@ -74,7 +69,6 @@ export default function AdminGames() {
     }
   };
 
-  // Handlers para el formulario de agregar
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -112,13 +106,11 @@ export default function AdminGames() {
     }
   };
 
-  // Filtrado + búsqueda
   const listaFiltrada = todos
     .filter(j => j.plataforma.toLowerCase() !== 'steam')
     .filter(j => (filter ? j.plataforma === filter : true))
     .filter(j => j.nombre.toLowerCase().includes(searchTerm.toLowerCase()));
 
-  // Modal de eliminación
   const onDeleteClick = (j: Juego) => {
     setSelected(j);
     setPassDelete('');
@@ -140,13 +132,11 @@ export default function AdminGames() {
     }
   };
 
-  // Modal de detalles
   const verDetalles = (juego: Juego) => {
     setCurrentGame(juego);
     setViewModalOpen(true);
   };
 
-  // Abrir modal de edición y prellenar
   const abrirEditar = (juego: Juego) => {
     setCurrentGame(juego);
     setEditFormData({
@@ -161,7 +151,6 @@ export default function AdminGames() {
     setEditModalOpen(true);
   };
 
-  // Handlers edición
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setEditFormData(prev => ({ ...prev, [name]: value }));
@@ -203,7 +192,6 @@ export default function AdminGames() {
     <div className="admin-games-container">
       <h1>Panel de Administración de Juegos</h1>
 
-      {/* Agregar Nuevo Juego */}
       <section>
         <h2>Agregar Nuevo Juego</h2>
         <form onSubmit={handleSubmit} className="admin-form" encType="multipart/form-data">
@@ -256,7 +244,6 @@ export default function AdminGames() {
         </form>
       </section>
 
-      {/* Administrar Juegos */}
       <section>
         <h2>Administrar Juegos</h2>
         {errorGlobal && <p className="error-global">{errorGlobal}</p>}
@@ -325,7 +312,6 @@ export default function AdminGames() {
         </div>
       </section>
 
-      {/* Modal Eliminar */}
       {modalOpen && selected && (
         <div className="modal-backdrop">
           <div className="modal-contenido">
@@ -346,7 +332,6 @@ export default function AdminGames() {
         </div>
       )}
 
-      {/* Modal Detalles */}
       {viewModalOpen && currentGame && (
         <div className="modal-backdrop">
           <div className="modal-contenido detalle-preview">
@@ -392,7 +377,6 @@ export default function AdminGames() {
       )}
 
 
-      {/* Modal Editar */}
       {editModalOpen && currentGame && (
         <div className="modal-backdrop">
           <div className="modal-contenido edit-modal">

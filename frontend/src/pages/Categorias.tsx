@@ -14,7 +14,6 @@ export default function Categorias() {
   return (
     <div className="categorias-container">
 
-      {/* Primera fila: tres categorías principales */}
       <div className="cat-row">
         {cards.slice(0, 3).map(c => (
           <Link to={`/categoria/${c.id}`} key={c.id} className="cat-card-link">
@@ -28,7 +27,6 @@ export default function Categorias() {
         ))}
       </div>
 
-      {/* Segunda fila: categoría única a pantalla completa */}
       <div className="cat-row full-width">
         {cards.slice(3).map(c => (
           <Link to={`/categoria/${c.id}`} key={c.id} className="cat-card-link">
