@@ -1,0 +1,78 @@
+[{
+  "_id": {
+    "$oid": "688698b3e8e19b70321d12d4"
+  },
+  "nombre": "Grounded 2",
+  "descripcion": "In this open-world, single-player or co-op survival adventure, craft weapons and armor, build your base, and traverse the playground on your buggy.",
+  "precio": 0,
+  "plataforma": "Xbox One, Xbox Series S, Xbox Series X",
+  "genero": "Supervivencia, Aventura",
+  "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwtfN-nfmkfrvsuGPSYjNRt4sE0SV0KU8Awg&s",
+  "disponible": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68869976e8e19b70321d12d7"
+  },
+  "nombre": "Super Meat Boy 3D",
+  "descripcion": "Super Meat Boy 3D is a tough-as-nails platformer where you play as an animated cube of meat who's trying to save his girlfriend, Bandage Girl, from the evil Dr. Fetus. Dash through deadly traps, wall-jump across brutal levels, and die — a lot — in this fast-paced, precision-based adventure now reimagined in full 3D.",
+  "precio": 0,
+  "plataforma": "Xbox One, Xbox Series S, Xbox Series X",
+  "genero": "Acción, 3D",
+  "imagen": "https://store-images.s-microsoft.com/image/apps.45499.13682468967165125.f6cc8af7-98b7-44e0-b9cb-cf7be3ecd662.04945db8-f776-4bce-aaa1-1d4b163639dd?q=90&w=177&h=265",
+  "disponible": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68869b8ee8e19b70321d12db"
+  },
+  "nombre": "Little Nightmares 3",
+  "descripcion": "Little Nightmares III is a disturbing atmospheric adventure in which the close friends Low and Alone, who wish to escape the Nothingness, will work together to survive a world full of nightmares and uncover its dark secrets.",
+  "precio": 0,
+  "plataforma": "PS5",
+  "genero": "Terror, Puzzle",
+  "imagen": "https://areajugones.sport.es/wp-content/uploads/2023/08/little-nightmares-3-2-436x588.jpg.webp",
+  "disponible": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68869c71e8e19b70321d12dd"
+  },
+  "nombre": "High On Life 2",
+  "descripcion": "An intergalactic conspiracy threatens the fate of humanity! Team up with a wide cast of talking alien guns as you shoot, stab, and skate your way through bizarre worlds, deadly enemies, and absurd missions in this hilarious and action-packed sequel to the hit game High On Life.",
+  "precio": 0,
+  "plataforma": "Xbox Series S, Xbox Series X",
+  "genero": "Shooter, Acción, Ciencia ficción, Comedia",
+  "imagen": "https://pbs.twimg.com/profile_images/1931776403046854656/rBor6bzP_400x400.jpg",
+  "disponible": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68869d3fe8e19b70321d12e0"
+  },
+  "nombre": "Resident Evil Requiem",
+  "descripcion": "Face your fears in Resident Evil: Requiem — a new chapter of survival horror where every bullet counts and every shadow hides a threat.",
+  "precio": 0,
+  "plataforma": "Xbox Series S, Xbox Series X",
+  "genero": "Survival Horror , Acción, Aventura",
+  "imagen": "https://s.pacn.ws/1/p/1ch/resident-evil-requiem-872629.11.jpg?v=sxmn2x",
+  "disponible": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68869ddee8e19b70321d12e2"
+  },
+  "nombre": "Grand Theft Auto VI",
+  "descripcion": "Experience a new era of crime in GTA VI — a sprawling open-world adventure full of danger, chaos, and limitless possibilities.",
+  "precio": 0,
+  "plataforma": "PS5",
+  "genero": "Mundo abierto, Acción, Aventura",
+  "imagen": "https://sheenugamecenter.com/wp-content/uploads/2024/01/GTA_6_PS5.webp",
+  "disponible": false,
+  "__v": 0
+}]

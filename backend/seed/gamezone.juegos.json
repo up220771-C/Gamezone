@@ -1,0 +1,460 @@
+[{
+  "_id": {
+    "$oid": "687ed224205fe5cf9949e7cf"
+  },
+  "nombre": "Elden Ring",
+  "descripcion": "Descubre los misterios del poder del Anillo de Elden. Encuentra adversarios con trasfondos complejos, personajes con sus propias motivaciones únicas para ayudar u obstaculizar tu progreso y criaturas temibles.",
+  "precio": 59.99,
+  "plataforma": "xbox",
+  "genero": "RPG",
+  "imagen": "https://m.media-amazon.com/images/I/718Psopj65L.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "stock": 14,
+  "descuento": 0
+},
+{
+  "_id": {
+    "$oid": "687ef3b7ca3c862033bb8201"
+  },
+  "nombre": "Zelda breath of the wild",
+  "descripcion": "Link, que despierta en un mundo postapocalíptico después de estar cien años durmiendo para derrotar a Ganon y salvar al reino de Hyrule.",
+  "precio": 46.99,
+  "plataforma": "Nintendo",
+  "genero": "Acción, Aventura",
+  "imagen": "https://m.media-amazon.com/images/I/71iiZsfoZ-L.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 20,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "687ef5ffca3c862033bb8207"
+  },
+  "nombre": "Mario Kart 8 Deluxe",
+  "descripcion": "Compite en divertidas carreras multijugador con los personajes del mundo de Mario en circuitos coloridos y llenos de acción.",
+  "precio": 44.99,
+  "plataforma": "Nintendo",
+  "genero": "Carreras, Familiar",
+  "imagen": "https://m.media-amazon.com/images/I/71jZAGKRAQL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 20,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "687ef622ca3c862033bb820b"
+  },
+  "nombre": "The Witcher 3: Wild Hunt",
+  "descripcion": "Conviértete en Geralt de Rivia, un cazador de monstruos, en un mundo lleno de decisiones morales, batallas y magia.",
+  "precio": 34.99,
+  "plataforma": "PS4",
+  "genero": "RPG, Mundo Abierto",
+  "imagen": "https://m.media-amazon.com/images/I/71h0MfwSOuL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 20,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "687ef649ca3c862033bb820f"
+  },
+  "nombre": "FIFA 23",
+  "descripcion": "El clásico juego de fútbol con todas las licencias, gráficos mejorados y nuevas físicas para una experiencia realista.",
+  "precio": 49.99,
+  "plataforma": "xbox",
+  "genero": "Deportes",
+  "imagen": "https://m.media-amazon.com/images/I/61fUItc7qZL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 20,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "687ef659ca3c862033bb8211"
+  },
+  "nombre": "Call of Duty: Modern Warfare II",
+  "descripcion": "La esperada secuela con combates tácticos intensos, misiones cinematográficas y multijugador competitivo.",
+  "precio": 69.99,
+  "plataforma": "xbox",
+  "genero": "Shooter, Guerra",
+  "imagen": "https://m.media-amazon.com/images/I/81ujGo9XUwL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 8
+},
+{
+  "_id": {
+    "$oid": "687ef67cca3c862033bb8215"
+  },
+  "nombre": "Far Cry 6",
+  "descripcion": "Explora la isla de Yara, derroca al régimen de Anton Castillo y lucha por la libertad en este shooter de mundo abierto.",
+  "precio": 59.99,
+  "plataforma": "xbox",
+  "genero": "Acción, Mundo Abierto",
+  "imagen": "https://m.media-amazon.com/images/I/81-wJLxJ6RL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 8
+},
+{
+  "_id": {
+    "$oid": "687ef849ca3c862033bb821a"
+  },
+  "nombre": "God of War Ragnarok",
+  "descripcion": "Kratos y Atreus enfrentan el fin del mundo nórdico en una épica historia llena de batallas brutales y emociones profundas.",
+  "precio": 69.99,
+  "plataforma": "PS4",
+  "genero": "Acción, Aventura",
+  "imagen": "https://m.media-amazon.com/images/I/81mspxmJwxL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 9
+},
+{
+  "_id": {
+    "$oid": "687ef873ca3c862033bb821c"
+  },
+  "nombre": "Animal Crossing: New Horizons",
+  "descripcion": "Construye tu isla ideal, haz amistad con adorables vecinos y relájate en este simulador de vida encantador.",
+  "precio": 49.99,
+  "plataforma": "Nintendo",
+  "genero": "Simulación, Social",
+  "imagen": "https://m.media-amazon.com/images/I/71EsARfsklS.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "687ef887ca3c862033bb821e"
+  },
+  "nombre": "Cyberpunk 2077",
+  "descripcion": "Entra en Night City como un mercenario en busca de inmortalidad en este RPG futurista de mundo abierto.",
+  "precio": 39.99,
+  "plataforma": "xbox",
+  "genero": "RPG, Ciencia Ficción",
+  "imagen": "https://m.media-amazon.com/images/I/61b7a9-QU4L.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "687ef893ca3c862033bb8220"
+  },
+  "nombre": "Super Smash Bros. Ultimate",
+  "descripcion": "Todos los luchadores están aquí. Pelea con más de 70 personajes en intensos combates multijugador.",
+  "precio": 59.99,
+  "plataforma": "Nintendo",
+  "genero": "Lucha, Multijugador",
+  "imagen": "https://m.media-amazon.com/images/I/81qzH0RY3DS.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "687ef8acca3c862033bb8224"
+  },
+  "nombre": "Resident Evil 4 Remake",
+  "descripcion": "Revive la icónica misión de Leon S. Kennedy en esta versión modernizada del clásico de horror y acción.",
+  "precio": 59.99,
+  "plataforma": "PS4",
+  "genero": "Survival Horror",
+  "imagen": "https://m.media-amazon.com/images/I/61PwjOHUmCL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "687ef977ca3c862033bb8228"
+  },
+  "nombre": "Red Dead Redemption 2",
+  "descripcion": "Explora el Salvaje Oeste con Arthur Morgan en un mundo abierto impresionante lleno de historia, acción y decisiones morales.",
+  "precio": 44.99,
+  "plataforma": "Steam",
+  "genero": "Acción, Mundo Abierto",
+  "imagen": "https://m.media-amazon.com/images/I/81pmpdi2UxL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "687ef97cca3c862033bb822a"
+  },
+  "nombre": "Metroid Dread",
+  "descripcion": "Samus Aran vuelve en una aventura 2D llena de tensión, tecnología alienígena y enemigos letales.",
+  "precio": 49.99,
+  "plataforma": "Nintendo",
+  "genero": "Acción, Exploración",
+  "imagen": "https://m.media-amazon.com/images/I/8176HX52haL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "68841893c4791afd77afe9e4"
+  },
+  "nombre": "Dragon Ball Fighterz",
+  "descripcion": "Dragon Ball FighterZ es un videojuego de lucha en 2D desarrollado por Arc System Works y distribuido por Bandai Namco Entertainment, basado en la franquicia Dragon Ball.",
+  "precio": 28.99,
+  "plataforma": "PS4",
+  "genero": "Lucha",
+  "imagen": "https://m.media-amazon.com/images/I/81IicXaxmZL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "68878dacc4791afd77afe9e8"
+  },
+  "nombre": "Gears of War 4",
+  "descripcion": "En Gears of War 4, JD Fenix y sus amigos deben enfrentarse a un nuevo enemigo monstruoso. Disfruta de la campaña cooperativa, Horda 3.0, el multijugador y el estilo de juego bajo cubierta redefinido.",
+  "precio": 63.99,
+  "plataforma": "xbox",
+  "genero": "Guerra, Supervivencia",
+  "imagen": "https://m.media-amazon.com/images/I/61SJEUJH46L.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "68878f0cc4791afd77afe9e9"
+  },
+  "nombre": "Super Mario Odyssey",
+  "descripcion": "Sigue a Mario y a su nuevo aliado Cappy, un sombrero con consciencia en su viaje por diversos reinos para salvar a la Princesa Peach de los planes de matrimonio forzado de Bowser.",
+  "precio": 32.99,
+  "plataforma": "Nintendo",
+  "genero": "Aventura, exploración",
+  "imagen": "https://m.media-amazon.com/images/I/91SF0Tzmv4L.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "6887904fc4791afd77afe9ea"
+  },
+  "nombre": "Marvel's Spider-Man",
+  "descripcion": "Este no es el Hombre Araña que conocías o que habías visto antes. Este es un experimentado Peter Parker quien es extraordinario en la lucha contra el crimen en la Nueva York de Marvel. ",
+  "precio": 41.99,
+  "plataforma": "PS4",
+  "genero": "Acción, Mundo abierto",
+  "imagen": "https://m.media-amazon.com/images/I/815aKWcEkEL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "68879151c4791afd77afe9eb"
+  },
+  "nombre": "Mortal Kombat 11",
+  "descripcion": "Mortal Kombat está de vuelta y mejor que nunca en la próxima evolución de la icónica franquicia. Las nuevas variaciones de personajes personalizados te dan un control sin precedentes para personalizar a los luchadores y hacerlos tuyos.  ",
+  "precio": 54.99,
+  "plataforma": "xbox",
+  "genero": "Lucha",
+  "imagen": "https://m.media-amazon.com/images/I/712auRmV2ML.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "6887955ac4791afd77afe9ed"
+  },
+  "nombre": "The Last of Us Part II ",
+  "descripcion": " Ambientado cuatro años después de The Last of Us (2013), el juego se centra en dos personajes jugables en un Estados Unidos post-apocalíptico cuyas vidas se entrelazan: Ellie, que parte en venganza por un asesinato, y Abby, una soldado que se ve involucrada en un conflicto entre su milicia y un culto religioso.",
+  "precio": "89.99",
+  "plataforma": "PS4",
+  "genero": "Supervivencia, Mundo abierto",
+  "imagen": "https://m.media-amazon.com/images/I/61jvdP9eRLL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "68879646c4791afd77afe9ee"
+  },
+  "nombre": "A Plague Tale: Innocence ",
+  "descripcion": "Sigue la sombría historia de la joven Amicia y su hermanito Hugo, en un viaje desgarrador a través de las horas más oscuras de la historia. Amicia y Hugo, perseguidos por soldados de la Inquisición y rodeados por enjambres de ratas imparables, llegarán a conocerse y confiar en los demás.",
+  "precio": "70.99",
+  "plataforma": "xbox",
+  "genero": "Supervivencia, horror",
+  "imagen": "https://m.media-amazon.com/images/I/71bekCZL-7L.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "68879ad6c4791afd77afe9ef"
+  },
+  "nombre": "Stray ",
+  "descripcion": "Perdido, solo y separado de su familia, un gato callejero debe desenredar un antiguo misterio para escapar de una ciudad olvidada hace mucho tiempo. Stray es un juego de aventuras felinas en tercera persona ambientado en los detallados callejones iluminados con luces de neón de una ciberciudad en decadencia y los turbios entornos de su sórdido vientre.",
+  "precio": "80.99",
+  "plataforma": "Nintendo",
+  "genero": "Aventura, Indie",
+  "imagen": "https://m.media-amazon.com/images/I/71Sa3OUrmZL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "68879bdbc4791afd77afe9f0"
+  },
+  "nombre": "Little Nightmares ",
+  "descripcion": "Sumérgete en Little Nightmares, una historia oscura y caprichosa que te enfrentará con tus miedos de infancia. Ayuda a Six a escapar de The Maw: un vasto recipiente misterioso habitado por almas corruptas que buscan su próxima comida.",
+  "precio": "38.99",
+  "plataforma": "PS4",
+  "genero": "Horror",
+  "imagen": "https://m.media-amazon.com/images/I/81YVSmcsY8S.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "descuento": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "68879c75c4791afd77afe9f1"
+  },
+  "nombre": "Dragon Ball Z Kakarot ",
+  "descripcion": "¡Revive la historia de Goku y otros Z Fighters en DRAGON BALL Z: KAKAROT! Más allá de las batallas épicas, experimenta la vida en el mundo de DRAGON BALL Z mientras luchas, pescas, comes y entrenas con Goku, Gohan, Vegeta y otros.",
+  "precio": "66.99",
+  "plataforma": "xbox",
+  "genero": "Peleas, Aventura",
+  "imagen": "https://m.media-amazon.com/images/I/71t00Fev9JL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "6887a0447aea9a50314ac9f1"
+  },
+  "nombre": "Luigi’s Mansion 3",
+  "descripcion": "¡Las vacaciones de ensueño de Luigi se convierten en una pesadilla fantasmal y pegajosa! Luigi se embarca en unas vacaciones de ensueño con Mario y sus amigos al recibir una invitación a un hotel de lujo. Sin embargo, su sueño se convierte rápidamente en una pesadilla cuando King Boo revela que todo había sido una estratagema para capturar a Mario y sus amigos.",
+  "precio": 46.99,
+  "plataforma": "Nintendo",
+  "genero": "Aventura",
+  "imagen": "https://m.media-amazon.com/images/I/81-FD3tzUlL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "stock": 9
+},
+{
+  "_id": {
+    "$oid": "6887a1247aea9a50314ac9f2"
+  },
+  "nombre": "Gang Beasts",
+  "descripcion": "Gang Beasts es un juego de fiesta multijugador tonto con personajes gelatinosos hoscos, secuencias brutales de lucha de slapstick y entornos peligrosos absurdos, ambientados en las calles medias de la ciudad de ternera.",
+  "precio": "46.99",
+  "plataforma": "PS4",
+  "genero": "Peleas",
+  "imagen": "https://m.media-amazon.com/images/I/81QmuvzmzCL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "6887a1b37aea9a50314ac9f3"
+  },
+  "nombre": "Halo Infinite",
+  "descripcion": "Cuando toda esperanza se pierde y el destino de la humanidad cuelga en el equilibrio, el Jefe Maestro está listo para enfrentar al enemigo más despiadado que haya enfrentado. Comienza de nuevo y entra en la armadura del mayor héroe de la humanidad para experimentar una aventura épica y finalmente explorar la escala del anillo Halo.",
+  "precio": "72.99",
+  "plataforma": "xbox",
+  "genero": "Guerra, Espacio",
+  "imagen": "https://m.media-amazon.com/images/I/91SVLtSOJ4L.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "6887a26d7aea9a50314ac9f4"
+  },
+  "nombre": "Minecraft",
+  "descripcion": "Construye todo lo que puedas imaginar en el modo Creativo, o realiza grandes expediciones en Survival a través de tierras misteriosas y en las profundidades de sus propios mundos infinitos.",
+  "precio": "22.99",
+  "plataforma": "Nintendo",
+  "genero": "Superviviencia, Aventura",
+  "imagen": "https://m.media-amazon.com/images/I/71CWsYcAcIL.__AC_SX300_SY300_QL70_ML2_.jpg",
+  "disponible": true,
+  "__v": 0,
+  "stock": 10
+},
+{
+  "_id": {
+    "$oid": "689402527a2acb7a91f533e0"
+  },
+  "nombre": "123456",
+  "descripcion": "asdfhjkl",
+  "precio": 2345,
+  "plataforma": "Nintendo",
+  "genero": "Shooter",
+  "imagen": "http://localhost:5000/uploads/1754530386616-799434475.jpg",
+  "disponible": true,
+  "descuento": 0,
+  "stock": 12,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689404ea7a2acb7a91f5342e"
+  },
+  "nombre": "Halo 3",
+  "descripcion": "prueba 1",
+  "precio": 39.99,
+  "plataforma": "xbox",
+  "genero": "Shooter",
+  "imagen": "http://localhost:5000/uploads/1754531050079-932682638.jpg",
+  "disponible": false,
+  "descuento": 0,
+  "stock": 0,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68964d1071a98ef4f000925d"
+  },
+  "nombre": "Hollow Knight",
+  "descripcion": "prueba",
+  "precio": 22,
+  "plataforma": "PS4",
+  "genero": "si",
+  "imagen": "http://localhost:5000/uploads/1754680592279-765955300.jpg",
+  "disponible": false,
+  "descuento": 0,
+  "stock": 0,
+  "__v": 0
+}]

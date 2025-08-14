@@ -2,14 +2,16 @@
 FROM node:18-alpine AS build-backend
 
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+# Usa package*.json para npm
+COPY package*.json ./
+# Instala deps con npm (ci si ya tienes package-lock.json)
+RUN npm ci --omit=dev || npm install --omit=dev
 
+# Copia el resto del código
 COPY . .
-# si usas TS necesitas compilar, si no, comentar:
-# RUN yarn build
+# Si usas TS, aquí compilarías
+# RUN npm run build
 
 EXPOSE 5000
 ENV NODE_ENV=production
-CMD ["node", "src/index.js"] 
-# o si no transpilas,: CMD ["node", "src/index.js"]
+CMD ["node", "src/index.js"]

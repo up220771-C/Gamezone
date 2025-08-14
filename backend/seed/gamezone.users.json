@@ -1,0 +1,190 @@
+[{
+  "_id": {
+    "$oid": "687ec0d054b72b97e19161de"
+  },
+  "nombre": "Juan Gamerzzz",
+  "correo": "juanzz@gamer.com",
+  "contraseña": "$2b$10$WpRr6tz6ZoFvSIbd5bwvde0v.p0U/M6ScOAcA4AjNGQhUFGry/rTS",
+  "rol": "user",
+  "__v": 0,
+  "updatedAt": {
+    "$date": "2025-08-05T23:56:51.274Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687eceeecc20c9d297a093d1"
+  },
+  "nombre": "Admin",
+  "correo": "admin@gamer.com",
+  "contraseña": "$2b$10$5kvAd6LDeloJ./lXxuasZ.jUTdhpkfhHZiKN.iHFeQtKKWk7eqU12",
+  "rol": "admin",
+  "__v": 0,
+  "apellido": "ATOR..",
+  "username": "ADMINATOR7",
+  "updatedAt": {
+    "$date": "2025-08-07T01:00:21.300Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "688049f2c91eef62a0c8c42e"
+  },
+  "nombre": "Jose Alonso",
+  "apellido": "Mauricio Hernandez",
+  "username": "Alonso74z",
+  "correo": "alonso@gmail.com",
+  "contraseña": "$2b$10$LrolZ0YD4AnlRRqoiktAk.s6f6C/t5F8518wRd0pJrwbBYGfYfjYm",
+  "rol": "cliente",
+  "createdAt": {
+    "$date": "2025-07-23T02:33:22.949Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-24T22:09:58.899Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68815ae81545d2cf70363d11"
+  },
+  "nombre": "cesar",
+  "apellido": "muñoz",
+  "username": "cesar",
+  "correo": "cesar@gmail.com",
+  "contraseña": "$2b$10$cFJPzohWoqDg/pp2GT4dUO3WknMXRmLM0hhGUoAWY/DPSJnWac3Gu",
+  "rol": "cliente",
+  "createdAt": {
+    "$date": "2025-07-23T21:58:00.183Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-23T21:58:00.183Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68815b4a1545d2cf70363d18"
+  },
+  "nombre": "Froylán",
+  "apellido": "Vitela",
+  "username": "Froglan_71",
+  "correo": "froy@gmail.com",
+  "contraseña": "$2b$10$kiGIdJaYZdXOkFWaku.Wu.Adrc/6EwnO7t0xk5CbzTuwojWqSXQsi",
+  "rol": "cliente",
+  "createdAt": {
+    "$date": "2025-07-23T21:59:38.312Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-28T17:31:39.648Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68815baf1545d2cf70363d1d"
+  },
+  "nombre": "Luis fernando",
+  "apellido": "Barrios",
+  "username": "luisito",
+  "correo": "luis@gmail.com",
+  "contraseña": "$2b$10$OprZm8urujRzoWiB/hME0eL3FvMjxmiVnNeaCFktHOQYEXAE7vkyy",
+  "rol": "cliente",
+  "createdAt": {
+    "$date": "2025-07-23T22:01:19.148Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-05T23:43:33.954Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68815d8c1545d2cf70363d2e"
+  },
+  "nombre": "Marco",
+  "apellido": "Galvan",
+  "username": "marco",
+  "correo": "marco@gmail.com",
+  "contraseña": "$2b$10$9NVXxWzOBemnh2Rdngb7c.WUfIdlqNtZv4na9LkxUq4o.aqX5FbXa",
+  "rol": "cliente",
+  "createdAt": {
+    "$date": "2025-07-23T22:09:16.093Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-23T22:09:16.093Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68825aee41bc0e26950f0c49"
+  },
+  "nombre": "Raul",
+  "apellido": "Galvan",
+  "username": "Marco",
+  "correo": "raul@gmail.com",
+  "contraseña": "$2b$10$bfcDOTCVp7I.IhJly.mwsOWZXvpe220NwteCJKq1.XvRpJPD1LV7y",
+  "rol": "cliente",
+  "createdAt": {
+    "$date": "2025-07-24T16:10:22.825Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-24T16:10:22.825Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6893f7387a2acb7a91f5336a"
+  },
+  "nombre": "Cesar",
+  "apellido": "Andros",
+  "username": "Andros121",
+  "correo": "andros@gmail.com",
+  "contraseña": "$2b$10$rokvHDgb5yFBHAFMy2586OBtFU41PtuhIrBXPBUuUrvtHiCU9EnRa",
+  "rol": "cliente",
+  "createdAt": {
+    "$date": "2025-08-07T00:45:44.088Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-07T00:46:16.918Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6894021f7a2acb7a91f533d8"
+  },
+  "nombre": "abc",
+  "apellido": "aaaa",
+  "username": "abc",
+  "correo": "a@gmail.com",
+  "contraseña": "1111",
+  "rol": "cliente",
+  "createdAt": {
+    "$date": "2025-08-07T01:32:15.060Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-07T01:32:15.060Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "689403507a2acb7a91f533fa"
+  },
+  "nombre": "Colunga",
+  "apellido": "Muñoz",
+  "username": "Profesor",
+  "correo": "colunga@gmail.com",
+  "contraseña": "$2b$10$YqamGpV0MxInHMk5BGDysez1pQS/38Y440q/9X2edWZLTE09R.Zj.",
+  "rol": "cliente",
+  "createdAt": {
+    "$date": "2025-08-07T01:37:20.808Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-07T01:37:20.808Z"
+  },
+  "__v": 0
+}]

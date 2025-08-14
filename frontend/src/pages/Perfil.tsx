@@ -211,12 +211,6 @@ export default function Perfil() {
           ))
         )}
       </div>
-
-      <div className="logout-action">
-        <button className="logout-btn" onClick={handleLogout}>
-        </button>
-        Log out
-      </div>
     </div>
   );
 }
